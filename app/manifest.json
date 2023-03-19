@@ -77,13 +77,35 @@
 					"pattern": "",
 					"name": "home",
 					"target": "home"
+				},
+				{
+					"name": "editOrderItems",
+					"pattern": "editOrderItems",
+					"target": {
+						"name": "editOrderItems",
+						"prefix": "eoi"
+					}
 				}
 			],
 			"targets": {
 				"home": {
 					"viewId": "home",
 					"viewName": "Home"
+				},
+				"editOrderItems": {
+					"type": "Component",
+					"usage": "editOrderItemsComponent",
+					"title": "Edit Order Items",
+					"id": "editOrderItems"
 				}
+			}
+		},
+		"componentUsages": {
+			"editOrderItemsComponent": {
+				"name": "handwerker.components.orderitems",
+				"settings": {},
+				"componentData": {},
+				"lazy": true
 			}
 		}
 	}

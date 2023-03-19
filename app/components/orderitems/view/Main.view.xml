@@ -1,4 +1,4 @@
-<mvc:View controllerName="hw.orderitems.controller.Main" displayBlock="true"
+<mvc:View controllerName="handwerker.components.orderitems.controller.Main" displayBlock="true"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc">
 	<SplitApp id="splitApp" initialDetail="detail" initialMaster="master">

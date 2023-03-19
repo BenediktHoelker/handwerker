@@ -3,7 +3,7 @@ import { support } from 'sap/ui/Device';
 import models from './model/models';
 
 /**
- * @namespace hw.orderitems
+ * @namespace handwerker.components.orderitems
  */
 export default class Component extends UIComponent {
   public static metadata = {

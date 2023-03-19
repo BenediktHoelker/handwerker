@@ -1,6 +1,6 @@
-specVersion: "2.6"
+specVersion: '2.6'
 metadata:
-  name: handwerker.testtypescript
+  name: handwerker
 type: application
 resources:
   configuration:
@@ -8,7 +8,7 @@ resources:
       webapp: dist
 framework:
   name: SAPUI5
-  version: "1.108.11"
+  version: '1.108.11'
   libraries:
     - name: sap.m
     - name: sap.ui.core

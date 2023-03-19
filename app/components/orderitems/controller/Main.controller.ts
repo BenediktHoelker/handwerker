@@ -3,7 +3,7 @@ import BaseController from './BaseController';
 import formatter from '../model/formatter';
 
 /**
- * @namespace hw.orderitems.controller
+ * @namespace handwerker.components.orderitems.controller
  */
 export default class Main extends BaseController {
   private formatter = formatter;

@@ -1,6 +1,6 @@
 specVersion: '2.6'
 metadata:
-  name: handwerker.testtypescript
+  name: handwerker
 type: application
 resources:
   configuration:

@@ -1,7 +1,7 @@
 {
 	"_version": "1.12.0",
 	"sap.app": {
-		"id": "hw.orderitems",
+		"id": "handwerker.components.orderitems",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"title": "{{appTitle}}",
@@ -27,7 +27,7 @@
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "hw.orderitems.view.App",
+			"viewName": "handwerker.components.orderitems.view.App",
 			"type": "XML",
 			"async": true,
 			"id": "app"
@@ -50,7 +50,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "hw.orderitems.i18n.i18n"
+					"bundleName": "handwerker.components.orderitems.i18n.i18n"
 				}
 			},
 			"": {
@@ -67,7 +67,7 @@
 			"config": {
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
-				"viewPath": "hw.orderitems.view",
+				"viewPath": "handwerker.components.orderitems.view",
 				"controlId": "app",
 				"controlAggregation": "pages",
 				"async": true
