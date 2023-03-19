@@ -19,13 +19,24 @@
 			</Page>
 		</masterPages>
 		<detailPages>
-			<Page id="detailPage" showHeader="false">
+			<Page id="detailPage" showHeader="false" floatingFooter="true">
 				<form:SimpleForm editable="true">
 					<smartfield:SmartLabel labelFor="equipment_ID"/>
 					<smartfield:SmartField id="equipment_ID" value="{equipment_ID}" textInEditModeSource="ValueList"/>
+					<smartfield:SmartLabel labelFor="quantity"/>
+					<smartfield:SmartField id="quantity" value="{quantity}"/>
+					<smartfield:SmartLabel labelFor="createdAt"/>
+					<smartfield:SmartField id="createdAt" value="{order/createdAt}" enabled="false"/>
+					<smartfield:SmartLabel labelFor="completedAt"/>
+					<smartfield:SmartField id="completedAt" value="{completedAt}"/>
 				</form:SimpleForm>
+				<footer>
+					<Toolbar >
+						<ToolbarSpacer />
+						<Button type="Emphasized" text="{i18n>submit}" press="onPressSubmit"/>
+					</Toolbar>
+				</footer>
 			</Page>
 		</detailPages>
-
 	</SplitApp>
 </mvc:View>

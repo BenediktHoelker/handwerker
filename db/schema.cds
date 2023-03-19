@@ -22,8 +22,8 @@ entity Orders : cuid, managed {
 }
 
 entity OrderItems : cuid, managed {
-    order     : Association to Orders     @title: '{i18n>order}';
-    equipment : Association to Equipments @title: '{i18n>equipment}';
-    quantity  : Integer                   @title: '{i18n>quantity}';
-// completedAt : DateTime                  @title: '{i18n>completedAt}'
+    order       : Association to Orders     @title: '{i18n>order}';
+    equipment   : Association to Equipments @title: '{i18n>equipment}';
+    quantity    : Integer                   @title: '{i18n>quantity}';
+    completedAt : DateTime                  @title: '{i18n>completedAt}'
 }

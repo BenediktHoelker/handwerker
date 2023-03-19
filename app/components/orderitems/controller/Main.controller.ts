@@ -3,6 +3,7 @@ import formatter from '../model/formatter';
 import List from 'sap/m/List';
 import SplitApp from 'sap/m/SplitApp';
 import UI5Event from 'sap/ui/base/Event';
+import ODataModel from 'sap/ui/model/odata/v2/ODataModel';
 
 /**
  * @namespace handwerker.components.orderitems.controller
@@ -37,6 +38,11 @@ export default class Main extends BaseController {
       listItem.getBindingContext().getPath(),
       { expand: 'equipment' }
     );
+  }
+
+  onPressSubmit() {
+    const model = this.getModel() as ODataModel;
+    model.submitChanges();
   }
 
   public onPressToggleMaster() {
