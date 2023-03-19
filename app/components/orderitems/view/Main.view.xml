@@ -1,16 +1,29 @@
 <mvc:View controllerName="handwerker.components.orderitems.controller.Main" displayBlock="true"
 	xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:smartfield="sap.ui.comp.smartfield"
 	xmlns:mvc="sap.ui.core.mvc">
 	<SplitApp id="splitApp" initialDetail="detail" initialMaster="master">
 		<masterPages>
-			<Page id="masterPage" title="{i18n>masterPageTitle}">
-				<List id="masterList" mode="SingleSelectMaster" items="{path: '/OrderItems', parameters:{expand : 'order/client,equipment'}}">
-					<StandardListItem title="{equipment/name}" description="{order/client/name}"/>
+			<Page id="masterPage" showHeader="false" backgroundDesign="List">
+				<List id="masterList" mode="SingleSelectMaster" items="{path: '/OrderItems', 
+				parameters:{expand : 'order/client,equipment'},
+				events: {change: '.onMasterListBindingChange'}}" selectionChange="onSelectionChange">
+					<headerToolbar>
+						<Toolbar>
+							<DynamicDateRange/>
+						</Toolbar>
+					</headerToolbar>
+					<StandardListItem title="{order/client/name}"/>
 				</List>
 			</Page>
 		</masterPages>
 		<detailPages>
-			<Page id="detailPage" backgroundDesign= "Solid" title="Detail Page 1">
+			<Page id="detailPage" showHeader="false">
+				<form:SimpleForm editable="true">
+					<smartfield:SmartLabel labelFor="equipment_ID"/>
+					<smartfield:SmartField id="equipment_ID" value="{equipment_ID}" textInEditModeSource="ValueList"/>
+				</form:SimpleForm>
 			</Page>
 		</detailPages>
 
