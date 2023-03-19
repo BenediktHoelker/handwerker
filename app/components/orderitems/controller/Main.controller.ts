@@ -17,9 +17,13 @@ export default class Main extends BaseController {
   public onInit() {
     const router = this.getRouter();
 
-    router.getRoute('main').attachPatternMatched(async () => {
-      setTimeout(() => {});
-    }, this);
+    router.getRoute('main').attachPatternMatched(() => {
+      this.byId('masterList')
+        .getBinding('items')
+        .attachEventOnce('change', (event: UI5Event) => {
+          this.onMasterListBindingChange(event);
+        });
+    });
   }
 
   public onMasterListBindingChange(event: UI5Event) {

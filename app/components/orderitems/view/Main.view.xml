@@ -7,8 +7,7 @@
 		<masterPages>
 			<Page id="masterPage" showHeader="false" backgroundDesign="List">
 				<List id="masterList" mode="SingleSelectMaster" items="{path: '/OrderItems', 
-				parameters:{expand : 'order/client,equipment'},
-				events: {change: '.onMasterListBindingChange'}}" selectionChange="onSelectionChange">
+				parameters:{expand : 'order/client,equipment'}}" selectionChange="onSelectionChange">
 					<headerToolbar>
 						<Toolbar>
 							<DynamicDateRange/>
