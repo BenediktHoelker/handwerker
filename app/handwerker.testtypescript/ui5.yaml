@@ -1,10 +1,10 @@
-specVersion: "2.6"
+specVersion: '2.6'
 metadata:
   name: handwerker.testtypescript
 type: application
 framework:
   name: SAPUI5
-  version: "1.108.11"
+  version: '1.108.11'
   libraries:
     - name: sap.m
     - name: sap.ui.core
@@ -24,10 +24,14 @@ server:
       afterMiddleware: compression
       configuration:
         debug: true
-        extraExts: "xml,json,properties"
+        extraExts: 'xml,json,properties'
         port: 35729
-        path: "webapp"
+        path: 'webapp'
     - name: ui5-tooling-transpile-middleware
       afterMiddleware: compression
+      configuration: *transpileConfig
+    - name: ui5-middleware-simpleproxy
+      afterMiddleware: compression
+      mountPath: /v2
       configuration:
-        *transpileConfig
+        baseUri: http://localhost:4004/v2

@@ -1,20 +1,18 @@
-<mvc:View
-	controllerName="handwerker.testtypescript.controller.Main"
-	displayBlock="true"
+<mvc:View controllerName="handwerker.testtypescript.controller.Main" displayBlock="true"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc">
+	<SplitApp id="splitApp" initialDetail="detail" initialMaster="master">
+		<masterPages>
+			<Page id="masterPage" title="{i18n>masterPageTitle}">
+				<List id="masterList" mode="SingleSelectMaster" items="{path: '/OrderItems', parameters:{expand : 'order/client,equipment'}}">
+					<StandardListItem title="{equipment/name}" description="{order/client/name}"/>
+				</List>
+			</Page>
+		</masterPages>
+		<detailPages>
+			<Page id="detailPage" backgroundDesign= "Solid">
+			</Page>
+		</detailPages>
 
-	<MessagePage
-		title="{i18n>appTitle}"
-		text="{i18n>appTitle}"
-		icon="sap-icon://accept"
-		id="page"
-		description="{i18n>appDescription}">
-		<buttons>
-			<Button
-				text="{i18n>btnText}"
-				press="sayHello" />
-		</buttons>
-	</MessagePage>
-
+	</SplitApp>
 </mvc:View>
