@@ -1,7 +1,7 @@
 {
 	"_version": "1.12.0",
 	"sap.app": {
-		"id": "handwerker.testtypescript",
+		"id": "handwerker",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"title": "{{appTitle}}",
@@ -27,7 +27,7 @@
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "handwerker.testtypescript.view.App",
+			"viewName": "handwerker.view.App",
 			"type": "XML",
 			"async": true,
 			"id": "app"
@@ -50,7 +50,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "handwerker.testtypescript.i18n.i18n"
+					"bundleName": "handwerker.i18n.i18n"
 				}
 			},
 			"": {
@@ -67,7 +67,7 @@
 			"config": {
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
-				"viewPath": "handwerker.testtypescript.view",
+				"viewPath": "handwerker.view",
 				"controlId": "app",
 				"controlAggregation": "pages",
 				"async": true
@@ -75,14 +75,14 @@
 			"routes": [
 				{
 					"pattern": "",
-					"name": "main",
-					"target": "main"
+					"name": "home",
+					"target": "home"
 				}
 			],
 			"targets": {
-				"main": {
-					"viewId": "main",
-					"viewName": "Main"
+				"home": {
+					"viewId": "home",
+					"viewName": "Home"
 				}
 			}
 		}

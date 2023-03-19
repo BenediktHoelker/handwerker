@@ -1,4 +1,4 @@
-<mvc:View controllerName="handwerker.testtypescript.controller.Main" displayBlock="true"
+<mvc:View controllerName="hw.orderitems.controller.Main" displayBlock="true"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc">
 	<SplitApp id="splitApp" initialDetail="detail" initialMaster="master">
@@ -10,7 +10,7 @@
 			</Page>
 		</masterPages>
 		<detailPages>
-			<Page id="detailPage" backgroundDesign= "Solid">
+			<Page id="detailPage" backgroundDesign= "Solid" title="Detail Page 1">
 			</Page>
 		</detailPages>
 

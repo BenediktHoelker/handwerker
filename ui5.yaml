@@ -2,6 +2,10 @@ specVersion: '2.6'
 metadata:
   name: handwerker.testtypescript
 type: application
+resources:
+  configuration:
+    paths:
+      webapp: app
 framework:
   name: SAPUI5
   version: '1.108.11'

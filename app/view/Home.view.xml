@@ -1,0 +1,21 @@
+<mvc:View controllerName="handwerker.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:uxap="sap.uxap"
+    xmlns="sap.m"
+    xmlns:f="sap.f" displayBlock="true">
+    <Page showFooter="false" showHeader="false">
+        <uxap:ObjectPageLayout upperCaseAnchorBar="false" subSectionLayout="TitleOnLeft">
+            <uxap:ObjectPageSection title="{i18n>enterData}">
+                <uxap:ObjectPageSubSection>
+                    <f:GridContainer>
+                        <GenericTile header="{i18n>masterDetail}" press=".navTo($event, 'trackViaCalendar', 'spc', 'masterDetail')">
+                            <layoutData>
+                                <f:GridContainerItemLayoutData minRows="2" columns="2" />
+                            </layoutData>
+                        </GenericTile>
+                    </f:GridContainer>
+                </uxap:ObjectPageSubSection>
+            </uxap:ObjectPageSection>
+        </uxap:ObjectPageLayout>
+    </Page>
+</mvc:View>

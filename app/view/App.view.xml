@@ -1,0 +1,24 @@
+<mvc:View controllerName="handwerker.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:tnt="sap.tnt" height="100%" displayBlock="true">
+
+    <tnt:ToolPage id="toolPage" class="sapUiSizeCompact">
+        <tnt:header>
+            <f:ShellBar title="Handwerker">
+            </f:ShellBar>
+        </tnt:header>
+
+        <tnt:sideContent>
+            <tnt:SideNavigation id="sideNavigation" expanded="true" selectedKey="{/selectedKey}" itemSelect=".onItemSelect">
+                <tnt:NavigationList>
+                    <tnt:NavigationListItem text="{i18n>collapseExpandSideNavigation}" icon="sap-icon://direction-arrows" select=".collapseExpandSideNavigation"/>
+                </tnt:NavigationList>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+        <tnt:mainContents>
+            <App id="app" height="100%"/>
+        </tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>

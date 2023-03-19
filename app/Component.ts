@@ -3,7 +3,7 @@ import { support } from 'sap/ui/Device';
 import models from './model/models';
 
 /**
- * @namespace handwerker.testtypescript
+ * @namespace handwerker
  */
 export default class Component extends UIComponent {
   public static metadata = {

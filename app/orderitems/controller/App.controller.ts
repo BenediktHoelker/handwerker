@@ -1,7 +1,7 @@
 import BaseController from './BaseController';
 
 /**
- * @namespace handwerker.testtypescript.controller
+ * @namespace hw.orderitems.controller
  */
 export default class App extends BaseController {
   public onInit(): void {
