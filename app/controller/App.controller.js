@@ -48,7 +48,7 @@ sap.ui.define(
         );
       },
 
-      collapseExpandSideNavigation() {
+      toggleSideNavigation() {
         const toolPage = this.getView().byId('toolPage');
         const isExpanded = toolPage.getSideExpanded();
         toolPage.setSideExpanded(!isExpanded);

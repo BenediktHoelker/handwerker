@@ -6,14 +6,29 @@
 
     <tnt:ToolPage id="toolPage" class="sapUiSizeCompact">
         <tnt:header>
-            <f:ShellBar title="Handwerker">
-            </f:ShellBar>
+            <tnt:ToolHeader>
+                <Button icon="sap-icon://menu2" type="Transparent" press="toggleSideNavigation">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </layoutData>
+                </Button>
+                <SearchField width="240px">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </layoutData>
+                </SearchField>
+                <ToolbarSpacer ></ToolbarSpacer>
+                <Button text="Alan Smith" type="Transparent" press=".onUserNamePress" ariaHasPopup="Menu">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </layoutData>
+                </Button>
+            </tnt:ToolHeader>
         </tnt:header>
 
         <tnt:sideContent>
             <tnt:SideNavigation id="sideNavigation" expanded="true" selectedKey="{/selectedKey}" itemSelect=".onItemSelect">
                 <tnt:NavigationList>
-                    <tnt:NavigationListItem text="{i18n>collapseExpandSideNavigation}" icon="sap-icon://direction-arrows" select=".collapseExpandSideNavigation"/>
                     <tnt:NavigationListItem text="{i18n>editOrderItems}" select=".navTo($event, 'editOrderItems')"/>
                 </tnt:NavigationList>
             </tnt:SideNavigation>
