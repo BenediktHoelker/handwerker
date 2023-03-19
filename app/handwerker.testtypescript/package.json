@@ -1,0 +1,35 @@
+{
+  "name": "testtypescript",
+  "version": "1.0.0",
+  "description": "UI5 Application: testtypescript",
+  "author": "Benedikt Hölker",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "ui5 build --clean-dest",
+    "build:opt": "ui5 build self-contained --clean-dest --all",
+    "start": "ui5 serve --port 8080 -o index.html",
+    "start:dist": "ui5 serve  --port 8080 -o index.html --config ui5-dist.yaml",
+    "ts-typecheck": "tsc --noEmit",
+    "prettier-format": "prettier --config .prettierrc 'webapp/**/*.ts' --write",
+    "lint": "eslint webapp"
+  },
+  "devDependencies": {
+    "@sapui5/ts-types-esm": "1.108.11",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "@ui5/cli": "^2.14.14",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.4",
+    "typescript": "^4.8.4",
+    "ui5-middleware-livereload": "^0.7.0",
+    "ui5-tooling-transpile": "^0.2.0"
+  },
+  "ui5": {
+    "dependencies": [
+      "ui5-middleware-livereload",
+      "ui5-tooling-transpile"
+    ]
+  }
+}
