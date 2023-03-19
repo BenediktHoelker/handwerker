@@ -8,12 +8,12 @@ export default {
    */
   formatValue: (value: string) => {
     if (!value) {
-      return "";
+      return '';
     }
     try {
       return parseFloat(value).toFixed(2);
     } catch (error) {
       return value;
     }
-  },
+  }
 };

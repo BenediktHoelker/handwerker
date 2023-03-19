@@ -1,13 +1,13 @@
-import UIComponent from "sap/ui/core/UIComponent";
-import { support } from "sap/ui/Device";
-import models from "./model/models";
+import UIComponent from 'sap/ui/core/UIComponent';
+import { support } from 'sap/ui/Device';
+import models from './model/models';
 
 /**
  * @namespace handwerker.testtypescript
  */
 export default class Component extends UIComponent {
   public static metadata = {
-    manifest: "json",
+    manifest: 'json'
   };
 
   private contentDensityClass: string;
@@ -16,7 +16,7 @@ export default class Component extends UIComponent {
     // call the base component's init function
     super.init();
 
-    this.setModel(models.createDeviceModel(), "device");
+    this.setModel(models.createDeviceModel(), 'device');
 
     // create the views based on the url/hash
     this.getRouter().initialize();
@@ -33,16 +33,16 @@ export default class Component extends UIComponent {
     if (this.contentDensityClass === undefined) {
       // check whether FLP has already set the content density class; do nothing in this case
       if (
-        document.body.classList.contains("sapUiSizeCozy") ||
-        document.body.classList.contains("sapUiSizeCompact")
+        document.body.classList.contains('sapUiSizeCozy') ||
+        document.body.classList.contains('sapUiSizeCompact')
       ) {
-        this.contentDensityClass = "";
+        this.contentDensityClass = '';
       } else if (!support.touch) {
         // apply "compact" mode if touch is not supported
-        this.contentDensityClass = "sapUiSizeCompact";
+        this.contentDensityClass = 'sapUiSizeCompact';
       } else {
         // "cozy" in case of touch support; default for most sap.m controls, but needed for desktop-first controls like sap.ui.table.Table
-        this.contentDensityClass = "sapUiSizeCozy";
+        this.contentDensityClass = 'sapUiSizeCozy';
       }
     }
     return this.contentDensityClass;

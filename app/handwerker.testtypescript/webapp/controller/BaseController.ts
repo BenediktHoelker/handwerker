@@ -1,11 +1,11 @@
-import Controller from "sap/ui/core/mvc/Controller";
-import UIComponent from "sap/ui/core/UIComponent";
-import AppComponent from "../Component";
-import Model from "sap/ui/model/Model";
-import ResourceModel from "sap/ui/model/resource/ResourceModel";
-import ResourceBundle from "sap/base/i18n/ResourceBundle";
-import Router from "sap/ui/core/routing/Router";
-import History from "sap/ui/core/routing/History";
+import Controller from 'sap/ui/core/mvc/Controller';
+import UIComponent from 'sap/ui/core/UIComponent';
+import AppComponent from '../Component';
+import Model from 'sap/ui/model/Model';
+import ResourceModel from 'sap/ui/model/resource/ResourceModel';
+import ResourceBundle from 'sap/base/i18n/ResourceBundle';
+import Router from 'sap/ui/core/routing/Router';
+import History from 'sap/ui/core/routing/History';
 
 /**
  * @namespace handwerker.testtypescript.controller
@@ -32,7 +32,7 @@ export default abstract class BaseController extends Controller {
    * @returns The i18n resource bundle of the component
    */
   public getResourceBundle(): ResourceBundle | Promise<ResourceBundle> {
-    const oModel = this.getOwnerComponent().getModel("i18n") as ResourceModel;
+    const oModel = this.getOwnerComponent().getModel('i18n') as ResourceModel;
     return oModel.getResourceBundle();
   }
 
@@ -77,7 +77,7 @@ export default abstract class BaseController extends Controller {
     if (sPreviousHash !== undefined) {
       window.history.go(-1);
     } else {
-      this.getRouter().navTo("main", {}, undefined, true);
+      this.getRouter().navTo('main', {}, undefined, true);
     }
   }
 }
