@@ -12,23 +12,13 @@
     "express-openid-connect": "^2.12.1",
     "jsonwebtoken": "^9.0.0"
   },
-  "scripts": {
-    "dev": "run-p start:cds start:ui5",
-    "test": "cds run --profile test",
-    "start:ui5": "ui5 serve --port 8080 -o index.html",
-    "start:cds": "cds run --profile development",
-    "start:dist": "ui5 serve  --port 8080 -o index.html --config ui5-dist.yaml",
-    "build": "ui5 build --clean-dest",
-    "build:opt": "ui5 build self-contained --clean-dest --all",
-    "ts-typecheck": "tsc --noEmit",
-    "prettier-format": "prettier --config .prettierrc app/**/*.ts --write",
-    "lint": "eslint webapp"
-  },
   "devDependencies": {
     "@sapui5/ts-types-esm": "1.108.11",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
     "@ui5/cli": "^2.14.14",
+    "cds-pg": "^0.1.36",
+    "cds-pg-migra": "^1.1.2",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -40,21 +30,25 @@
     "ui5-middleware-simpleproxy": "^0.9.4",
     "ui5-tooling-transpile": "^0.2.0"
   },
+  "scripts": {
+    "dev": "run-p start:cds start:ui5",
+    "test": "cds run --profile test",
+    "start:ui5": "ui5 serve --port 8080 -o index.html",
+    "start:cds": "cds run --profile development",
+    "start:dist": "ui5 serve  --port 8080 -o index.html --config ui5-dist.yaml",
+    "deploy": "cds-pg-migra",
+    "deploy:prod": "cds deploy --profile production",
+    "build": "ui5 build --clean-dest",
+    "build:opt": "ui5 build self-contained --clean-dest --all",
+    "ts-typecheck": "tsc --noEmit",
+    "prettier-format": "prettier --config .prettierrc app/**/*.ts --write",
+    "lint": "eslint webapp"
+  },
   "ui5": {
     "dependencies": [
       "ui5-middleware-livereload",
       "ui5-middleware-simpleproxy",
       "ui5-tooling-transpile"
     ]
-  },
-  "cds": {
-    "requires": {
-      "db": {
-        "kind": "sqlite",
-        "credentials": {
-          "database": "db.sqlite"
-        }
-      }
-    }
   }
 }
