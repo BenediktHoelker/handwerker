@@ -1,0 +1,40 @@
+<mvc:View controllerName="handwerker.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:tnt="sap.tnt" height="100%" displayBlock="true">
+
+    <tnt:ToolPage id="toolPage" class="sapUiSizeCompact">
+        <tnt:header>
+            <tnt:ToolHeader>
+                <Button icon="sap-icon://menu2" type="Transparent" press="toggleSideNavigation">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </layoutData>
+                </Button>
+                <SearchField width="240px">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </layoutData>
+                </SearchField>
+                <ToolbarSpacer ></ToolbarSpacer>
+                <Button text="Alan Smith" type="Transparent" press=".onUserNamePress" ariaHasPopup="Menu">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </layoutData>
+                </Button>
+            </tnt:ToolHeader>
+        </tnt:header>
+
+        <tnt:sideContent>
+            <tnt:SideNavigation id="sideNavigation" expanded="true" selectedKey="{/selectedKey}" itemSelect=".onItemSelect">
+                <tnt:NavigationList>
+                    <tnt:NavigationListItem text="{i18n>editOrderItems}" select=".navTo($event, 'editOrderItems')"/>
+                </tnt:NavigationList>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+        <tnt:mainContents>
+            <App id="app" height="100%"/>
+        </tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>

@@ -1,0 +1,41 @@
+<mvc:View controllerName="handwerker.components.orderitems.controller.Main" displayBlock="true"
+	xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:smartfield="sap.ui.comp.smartfield"
+	xmlns:mvc="sap.ui.core.mvc">
+	<SplitApp id="splitApp" initialDetail="detail" initialMaster="master">
+		<masterPages>
+			<Page id="masterPage" showHeader="false" backgroundDesign="List">
+				<List id="masterList" mode="SingleSelectMaster" items="{path: '/OrderItems', 
+				parameters:{expand : 'order/client,equipment'}}" selectionChange="onSelectionChange">
+					<headerToolbar>
+						<Toolbar>
+							<DynamicDateRange/>
+						</Toolbar>
+					</headerToolbar>
+					<StandardListItem title="{order/client/name}"/>
+				</List>
+			</Page>
+		</masterPages>
+		<detailPages>
+			<Page id="detailPage" showHeader="false" floatingFooter="true">
+				<form:SimpleForm editable="true">
+					<smartfield:SmartLabel labelFor="equipment_ID"/>
+					<smartfield:SmartField id="equipment_ID" value="{equipment_ID}" textInEditModeSource="ValueList"/>
+					<smartfield:SmartLabel labelFor="quantity"/>
+					<smartfield:SmartField id="quantity" value="{quantity}"/>
+					<smartfield:SmartLabel labelFor="createdAt"/>
+					<smartfield:SmartField id="createdAt" value="{order/createdAt}" enabled="false"/>
+					<smartfield:SmartLabel labelFor="completedAt"/>
+					<smartfield:SmartField id="completedAt" value="{completedAt}"/>
+				</form:SimpleForm>
+				<footer>
+					<Toolbar >
+						<ToolbarSpacer />
+						<Button type="Emphasized" text="{i18n>submit}" press="onPressSubmit"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</detailPages>
+	</SplitApp>
+</mvc:View>

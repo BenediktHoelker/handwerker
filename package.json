@@ -14,6 +14,7 @@
   },
   "scripts": {
     "dev": "run-p start:cds start:ui5",
+    "test": "cds run --profile test",
     "start:ui5": "ui5 serve --port 8080 -o index.html",
     "start:cds": "cds run --profile development",
     "start:dist": "ui5 serve  --port 8080 -o index.html --config ui5-dist.yaml",
