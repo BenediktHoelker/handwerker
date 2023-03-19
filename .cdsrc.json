@@ -1,1 +1,46 @@
-{}
+{
+    "requires": {
+        "[development]": {
+            "auth": {
+                "users": {
+                    "alice": {
+                        "roles": [
+                            "read:orderitems"
+                        ]
+                    },
+                    "admin": {
+                        "roles": [
+                            "read:orderitems",
+                            "write:orderitems"
+                        ]
+                    }
+                }
+            }
+        },
+        "[test]": {
+            "auth": {
+                "impl": "srv/auth.js"
+            }
+        },
+        "[production]": {
+            "auth": {
+                "impl": "srv/auth.js"
+            }
+        }
+    },
+    "[development]": {
+        "folders": {
+            "app": "app"
+        }
+    },
+    "[test]": {
+        "folders": {
+            "app": "dist"
+        }
+    },
+    "[production]": {
+        "folders": {
+            "app": "dist"
+        }
+    }
+}

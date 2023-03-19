@@ -8,12 +8,14 @@
   "dependencies": {
     "@sap/cds": "^6",
     "@sap/cds-odata-v2-adapter-proxy": "^1.9.20",
-    "express": "^4"
+    "express": "^4",
+    "express-openid-connect": "^2.12.1",
+    "jsonwebtoken": "^9.0.0"
   },
   "scripts": {
     "dev": "run-p start:cds start:ui5",
     "start:ui5": "ui5 serve --port 8080 -o index.html",
-    "start:cds": "cds run",
+    "start:cds": "cds run --profile development",
     "start:dist": "ui5 serve  --port 8080 -o index.html --config ui5-dist.yaml",
     "build": "ui5 build --clean-dest",
     "build:opt": "ui5 build self-contained --clean-dest --all",
