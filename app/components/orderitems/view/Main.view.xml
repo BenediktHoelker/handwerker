@@ -6,14 +6,16 @@
 	<SplitApp id="splitApp" initialDetail="detail" initialMaster="master">
 		<masterPages>
 			<Page id="masterPage" showHeader="false" backgroundDesign="List">
-				<List id="masterList" mode="SingleSelectMaster" items="{path: '/OrderItems', 
-				parameters:{expand : 'order/client,equipment'}}" selectionChange="onSelectionChange">
+				<List id="masterList" mode="SingleSelectMaster" items="{
+				path: '/OrderItems', 
+				parameters: {expand : 'order/client,equipment'},
+				sorter: {path: 'clientConcatCreatedOn', group: true}}" selectionChange="onSelectionChange">
 					<headerToolbar>
 						<Toolbar>
 							<DynamicDateRange/>
 						</Toolbar>
 					</headerToolbar>
-					<StandardListItem title="{order/client/name}"/>
+					<StandardListItem title="{equipment/name}"/>
 				</List>
 			</Page>
 		</masterPages>

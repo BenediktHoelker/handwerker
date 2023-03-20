@@ -28,9 +28,10 @@ export default class Main extends BaseController {
 
   public onMasterListBindingChange(event: UI5Event) {
     const masterList = this.byId('masterList') as List;
-    const firstMasterListItem = masterList.getItems()[0];
+    const firstMasterListItem = masterList.getItems()[1]; // [0] is a group header
     const path = firstMasterListItem.getBindingContext().getPath();
 
+    masterList.setSelectedItem(firstMasterListItem);
     this.byId('detailPage').bindElement(path);
   }
 

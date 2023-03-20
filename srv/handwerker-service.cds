@@ -5,5 +5,11 @@ service HandwerkerService {
     entity BusinessPartners as projection on my.BusinessPartners;
     entity Equipments       as projection on my.Equipments;
     entity Orders           as projection on my.Orders;
-    entity OrderItems       as projection on my.OrderItems
+
+    entity OrderItems       as projection on my.OrderItems {
+        *,
+        order.client.name || ', ' || TO_CHAR(
+            order.createdAt, 'YYYY-MM-DD'
+        ) as clientConcatCreatedOn : String @title: '{i18n>createdOn}'
+    };
 }
