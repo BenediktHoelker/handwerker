@@ -4,7 +4,10 @@
             "[development]": {
                 "kind": "dummy"
             },
-            "[test, production]": {
+            "[test]": {
+                "impl": "srv/auth.js"
+            },
+            "[production]": {
                 "impl": "srv/auth.js"
             }
         },
@@ -30,10 +33,11 @@
         "[development]": {
             "app": "app"
         },
-        "[test, production]": {
-            "folders": {
-                "app": "dist"
-            }
+        "[test]": {
+            "app": "dist"
+        },
+        "[production]": {
+            "app": "dist"
         }
     }
 }

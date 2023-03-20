@@ -1,7 +1,6 @@
 <mvc:View controllerName="handwerker.controller.App"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:f="sap.f"
     xmlns:tnt="sap.tnt" height="100%" displayBlock="true">
 
     <tnt:ToolPage id="toolPage" class="sapUiSizeCompact">

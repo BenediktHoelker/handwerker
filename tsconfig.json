@@ -9,7 +9,7 @@
     "strict": true,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
-    "rootDirs": ["./app/components/orderitems"],
+    "rootDirs": ["./app/components/orderitems", "./app/components/orders"],
     "outDir": "./dist",
     "baseUrl": "./",
     "moduleResolution": "node",
@@ -18,8 +18,12 @@
       "./node_modules/@sapui5/ts-types-esm"
     ],
     "paths": {
-      "app/components/orderitems/*": ["./app/*"]
+      "app/components/orderitems/*": ["./app/*"],
+      "app/components/orders/*": ["./app/*"]
     }
   },
-  "include": ["./app/components/orderitems/**/*"]
+  "include": [
+    "./app/components/orderitems/**/*",
+    "./app/components/orders/**/*"
+  ]
 }

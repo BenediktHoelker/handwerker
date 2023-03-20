@@ -34,3 +34,6 @@ mta_archives/
 .env
 .env.production
 default-envs/*
+
+# UI5
+dist
