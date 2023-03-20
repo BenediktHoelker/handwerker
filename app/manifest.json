@@ -74,6 +74,14 @@
 			},
 			"routes": [
 				{
+					"pattern": "",
+					"name": "editOrders",
+					"target": {
+						"name": "editOrders",
+						"prefix": "eo"
+					}
+				},
+				{
 					"name": "editOrderItems",
 					"pattern": "editOrderItems",
 					"target": {
@@ -82,11 +90,11 @@
 					}
 				},
 				{
-					"pattern": "",
-					"name": "editOrders",
+					"name": "editEquipments",
+					"pattern": "editEquipments",
 					"target": {
-						"name": "editOrders",
-						"prefix": "eo"
+						"name": "editEquipments",
+						"prefix": "eequi"
 					}
 				},
 				{
@@ -111,6 +119,12 @@
 					"title": "Edit Orders",
 					"id": "editOrders"
 				},
+				"editEquipments": {
+					"type": "Component",
+					"usage": "editEquipmentsComponent",
+					"title": "Edit Equipments",
+					"id": "editEquipments"
+				},
 				"manageBusinessPartners": {
 					"type": "Component",
 					"usage": "manageBusinessPartnersComponent",
@@ -128,6 +142,12 @@
 			},
 			"editOrdersComponent": {
 				"name": "handwerker.components.orders",
+				"settings": {},
+				"componentData": {},
+				"lazy": true
+			},
+			"editEquipmentsComponent": {
+				"name": "handwerker.components.equipments",
 				"settings": {},
 				"componentData": {},
 				"lazy": true

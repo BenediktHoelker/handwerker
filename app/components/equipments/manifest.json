@@ -1,7 +1,7 @@
 {
   "_version": "1.40.0",
   "sap.app": {
-    "id": "handwerker.components.businesspartners",
+    "id": "handwerker.components.equipments",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -61,7 +61,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "handwerker.businesspartners.equipments.i18n.i18n"
+          "bundleName": "handwerker.components.equipments.i18n.i18n"
         }
       },
       "": {
@@ -97,8 +97,8 @@
       "showDraftToggle": false
     },
     "pages": {
-      "ListReport|BusinessPartners": {
-        "entitySet": "BusinessPartners",
+      "ListReport|Equipments": {
+        "entitySet": "Equipments",
         "component": {
           "name": "sap.suite.ui.generic.template.ListReport",
           "list": true,
@@ -115,8 +115,8 @@
           }
         },
         "pages": {
-          "ObjectPage|BusinessPartners": {
-            "entitySet": "BusinessPartners",
+          "ObjectPage|Equipments": {
+            "entitySet": "Equipments",
             "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
             "component": {
               "name": "sap.suite.ui.generic.template.ObjectPage"

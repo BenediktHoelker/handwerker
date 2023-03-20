@@ -26,6 +26,7 @@
                     <!-- <tnt:NavigationListItem text="{i18n>editOrderItems}" select=".navTo($event, 'editOrderItems')"/> -->
                     <tnt:NavigationListItem text="{i18n>orders}" icon="sap-icon://sales-order" select=".navTo($event, 'editOrders')"/>
                     <tnt:NavigationListItem text="{i18n>businessPartners}" icon="sap-icon://customer" select=".navTo($event, 'manageBusinessPartners')"/>
+                    <tnt:NavigationListItem text="{i18n>equipments}" icon="sap-icon://add-equipment" select=".navTo($event, 'editEquipments')"/>
                 </tnt:NavigationList>
             </tnt:SideNavigation>
         </tnt:sideContent>
