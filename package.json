@@ -39,8 +39,8 @@
     "deploy": "sh set-env.sh development && cds-pg-migra",
     "deploy:overwrite": "sh set-env.sh development && cds-pg-migra -o",
     "deploy:prod": "sh set-env.sh production && cds-pg-migra",
-    "build": "ui5 build --clean-dest",
-    "build:opt": "ui5 build self-contained --clean-dest --all",
+    "build:simple": "ui5 build --clean-dest",
+    "build": "ui5 build self-contained --clean-dest --all",
     "ts-typecheck": "tsc --noEmit",
     "prettier-format": "prettier --config .prettierrc app/**/*.ts --write",
     "lint": "eslint webapp"
