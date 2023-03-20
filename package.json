@@ -50,5 +50,22 @@
       "ui5-middleware-simpleproxy",
       "ui5-tooling-transpile"
     ]
+  },
+  "cds": {
+    "db": {
+      "kind": "postgres"
+    },
+    "postgres": {
+      "dialect": "plain",
+      "impl": "cds-pg",
+      "model": [
+        "srv"
+      ],
+      "credentials": {
+        "ssl": {
+          "rejectUnauthorized": false
+        }
+      }
+    }
   }
 }

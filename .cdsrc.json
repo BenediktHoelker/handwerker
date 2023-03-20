@@ -26,23 +26,6 @@
             "auth": {
                 "impl": "srv/auth.js"
             }
-        },
-        "db": {
-            "kind": "postgres"
-        },
-        "postgres": {
-            "dialect": "plain",
-            "impl": "cds-pg",
-            "model": [
-                "srv"
-            ],
-            "credentials": {
-                "[production]": {
-                    "ssl": {
-                        "rejectUnauthorized": false
-                    }
-                }
-            }
         }
     },
     "[development]": {
