@@ -1,4 +1,4 @@
-<mvc:View controllerName="handwerker.components.orders.controller.Main" displayBlock="true"
+<mvc:View xmlns:core="sap.ui.core" controllerName="handwerker.components.orders.controller.Main" displayBlock="true"
 	xmlns="sap.m"
 	xmlns:form="sap.ui.layout.form"
 	xmlns:smartfield="sap.ui.comp.smartfield"
@@ -27,32 +27,36 @@
 		</masterPages>
 		<detailPages>
 			<Page id="detailPage" showHeader="false" floatingFooter="true">
-				<form:SimpleForm editable="true">
+				<form:SimpleForm editable="true" layout="ResponsiveGridLayout" title="{createdOn}" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1">
+					<core:Title text="{i18n>header}"/>
 					<smartfield:SmartLabel labelFor="client_ID"/>
 					<smartfield:SmartField id="client_ID" value="{client_ID}" textInEditModeSource="ValueList"/>
+					<core:Title text="{i18n>orderItems}"/>
+					<Table id="itemsTable" items="{path: 'items', parameters: {expand : 'equipment'}}" fixedLayout="false">
+						<headerToolbar>
+							<Toolbar >
+								<ToolbarSpacer />
+								<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateOrderItem"/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column >
+								<Label text="{/OrderItems/equipment_ID/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
+							</Column>
+							<Column >
+								<Label text="{/OrderItems/quantity/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
+							</Column>
+							<Column/>
+						</columns>
+						<ColumnListItem >
+							<cells>
+								<smartfield:SmartField value="{equipment_ID}" textInEditModeSource="ValueList"/>
+								<smartfield:SmartField value="{quantity}"/>
+								<Button icon="sap-icon://delete" press="onPressDeleteItem"/>
+							</cells>
+						</ColumnListItem>
+					</Table>
 				</form:SimpleForm>
-				<Table items="{path: 'items', parameters: {expand : 'equipment'}}">
-					<headerToolbar>
-						<Toolbar >
-							<ToolbarSpacer />
-							<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateOrderItem"/>
-						</Toolbar>
-					</headerToolbar>
-					<columns>
-						<Column >
-							<Label text="{/OrderItems/equipment_ID/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
-						</Column>
-						<Column >
-							<Label text="{/OrderItems/quantity/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
-						</Column>
-					</columns>
-					<ColumnListItem >
-						<cells>
-							<smartfield:SmartField value="{equipment_ID}" textInEditModeSource="ValueList"/>
-							<smartfield:SmartField value="{quantity}"/>
-						</cells>
-					</ColumnListItem>
-				</Table>
 				<footer>
 					<Toolbar >
 						<ToolbarSpacer />

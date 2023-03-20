@@ -4,6 +4,10 @@ import List from 'sap/m/List';
 import SplitApp from 'sap/m/SplitApp';
 import UI5Event from 'sap/ui/base/Event';
 import ODataModel from 'sap/ui/model/odata/v2/ODataModel';
+import ODataListBinding from 'sap/ui/model/odata/v2/ODataListBinding';
+import Table from 'sap/m/Table';
+import ColumnListItem from 'sap/m/ColumnListItem';
+import Button from 'sap/m/Button';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -43,6 +47,27 @@ export default class Main extends BaseController {
       listItem.getBindingContext().getPath(),
       { expand: 'client' }
     );
+  }
+
+  public onPressCreateOrderItem() {
+    const itemsTable = this.byId('itemsTable') as Table;
+    const itemsBinding = itemsTable?.getBinding('items') as ODataListBinding;
+    itemsBinding.create({});
+
+    setTimeout(() => {
+      const firstItem = itemsTable?.getItems()[0] as ColumnListItem;
+      const firstInput = firstItem.getCells()[0];
+      firstInput.focus();
+    });
+  }
+
+  public onPressDeleteItem(event: UI5Event) {
+    const item = event.getSource() as Button;
+    const path = item.getBindingContext()?.getPath();
+    const model = this.getModel() as ODataModel;
+    if (path) {
+      model.remove(path);
+    }
   }
 
   onPressSubmit() {
