@@ -1,10 +1,10 @@
-using {handwerker as my} from './schema';
+using {HandwerkerService as my} from './handwerker-service';
 
 annotate my.OrderItems with {
     equipment
     @(Common: {
         Text     : {
-            $value                : equipment.name,
+            $value                : equipmentName,
             ![@UI.TextArrangement]: #TextOnly,
         },
         ValueList: {
@@ -19,7 +19,6 @@ annotate my.OrderItems with {
                 },
                 {
                     $Type            : 'Common.ValueListParameterDisplayOnly',
-                    // LocalDataProperty: equipment.name,
                     ValueListProperty: 'name'
                 },
             ],
@@ -31,7 +30,7 @@ annotate my.Orders with {
     client
     @(Common: {
         Text     : {
-            $value                : client.name,
+            $value                : clientName,
             ![@UI.TextArrangement]: #TextOnly,
         },
         ValueList: {

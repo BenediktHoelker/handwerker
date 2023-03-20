@@ -47,15 +47,14 @@ export default class Main extends BaseController {
     if (!listItem.getBindingContext()) return; // Group headers don't have a context
 
     this.byId('detailPage')?.bindElement(
-      listItem.getBindingContext().getPath(),
-      { expand: 'client' }
+      listItem.getBindingContext().getPath()
     );
   }
 
   public onPressCreateOrder() {
     const ordersList = this.byId('ordersList') as List;
     const itemsBinding = ordersList?.getBinding('items') as ODataListBinding;
-    const newOrderContext = itemsBinding.create({ ID: this._createGUID() });
+    const newOrderContext = itemsBinding.create({});
     const firstItem = ordersList.getItems()[0];
 
     ordersList.setSelectedItem(firstItem);
@@ -64,27 +63,11 @@ export default class Main extends BaseController {
     this.byId('client_ID')?.focus();
   }
 
-  private _createGUID() {
-    const newGUID = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(
-      /[018]/g,
-      (c) =>
-        (
-          c ^
-          (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-        ).toString(16)
-    ) as String;
-
-    return newGUID;
-  }
-
   public onPressCreateOrderItem() {
-    const order_ID = this.byId('detailPage')
-      ?.getBindingContext()
-      ?.getProperty('ID');
     const itemsTable = this.byId('itemsTable') as Table;
     const itemsBinding = itemsTable?.getBinding('items') as ODataListBinding;
 
-    itemsBinding.create({ order_ID, ID: this._createGUID() });
+    itemsBinding.create({});
 
     setTimeout(() => {
       const firstItem = itemsTable?.getItems()[0] as ColumnListItem;
@@ -102,6 +85,23 @@ export default class Main extends BaseController {
     }
   }
 
+  public onSearch(event: UI5Event) {
+    const query = event.getParameter('query');
+    const ordersList = this.byId('ordersList') as List;
+
+    const bindingInfo = ordersList.getBindingInfo('items') as any;
+
+    if (!bindingInfo.parameters) {
+      bindingInfo.parameters = {};
+    }
+    if (!bindingInfo.parameters.custom) {
+      bindingInfo.parameters.custom = {};
+    }
+    bindingInfo.parameters.custom.search = query;
+
+    ordersList.bindItems(bindingInfo);
+  }
+
   onPressSubmit() {
     const model = this.getModel() as ODataModel;
     model.submitChanges();
@@ -116,25 +116,4 @@ export default class Main extends BaseController {
       splitApp.toMaster('masterPage', 'slide', {}, {});
     }
   }
-
-  // initNewWorkItem(startDate = roundTimeToQuarterHour(Date.now())) {
-  //   const model = this.getModel();
-  //   const MyCategoriesNested = model.getProperty('/MyCategoriesNested');
-
-  //   const workItem = {
-  //     title: '',
-  //     confirmed: true,
-  //     date: startDate,
-  //     // dateISOString: now,
-  //     activatedDate: startDate,
-  //     completedDate: addMinutes(startDate, 15)
-  //     // activity: model.getData().activities[0],
-  //     // location: model.getData().locations[0],
-  //   };
-
-  //   model.setProperty('/MyWorkItems/NEW', workItem);
-  //   model.setProperty('/MyCategoriesNestedAndFiltered', MyCategoriesNested);
-
-  //   this.byId('hierarchyTree').clearSelection(true);
-  // }
 }

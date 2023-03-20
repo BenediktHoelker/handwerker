@@ -16,9 +16,11 @@ entity Equipments : cuid, managed {
 }
 
 entity Orders : cuid, managed {
-    client : Association to BusinessPartners @title: '{i18n>client}';
-    items  : Composition of many OrderItems
-                 on items.order = $self      @title: '{i18n>items}';
+    title       : String                          @title: '{i18n>title}';
+    description : String                          @title: '{i18n>description}';
+    client      : Association to BusinessPartners @title: '{i18n>client}';
+    items       : Composition of many OrderItems
+                      on items.order = $self      @title: '{i18n>items}';
 }
 
 entity OrderItems : cuid, managed {

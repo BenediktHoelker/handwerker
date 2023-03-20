@@ -7,17 +7,24 @@ service HandwerkerService {
 
     entity Orders           as projection on my.Orders {
         *,
-        client.name   as clientName : String @title: '{i18n>clientName}',
-        TO_CHAR(createdAt,
-        'YYYY-MM-DD') as createdOn  : String
+        cast(
+            count(
+                distinct items.ID
+            ) as                    Integer
+        )           as itemsCount : Integer @title: '{i18n>itemsCount}',
+        client.name as clientName : String  @title: '{i18n>clientName}',
+        TO_CHAR(
+            createdAt, 'YYYY-MM-DD'
+        )           as createdOn  : String
 
-    @title: '{i18n>createdOn}'
-};
+                                            @title: '{i18n>createdOn}'
+    } group by createdAt, createdBy, description, ID, modifiedAt, modifiedBy, title, client.name;
 
-entity OrderItems           as projection on my.OrderItems {
-    *,
-    order.client.name || ', ' || TO_CHAR(
-        order.createdAt, 'YYYY-MM-DD'
-    ) as clientConcatCreatedOn : String @title: '{i18n>createdOn}'
-};
+    entity OrderItems       as projection on my.OrderItems {
+        *,
+        equipment.name as equipmentName         : String @title: '{i18n>equipmentName}',
+        order.client.name || ', ' || TO_CHAR(
+            order.createdAt, 'YYYY-MM-DD'
+        )              as clientConcatCreatedOn : String @title: '{i18n>createdOn}'
+    };
 }

@@ -7,15 +7,14 @@
 		<masterPages>
 			<Page id="masterPage" showHeader="false" backgroundDesign="List" floatingFooter="true">
 				<List id="ordersList" mode="SingleSelectMaster" items="{
-				path: '/Orders', 
-				parameters: {expand : 'client'},
-				sorter: {path: 'clientName', group: true}}" selectionChange="onSelectionChange">
+				path: '/Orders',
+				sorter: {path: 'clientName'}}" selectionChange="onSelectionChange">
 					<headerToolbar>
 						<Toolbar>
-							<DynamicDateRange/>
+							<SearchField search="onSearch"/>
 						</Toolbar>
 					</headerToolbar>
-					<StandardListItem title="{createdOn}"/>
+					<StandardListItem title="{title}" counter="{itemsCount}"/>
 				</List>
 				<footer>
 					<Toolbar >
@@ -31,8 +30,12 @@
 					<core:Title text="{i18n>header}"/>
 					<smartfield:SmartLabel labelFor="client_ID"/>
 					<smartfield:SmartField id="client_ID" value="{client_ID}" textInEditModeSource="ValueList"/>
+					<smartfield:SmartLabel labelFor="title"/>
+					<smartfield:SmartField id="title" value="{title}"/>
+					<Label labelFor="description" text="{/Orders/description/##com.sap.vocabularies.Common.v1.Label/String}"/>
+					<TextArea id="description" value="{description}"/>
 					<core:Title text="{i18n>orderItems}"/>
-					<Table id="itemsTable" items="{path: 'items', parameters: {expand : 'equipment'}}" fixedLayout="false">
+					<Table id="itemsTable" items="{path: 'items'}" fixedLayout="false">
 						<headerToolbar>
 							<Toolbar >
 								<ToolbarSpacer />

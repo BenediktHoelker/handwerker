@@ -1,7 +1,7 @@
 <mvc:View controllerName="handwerker.controller.App"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:tnt="sap.tnt" height="100%" displayBlock="true">
+    xmlns:tnt="sap.tnt">
 
     <tnt:ToolPage id="toolPage" class="sapUiSizeCompact">
         <tnt:header>
@@ -11,11 +11,6 @@
                         <OverflowToolbarLayoutData priority="NeverOverflow" />
                     </layoutData>
                 </Button>
-                <SearchField width="240px">
-                    <layoutData>
-                        <OverflowToolbarLayoutData priority="NeverOverflow" />
-                    </layoutData>
-                </SearchField>
                 <ToolbarSpacer ></ToolbarSpacer>
                 <Button text="Alan Smith" type="Transparent" press=".onUserNamePress" ariaHasPopup="Menu">
                     <layoutData>

@@ -37,6 +37,7 @@
     "start:cds": "cds run --profile development",
     "start:dist": "ui5 serve  --port 8080 --config ui5-dist.yaml",
     "deploy": "sh set-env.sh development && cds-pg-migra",
+    "deploy:overwrite": "sh set-env.sh development && cds-pg-migra -o",
     "deploy:prod": "sh set-env.sh production && cds-pg-migra",
     "build": "ui5 build --clean-dest",
     "build:opt": "ui5 build self-contained --clean-dest --all",
