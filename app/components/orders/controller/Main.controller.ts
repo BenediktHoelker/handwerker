@@ -8,6 +8,7 @@ import ODataListBinding from 'sap/ui/model/odata/v2/ODataListBinding';
 import Table from 'sap/m/Table';
 import ColumnListItem from 'sap/m/ColumnListItem';
 import Button from 'sap/m/Button';
+import Guid from 'sap/ui/model/odata/type/Guid';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -21,44 +22,75 @@ export default class Main extends BaseController {
   public onInit() {
     const router = this.getRouter();
 
-    router.getRoute('main').attachPatternMatched(() => {
-      this.byId('masterList')
-        .getBinding('items')
-        .attachEventOnce('change', (event: UI5Event) => {
-          this.onMasterListBindingChange(event);
+    router.getRoute('main')?.attachPatternMatched(() => {
+      this.byId('ordersList')
+        ?.getBinding('items')
+        ?.attachEventOnce('change', (event: UI5Event) => {
+          this._selectFirstItem(event);
         });
     });
   }
 
-  public onMasterListBindingChange(event: UI5Event) {
-    const masterList = this.byId('masterList') as List;
-    const firstMasterListItem = masterList.getItems()[1]; // [0] is a group header
-    const path = firstMasterListItem.getBindingContext().getPath();
+  private _selectFirstItem(event: UI5Event) {
+    const ordersList = this.byId('ordersList') as List;
+    const firstMasterListItem = ordersList.getItems()[1]; // [0] is a group header
+    const path = firstMasterListItem?.getBindingContext()?.getPath();
 
-    masterList.setSelectedItem(firstMasterListItem);
-    this.byId('detailPage').bindElement(path);
+    ordersList.setSelectedItem(firstMasterListItem);
+    if (path) {
+      this.byId('detailPage')?.bindElement(path);
+    }
   }
 
   public onSelectionChange(event: UI5Event) {
     const { listItem } = event.getParameters();
     if (!listItem.getBindingContext()) return; // Group headers don't have a context
 
-    this.byId('detailPage').bindElement(
+    this.byId('detailPage')?.bindElement(
       listItem.getBindingContext().getPath(),
       { expand: 'client' }
     );
   }
 
+  public onPressCreateOrder() {
+    const ordersList = this.byId('ordersList') as List;
+    const itemsBinding = ordersList?.getBinding('items') as ODataListBinding;
+    const newOrderContext = itemsBinding.create({ ID: this._createGUID() });
+    const firstItem = ordersList.getItems()[0];
+
+    ordersList.setSelectedItem(firstItem);
+
+    this.byId('detailPage')?.bindElement(newOrderContext.getPath());
+    this.byId('client_ID')?.focus();
+  }
+
+  private _createGUID() {
+    const newGUID = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(
+      /[018]/g,
+      (c) =>
+        (
+          c ^
+          (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+        ).toString(16)
+    ) as String;
+
+    return newGUID;
+  }
+
   public onPressCreateOrderItem() {
+    const order_ID = this.byId('detailPage')
+      ?.getBindingContext()
+      ?.getProperty('ID');
     const itemsTable = this.byId('itemsTable') as Table;
     const itemsBinding = itemsTable?.getBinding('items') as ODataListBinding;
-    itemsBinding.create({});
+
+    itemsBinding.create({ order_ID, ID: this._createGUID() });
 
     setTimeout(() => {
       const firstItem = itemsTable?.getItems()[0] as ColumnListItem;
       const firstInput = firstItem.getCells()[0];
       firstInput.focus();
-    });
+    }, 30);
   }
 
   public onPressDeleteItem(event: UI5Event) {

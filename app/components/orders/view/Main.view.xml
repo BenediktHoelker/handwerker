@@ -6,9 +6,8 @@
 	<SplitApp id="splitApp" initialDetail="detail" initialMaster="master">
 		<masterPages>
 			<Page id="masterPage" showHeader="false" backgroundDesign="List" floatingFooter="true">
-				<List id="masterList" mode="SingleSelectMaster" items="{
+				<List id="ordersList" mode="SingleSelectMaster" items="{
 				path: '/Orders', 
-				parameters: {expand : 'client'},
 				sorter: {path: 'clientName', group: true}}" selectionChange="onSelectionChange">
 					<headerToolbar>
 						<Toolbar>
@@ -32,7 +31,7 @@
 					<smartfield:SmartLabel labelFor="client_ID"/>
 					<smartfield:SmartField id="client_ID" value="{client_ID}" textInEditModeSource="ValueList"/>
 					<core:Title text="{i18n>orderItems}"/>
-					<Table id="itemsTable" items="{path: 'items', parameters: {expand : 'equipment'}}" fixedLayout="false">
+					<Table id="itemsTable" items="{path: 'items'}" fixedLayout="false">
 						<headerToolbar>
 							<Toolbar >
 								<ToolbarSpacer />
