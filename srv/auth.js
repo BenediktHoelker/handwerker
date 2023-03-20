@@ -28,6 +28,7 @@ function capAuth0(req, res, next) {
 
   // retrieve permissions
   let jwtDecoded = jsonwebtoken.decode(req.oidc.accessToken.access_token);
+  let idDecoded = jsonwebtoken.decode(req.oidc.idToken);
 
   if (jwtDecoded.permissions) {
     capUser._roles.push(...jwtDecoded.permissions);
