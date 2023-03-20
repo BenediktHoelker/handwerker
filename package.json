@@ -8,6 +8,7 @@
   "dependencies": {
     "@sap/cds": "^6",
     "@sap/cds-odata-v2-adapter-proxy": "^1.9.20",
+    "cds-pg": "^0.1.36",
     "express": "^4",
     "express-openid-connect": "^2.12.1",
     "jsonwebtoken": "^9.0.0"
@@ -17,7 +18,6 @@
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
     "@ui5/cli": "^2.14.14",
-    "cds-pg": "^0.1.36",
     "cds-pg-migra": "^1.1.1",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.7.0",
