@@ -1,7 +1,7 @@
 {
     "requires": {
-        "[development]": {
-            "auth": {
+        "auth": {
+            "[development]": {
                 "users": {
                     "alice": {
                         "roles": [
@@ -15,17 +15,28 @@
                         ]
                     }
                 }
-            }
-        },
-        "[test]": {
-            "auth": {
+            },
+            "[test]": {
+                "impl": "srv/auth.js"
+            },
+            "[production]": {
                 "impl": "srv/auth.js"
             }
         },
-        "[production]": {
-            "auth": {
-                "impl": "srv/auth.js"
+        "db": {
+            "kind": "postgres",
+            "credentials": {
+                "ssl": {
+                    "rejectUnauthorized": false
+                }
             }
+        },
+        "postgres": {
+            "dialect": "plain",
+            "impl": "cds-pg",
+            "model": [
+                "srv"
+            ]
         }
     },
     "[development]": {
