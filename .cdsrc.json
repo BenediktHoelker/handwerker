@@ -14,7 +14,12 @@
         "db": {
             "kind": "postgres",
             "credentials": {
-                "[test, production]": {
+                "[test]": {
+                    "ssl": {
+                        "rejectUnauthorized": false
+                    }
+                },
+                "[production]": {
                     "ssl": {
                         "rejectUnauthorized": false
                     }
