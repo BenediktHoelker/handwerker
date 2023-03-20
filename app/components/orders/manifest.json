@@ -1,7 +1,7 @@
 {
 	"_version": "1.12.0",
 	"sap.app": {
-		"id": "handwerker",
+		"id": "handwerker.components.orders",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"title": "{{appTitle}}",
@@ -27,7 +27,7 @@
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "handwerker.view.App",
+			"viewName": "handwerker.components.orders.view.App",
 			"type": "XML",
 			"async": true,
 			"id": "app"
@@ -50,7 +50,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "handwerker.i18n.i18n"
+					"bundleName": "handwerker.components.orders.i18n.i18n"
 				}
 			},
 			"": {
@@ -67,7 +67,7 @@
 			"config": {
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
-				"viewPath": "handwerker.view",
+				"viewPath": "handwerker.components.orders.view",
 				"controlId": "app",
 				"controlAggregation": "pages",
 				"async": true
@@ -75,57 +75,15 @@
 			"routes": [
 				{
 					"pattern": "",
-					"name": "home",
-					"target": "home"
-				},
-				{
-					"name": "editOrderItems",
-					"pattern": "editOrderItems",
-					"target": {
-						"name": "editOrderItems",
-						"prefix": "eoi"
-					}
-				},
-				{
-					"name": "editOrders",
-					"pattern": "editOrders",
-					"target": {
-						"name": "editOrders",
-						"prefix": "eo"
-					}
+					"name": "main",
+					"target": "main"
 				}
 			],
 			"targets": {
-				"home": {
-					"viewId": "home",
-					"viewName": "Home"
-				},
-				"editOrderItems": {
-					"type": "Component",
-					"usage": "editOrderItemsComponent",
-					"title": "Edit Order Items",
-					"id": "editOrderItems"
-				},
-				"editOrders": {
-					"type": "Component",
-					"usage": "editOrdersComponent",
-					"title": "Edit Orders",
-					"id": "editOrders"
+				"main": {
+					"viewId": "main",
+					"viewName": "Main"
 				}
-			}
-		},
-		"componentUsages": {
-			"editOrderItemsComponent": {
-				"name": "handwerker.components.orderitems",
-				"settings": {},
-				"componentData": {},
-				"lazy": true
-			},
-			"editOrdersComponent": {
-				"name": "handwerker.components.orders",
-				"settings": {},
-				"componentData": {},
-				"lazy": true
 			}
 		}
 	}

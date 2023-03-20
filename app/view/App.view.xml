@@ -30,6 +30,7 @@
             <tnt:SideNavigation id="sideNavigation" expanded="true" selectedKey="{/selectedKey}" itemSelect=".onItemSelect">
                 <tnt:NavigationList>
                     <tnt:NavigationListItem text="{i18n>editOrderItems}" select=".navTo($event, 'editOrderItems')"/>
+                    <tnt:NavigationListItem text="{i18n>editOrders}" select=".navTo($event, 'editOrders')"/>
                 </tnt:NavigationList>
             </tnt:SideNavigation>
         </tnt:sideContent>

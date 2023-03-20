@@ -1,0 +1,65 @@
+<mvc:View controllerName="handwerker.components.orders.controller.Main" displayBlock="true"
+	xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:smartfield="sap.ui.comp.smartfield"
+	xmlns:mvc="sap.ui.core.mvc">
+	<SplitApp id="splitApp" initialDetail="detail" initialMaster="master">
+		<masterPages>
+			<Page id="masterPage" showHeader="false" backgroundDesign="List" floatingFooter="true">
+				<List id="masterList" mode="SingleSelectMaster" items="{
+				path: '/Orders', 
+				parameters: {expand : 'client'},
+				sorter: {path: 'clientName', group: true}}" selectionChange="onSelectionChange">
+					<headerToolbar>
+						<Toolbar>
+							<DynamicDateRange/>
+						</Toolbar>
+					</headerToolbar>
+					<StandardListItem title="{createdOn}"/>
+				</List>
+				<footer>
+					<Toolbar >
+						<ToolbarSpacer />
+						<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateOrder"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</masterPages>
+		<detailPages>
+			<Page id="detailPage" showHeader="false" floatingFooter="true">
+				<form:SimpleForm editable="true">
+					<smartfield:SmartLabel labelFor="client_ID"/>
+					<smartfield:SmartField id="client_ID" value="{client_ID}" textInEditModeSource="ValueList"/>
+				</form:SimpleForm>
+				<Table items="{path: 'items', parameters: {expand : 'equipment'}}">
+					<headerToolbar>
+						<Toolbar >
+							<ToolbarSpacer />
+							<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateOrderItem"/>
+						</Toolbar>
+					</headerToolbar>
+					<columns>
+						<Column >
+							<Label text="{/OrderItems/equipment_ID/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
+						</Column>
+						<Column >
+							<Label text="{/OrderItems/quantity/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
+						</Column>
+					</columns>
+					<ColumnListItem >
+						<cells>
+							<smartfield:SmartField value="{equipment_ID}" textInEditModeSource="ValueList"/>
+							<smartfield:SmartField value="{quantity}"/>
+						</cells>
+					</ColumnListItem>
+				</Table>
+				<footer>
+					<Toolbar >
+						<ToolbarSpacer />
+						<Button type="Emphasized" text="{i18n>submit}" press="onPressSubmit"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</detailPages>
+	</SplitApp>
+</mvc:View>
