@@ -27,4 +27,11 @@ service HandwerkerService {
             order.createdAt, 'YYYY-MM-DD'
         )              as clientConcatCreatedOn : String @title: '{i18n>createdOn}'
     };
+
+    type Users {
+        email : String @title: '{i18n>email}';
+        name  : String @title: '{i18n>name}';
+    }
+
+    function getUserInfo() returns Users;
 }
