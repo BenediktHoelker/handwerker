@@ -88,6 +88,14 @@
 						"name": "editOrders",
 						"prefix": "eo"
 					}
+				},
+				{
+					"pattern": "manageBusinessPartners",
+					"name": "manageBusinessPartners",
+					"target": {
+						"name": "manageBusinessPartners",
+						"prefix": "mngBP"
+					}
 				}
 			],
 			"targets": {
@@ -102,6 +110,12 @@
 					"usage": "editOrdersComponent",
 					"title": "Edit Orders",
 					"id": "editOrders"
+				},
+				"manageBusinessPartners": {
+					"type": "Component",
+					"usage": "manageBusinessPartnersComponent",
+					"title": "Manage Business Partners",
+					"id": "manageBusinessPartners"
 				}
 			}
 		},
@@ -114,6 +128,12 @@
 			},
 			"editOrdersComponent": {
 				"name": "handwerker.components.orders",
+				"settings": {},
+				"componentData": {},
+				"lazy": true
+			},
+			"manageBusinessPartnersComponent": {
+				"name": "handwerker.components.businesspartners",
 				"settings": {},
 				"componentData": {},
 				"lazy": true
