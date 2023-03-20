@@ -2,32 +2,19 @@
     "requires": {
         "auth": {
             "[development]": {
-                "users": {
-                    "alice": {
-                        "roles": [
-                            "read:orderitems"
-                        ]
-                    },
-                    "admin": {
-                        "roles": [
-                            "read:orderitems",
-                            "write:orderitems"
-                        ]
-                    }
-                }
+                "kind": "dummy"
             },
-            "[test]": {
-                "impl": "srv/auth.js"
-            },
-            "[production]": {
+            "[test, production]": {
                 "impl": "srv/auth.js"
             }
         },
         "db": {
             "kind": "postgres",
             "credentials": {
-                "ssl": {
-                    "rejectUnauthorized": false
+                "[test, production]": {
+                    "ssl": {
+                        "rejectUnauthorized": false
+                    }
                 }
             }
         },
@@ -39,19 +26,14 @@
             ]
         }
     },
-    "[development]": {
-        "folders": {
+    "folders": {
+        "[development]": {
             "app": "app"
-        }
-    },
-    "[test]": {
-        "folders": {
-            "app": "dist"
-        }
-    },
-    "[production]": {
-        "folders": {
-            "app": "dist"
+        },
+        "[test, production]": {
+            "folders": {
+                "app": "dist"
+            }
         }
     }
 }
