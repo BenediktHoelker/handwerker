@@ -8,7 +8,10 @@ import ODataListBinding from 'sap/ui/model/odata/v2/ODataListBinding';
 import Table from 'sap/m/Table';
 import ColumnListItem from 'sap/m/ColumnListItem';
 import Button from 'sap/m/Button';
-import Guid from 'sap/ui/model/odata/type/Guid';
+import MessageToast from 'sap/m/MessageToast';
+import ResourceBundle from 'sap/base/i18n/ResourceBundle';
+import MessageBox from 'sap/m/MessageBox';
+import ReuseComponentSupport from 'sap/suite/ui/generic/template/extensionAPI/ReuseComponentSupport';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -104,7 +107,12 @@ export default class Main extends BaseController {
 
   onPressSubmit() {
     const model = this.getModel() as ODataModel;
-    model.submitChanges();
+    const resBundle = this.getResourceBundle() as ResourceBundle;
+
+    model.submitChanges({
+      success: () => MessageToast.show(resBundle.getText('submit.successful')),
+      error: () => MessageBox.error(resBundle.getText('submit.error'))
+    });
   }
 
   public onPressToggleMaster() {
