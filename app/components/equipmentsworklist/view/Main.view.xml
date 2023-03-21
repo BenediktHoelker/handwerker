@@ -1,0 +1,29 @@
+<mvc:View xmlns:core="sap.ui.core" controllerName="handwerker.components.equipmentsworklist.controller.Main" displayBlock="true"
+	xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:smartfield="sap.ui.comp.smartfield"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page id="worklist" showHeader="false" showFooter="false">
+		<Table id="equipmentsTable" items="{/Equipments}" fixedLayout="false">
+			<headerToolbar>
+				<Toolbar >
+					<SearchField search="onSearch"/>
+					<ToolbarSpacer />
+					<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateEquipment"/>
+				</Toolbar>
+			</headerToolbar>
+			<columns>
+				<Column >
+					<Label text="{/Equipments/name/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
+				</Column>
+				<Column/>
+			</columns>
+			<ColumnListItem >
+				<cells>
+					<smartfield:SmartField value="{name}"/>
+					<Button icon="sap-icon://delete" press="onPressDeleteEquipment"/>
+				</cells>
+			</ColumnListItem>
+		</Table>
+	</Page>
+</mvc:View>

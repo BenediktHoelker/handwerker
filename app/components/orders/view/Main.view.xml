@@ -7,7 +7,7 @@
 		<masterPages>
 			<Page id="masterPage" showHeader="false" backgroundDesign="List" floatingFooter="true">
 				<List id="ordersList" mode="SingleSelectMaster" items="{
-				path: '/Orders',
+				path: '/Orders',},
 				sorter: {path: 'clientName'}}" selectionChange="onSelectionChange">
 					<headerToolbar>
 						<Toolbar>
@@ -21,6 +21,7 @@
 						<ToolbarSpacer />
 						<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateOrder"/>
 					</Toolbar>
+
 				</footer>
 			</Page>
 		</masterPages>

@@ -98,6 +98,14 @@
 					}
 				},
 				{
+					"name": "editEquipmentsWorklist",
+					"pattern": "editEquipmentsWorklist",
+					"target": {
+						"name": "editEquipmentsWorklist",
+						"prefix": "eequiw"
+					}
+				},
+				{
 					"pattern": "manageBusinessPartners",
 					"name": "manageBusinessPartners",
 					"target": {
@@ -125,6 +133,12 @@
 					"title": "Edit Equipments",
 					"id": "editEquipments"
 				},
+				"editEquipmentsWorklist": {
+					"type": "Component",
+					"usage": "editEquipmentsWorklistComponent",
+					"title": "Edit Equipments (Worklist)",
+					"id": "editEquipmentsWorklist"
+				},
 				"manageBusinessPartners": {
 					"type": "Component",
 					"usage": "manageBusinessPartnersComponent",
@@ -148,6 +162,12 @@
 			},
 			"editEquipmentsComponent": {
 				"name": "handwerker.components.equipments",
+				"settings": {},
+				"componentData": {},
+				"lazy": true
+			},
+			"editEquipmentsWorklistComponent": {
+				"name": "handwerker.components.equipmentsworklist",
 				"settings": {},
 				"componentData": {},
 				"lazy": true
