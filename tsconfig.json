@@ -9,7 +9,11 @@
     "strict": true,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
-    "rootDirs": ["./app/components/orderitems", "./app/components/orders"],
+    "rootDirs": [
+      "./app/components/orders",
+      "./app/components/orderitems",
+      "./app/components/equipmentsworklist"
+    ],
     "outDir": "./dist",
     "baseUrl": "./",
     "moduleResolution": "node",
@@ -23,7 +27,8 @@
     }
   },
   "include": [
+    "./app/components/orders/**/*",
     "./app/components/orderitems/**/*",
-    "./app/components/orders/**/*"
+    "./app/components/equipmentsworklist/**/*"
   ]
 }

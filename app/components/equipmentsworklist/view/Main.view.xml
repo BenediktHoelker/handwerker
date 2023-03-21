@@ -7,21 +7,43 @@
 		<Table id="equipmentsTable" items="{/Equipments}" fixedLayout="false">
 			<headerToolbar>
 				<Toolbar >
-					<SearchField search="onSearch"/>
+					<SearchField search="onSearch" width="20rem"/>
 					<ToolbarSpacer />
 					<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateEquipment"/>
+					<StepInput step="0.1" displayValuePrecision="1" id="marginInput" value="{settingsValue}" width="10rem" description="{i18n>margin}"/>
 				</Toolbar>
 			</headerToolbar>
 			<columns>
 				<Column >
-					<Label text="{/Equipments/name/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
+					<Label text="{/Equipments/name/##com.sap.vocabularies.Common.v1.Label/String}"/>
+				</Column>
+				<Column >
+					<Label text="{/Equipments/purchasePrice/##com.sap.vocabularies.Common.v1.Label/String}"/>
+				</Column>
+				<Column >
+					<Label text="{/Equipments/salesPrice/##com.sap.vocabularies.Common.v1.Label/String}"/>
+				</Column>
+				<Column >
+					<Label text="{/Equipments/margin/##com.sap.vocabularies.Common.v1.Label/String}"/>
 				</Column>
 				<Column/>
 			</columns>
 			<ColumnListItem >
 				<cells>
 					<smartfield:SmartField value="{name}"/>
-					<Button icon="sap-icon://delete" press="onPressDeleteEquipment"/>
+					<Input value="{
+						parts: ['purchasePrice', 'purchasePriceCurrency_code'], 
+						type:'sap.ui.model.type.Currency'
+					}"/>
+					<Input value="{
+						parts: ['salesPrice', 'salesPriceCurrency_code'], 
+						type:'sap.ui.model.type.Currency'
+					}"/>
+					<Text text="{margin}"/>
+					<HBox >
+						<Button icon="sap-icon://delete" press="onPressDeleteEquipment" class="sapUiTinyMarginEnd"/>
+						<Button icon="sap-icon://refresh" press="onPressCalculateSalesPrice"/>
+					</HBox>
 				</cells>
 			</ColumnListItem>
 		</Table>

@@ -22,7 +22,26 @@ export default class Main extends BaseController {
   /**
    * onInit
    */
-  public onInit() {}
+  public onInit() {
+    this.byId('marginInput')?.bindElement("/Settings('margin')");
+  }
+
+  public onPressCalculateSalesPrice(event: UI5Event) {
+    const model = this.getModel() as ODataModel;
+    const margin = this.getModel().getProperty(
+      "/Settings('margin')/settingsValue"
+    );
+    const button = event.getSource() as Button;
+    const path = button.getBindingContext()?.getPath();
+
+    const purchasePrice = model.getProperty(path + '/purchasePrice');
+
+    model.setProperty(path + '/margin', margin);
+    model.setProperty(
+      path + '/salesPrice',
+      (Math.round(Number(purchasePrice) * margin * 100) / 100).toFixed(2)
+    );
+  }
 
   public onPressCreateEquipment() {
     const equipmentsTable = this.byId('equipmentsTable') as Table;

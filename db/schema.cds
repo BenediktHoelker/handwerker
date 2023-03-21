@@ -1,9 +1,16 @@
 using {
     cuid,
+    Currency,
     managed
 } from '@sap/cds/common';
 
 namespace handwerker;
+
+// use custom to avoid problems with language-dependent problems (not working with PG-adapter)
+entity Currencies {
+    key code   : String(3) @(title: '{i18n>CurrencyCode}');
+        symbol : String(5) @(title: '{i18n>CurrencySymbol}');
+}
 
 entity BusinessPartners : cuid, managed {
     name   : String                       @title: '{i18n>name}';
@@ -12,7 +19,17 @@ entity BusinessPartners : cuid, managed {
 }
 
 entity Equipments : cuid, managed {
-    name : String @title: '{i18n>name}'
+    name                  : String        @title: '{i18n>name}';
+
+    @Measures.ISOCurrency: purchasePriceCurrency_code
+    purchasePrice         : Decimal(9, 2) @title: '{i18n>purchasePrice}';
+
+    @Measures.ISOCurrency: salesPriceCurrency_code
+    salesPrice            : Decimal(9, 2) @title: '{i18n>salesPrice}';
+
+    purchasePriceCurrency : Currency      @title: '{i18n>purchasePriceCurrency}';
+    salesPriceCurrency    : Currency      @title: '{i18n>salesPriceCurrency}';
+    margin                : Decimal       @title: '{i18n>margin}';
 }
 
 entity Orders : cuid, managed {
@@ -27,5 +44,22 @@ entity OrderItems : cuid, managed {
     order       : Association to Orders     @title: '{i18n>order}';
     equipment   : Association to Equipments @title: '{i18n>equipment}';
     quantity    : Integer                   @title: '{i18n>quantity}';
-    completedAt : DateTime                  @title: '{i18n>completedAt}'
+    completedAt : DateTime                  @title: '{i18n>completedAt}';
 }
+
+entity Settings : managed {
+    key settingsKey   : String @title: '{i18n>settingsKey}';
+        settingsValue : String @title: '{i18n>settingsValue}';
+}
+
+view OrderItemsAggr as
+    select from OrderItems {
+        key order.ID as order_ID,
+            cast(
+                count(
+                    distinct ID
+                ) as                 Integer
+            )        as itemsCount : Integer @title: '{i18n>itemsCount}',
+    }
+    group by
+        order.ID;
