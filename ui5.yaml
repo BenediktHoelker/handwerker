@@ -16,10 +16,13 @@ framework:
     - name: sap.ui.comp
     - name: sap.ui.layout
     - name: sap.ui.unified
-    - name: sap.ui.generic.app
-    - name: sap.suite.ui.generic.template
+    # - name: sap.ui.generic.app
+    # - name: sap.suite.ui.generic.template
     - name: themelib_sap_horizon
 builder:
+  resources:
+    excludes:
+      - 'handwerker/components/businesspartners'
   customTasks:
     - name: ui5-tooling-transpile-task
       afterTask: replaceVersion
