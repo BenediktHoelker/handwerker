@@ -20,15 +20,16 @@ function capAuth0(req, res, next) {
     return next(Error());
   }
 
-  // map token attributes to CAP user
-  let capUser = {
-    id: req.oidc.user.sub,
-    _roles: ['authenticated-user']
-  };
-
   // retrieve permissions
   let jwtDecoded = jsonwebtoken.decode(req.oidc.accessToken.access_token);
   let idDecoded = jsonwebtoken.decode(req.oidc.idToken);
+
+  // map token attributes to CAP user
+  let capUser = {
+    id: req.oidc.user.sub,
+    email: jwtDecoded['https://handwerker.com/email'],
+    _roles: ['authenticated-user']
+  };
 
   if (jwtDecoded.permissions) {
     capUser._roles.push(...jwtDecoded.permissions);

@@ -1,12 +1,19 @@
 sap.ui.define(
-  [
-    // "../Authentication",
-    './BaseController',
-    'sap/ui/model/json/JSONModel'
-  ],
+  ['./BaseController', 'sap/ui/model/json/JSONModel'],
   (BaseController, JSONModel) =>
     BaseController.extend('handwerker.controller.App', {
-      onInit() {},
+      onInit() {
+        const viewModel = new JSONModel({ user: '' });
+
+        this.getView().setModel(viewModel, 'viewModel');
+
+        this.getModel().callFunction('/getUserInfo', {
+          success: (result) => {
+            const email = result.getUserInfo.email;
+            viewModel.setProperty('/user', email);
+          }
+        });
+      },
 
       navTo(event, pattern, target, deepRoute) {
         let deepRoutingConfig = {};
