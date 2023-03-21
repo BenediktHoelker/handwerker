@@ -12,6 +12,8 @@ import MessageToast from 'sap/m/MessageToast';
 import ResourceBundle from 'sap/base/i18n/ResourceBundle';
 import MessageBox from 'sap/m/MessageBox';
 import ReuseComponentSupport from 'sap/suite/ui/generic/template/extensionAPI/ReuseComponentSupport';
+import Input from 'sap/m/Input';
+import Tab from 'sap/ui/webc/main/Tab';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -69,6 +71,48 @@ export default class Main extends BaseController {
     );
   }
 
+  public calculateSalesPrice(event: UI5Event) {
+    const control = event.getSource() as Input;
+    const path = control.getBindingContext()?.getPath();
+    const orderItem = control.getBindingContext()?.getObject() as {
+      quantity: String;
+    };
+
+    const model = this.getModel() as ODataModel;
+
+    setTimeout(() => {
+      const equipment = model.getProperty(path + '/equipment') as {
+        salesPrice: String;
+        salesPriceCurrency_code: String;
+      };
+      const totalItemPrice = (
+        Math.round(
+          Number(orderItem.quantity) * Number(equipment.salesPrice) * 100
+        ) / 100
+      ).toFixed(2);
+
+      model.setProperty(path + '/salesPrice', totalItemPrice);
+      model.setProperty(
+        path + '/salesPriceCurrency_code',
+        equipment.salesPriceCurrency_code
+      );
+
+      const orderPath = this.byId('detailPage').getBindingContext().getPath();
+      const orderItemsTable = this.byId('itemsTable') as Table;
+
+      const totalPrice = orderItemsTable
+        .getItems()
+        .map((item) => item.getBindingContext().getProperty('salesPrice'))
+        .map((price) => Number(price))
+        .filter((price) => !!price && !isNaN(price))
+        .reduce((acc, curr) => acc + Number(curr), 0);
+
+      // TODO: implement currency-handling
+      model.setProperty(orderPath + '/salesPrice', totalPrice);
+      model.setProperty(orderPath + '/salesPriceCurrency_code', 'EUR');
+    });
+  }
+
   public onPressCreateOrder() {
     const ordersList = this.byId('ordersList') as List;
     const itemsBinding = ordersList?.getBinding('items') as ODataListBinding;
@@ -98,9 +142,13 @@ export default class Main extends BaseController {
     const item = event.getSource() as Button;
     const path = item.getBindingContext()?.getPath();
     const model = this.getModel() as ODataModel;
+
+    // TODO: make it async => wait for it to calculateSalesPrice correctly
     if (path) {
       model.remove(path);
     }
+
+    this.calculateSalesPrice(event);
   }
 
   public onSearch(event: UI5Event) {
@@ -128,6 +176,10 @@ export default class Main extends BaseController {
       success: () => MessageToast.show(resBundle.getText('submit.successful')),
       error: () => MessageBox.error(resBundle.getText('submit.error'))
     });
+
+    // Workaround: submitChanges seems not to reset changes reliably
+    // TODO: understand and replace
+    model.resetChanges();
   }
 
   public onPressToggleMaster() {

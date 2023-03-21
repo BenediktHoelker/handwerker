@@ -23,28 +23,36 @@ entity Equipments : cuid, managed {
 
     @Measures.ISOCurrency: purchasePriceCurrency_code
     purchasePrice         : Decimal(9, 2) @title: '{i18n>purchasePrice}';
+    purchasePriceCurrency : Currency      @title: '{i18n>purchasePriceCurrency}';
 
     @Measures.ISOCurrency: salesPriceCurrency_code
     salesPrice            : Decimal(9, 2) @title: '{i18n>salesPrice}';
-
-    purchasePriceCurrency : Currency      @title: '{i18n>purchasePriceCurrency}';
     salesPriceCurrency    : Currency      @title: '{i18n>salesPriceCurrency}';
     margin                : Decimal       @title: '{i18n>margin}';
 }
 
 entity Orders : cuid, managed {
-    title       : String                          @title: '{i18n>title}';
-    description : String                          @title: '{i18n>description}';
-    client      : Association to BusinessPartners @title: '{i18n>client}';
-    items       : Composition of many OrderItems
-                      on items.order = $self      @title: '{i18n>items}';
+    title              : String                          @title: '{i18n>title}';
+    description        : String                          @title: '{i18n>description}';
+    client             : Association to BusinessPartners @title: '{i18n>client}';
+
+    @Measures.ISOCurrency: salesPriceCurrency_code
+    salesPrice         : Decimal(9, 2)                   @title: '{i18n>salesPrice}';
+    salesPriceCurrency : Currency                        @title: '{i18n>salesPriceCurrency}';
+
+    items              : Composition of many OrderItems
+                             on items.order = $self      @title: '{i18n>items}';
 }
 
 entity OrderItems : cuid, managed {
-    order       : Association to Orders     @title: '{i18n>order}';
-    equipment   : Association to Equipments @title: '{i18n>equipment}';
-    quantity    : Integer                   @title: '{i18n>quantity}';
-    completedAt : DateTime                  @title: '{i18n>completedAt}';
+    order              : Association to Orders     @title: '{i18n>order}';
+    equipment          : Association to Equipments @title: '{i18n>equipment}';
+    quantity           : Integer                   @title: '{i18n>quantity}';
+
+    @Measures.ISOCurrency: salesPriceCurrency_code
+    salesPrice         : Decimal(9, 2)             @title: '{i18n>salesPrice}';
+    salesPriceCurrency : Currency                  @title: '{i18n>salesPriceCurrency}';
+    completedAt        : DateTime                  @title: '{i18n>completedAt}';
 }
 
 entity Settings : managed {

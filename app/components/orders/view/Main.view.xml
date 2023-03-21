@@ -15,7 +15,13 @@
 							<SearchField search="onSearch"/>
 						</Toolbar>
 					</headerToolbar>
-					<StandardListItem title="{title}" counter="{itemsAggr/itemsCount}"/>
+
+					<!-- <ObjectNumber number="{salesPrice}" unit="{salesPriceCurrency_code}"/> -->
+					<!-- <ObjectListItem title="{title}" number="{salesPrice}" numberUnit="{salesPriceCurrency_code}"/> -->
+					<StandardListItem title="{title}" info="{
+								parts: ['salesPrice', 'salesPriceCurrency_code'], 
+								type:'sap.ui.model.type.Currency'
+							}"/>
 				</List>
 				<footer>
 					<Toolbar >
@@ -36,11 +42,12 @@
 					<Label labelFor="description" text="{/Orders/description/##com.sap.vocabularies.Common.v1.Label/String}"/>
 					<TextArea id="description" value="{description}"/>
 				</form:SimpleForm>
-				<Table id="itemsTable" items="{path: 'items'}" fixedLayout="false">
+				<Table id="itemsTable" items="{path: 'items', parameters: {expand: 'equipment'}}" fixedLayout="false">
 					<headerToolbar>
 						<Toolbar >
 							<Title text="{i18n>orderItems}" />
 							<ToolbarSpacer />
+							<ObjectNumber number="{salesPrice}" unit="{salesPriceCurrency_code}"/>
 							<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateOrderItem"/>
 						</Toolbar>
 					</headerToolbar>
@@ -51,12 +58,26 @@
 						<Column >
 							<Label text="{/OrderItems/quantity/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
 						</Column>
+						<Column >
+							<Label text="{i18n>unitSalesPrice}"></Label>
+						</Column>
+						<Column >
+							<Label text="{i18n>totalItemSalesPrice}"></Label>
+						</Column>
 						<Column/>
 					</columns>
 					<ColumnListItem >
 						<cells>
-							<smartfield:SmartField value="{equipment_ID}" textInEditModeSource="ValueList"/>
-							<StepInput value="{quantity}"/>
+							<smartfield:SmartField value="{equipment_ID}" textInEditModeSource="ValueList" change="calculateSalesPrice"/>
+							<StepInput value="{quantity}" change="calculateSalesPrice"/>
+							<Input value="{
+								parts: ['equipment/salesPrice', 'equipment/salesPriceCurrency_code'], 
+								type:'sap.ui.model.type.Currency'
+							}" enabled="false"/>
+							<Input value="{
+								parts: ['salesPrice', 'salesPriceCurrency_code'], 
+								type:'sap.ui.model.type.Currency'
+							}" enabled="false"/>
 							<Button icon="sap-icon://delete" press="onPressDeleteItem"/>
 						</cells>
 					</ColumnListItem>

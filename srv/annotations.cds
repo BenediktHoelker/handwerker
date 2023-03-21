@@ -21,6 +21,16 @@ annotate my.OrderItems with {
                     $Type            : 'Common.ValueListParameterDisplayOnly',
                     ValueListProperty: 'name'
                 },
+                {
+                    $Type            : 'Common.ValueListParameterOut',
+                    LocalDataProperty: equipment.salesPrice,
+                    ValueListProperty: 'salesPrice'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterOut',
+                    LocalDataProperty: equipment.salesPriceCurrency_code,
+                    ValueListProperty: 'salesPriceCurrency_code'
+                },
             ],
         }
     });
