@@ -5,24 +5,20 @@ service HandwerkerService {
     entity BusinessPartners as projection on my.BusinessPartners;
     entity Equipments       as projection on my.Equipments;
     entity Settings         as projection on my.Settings;
+    entity OrderItemsAggr   as projection on my.OrderItemsAggr;
+
+    entity Orders           as projection on my.Orders {
+            *,
+        key ID,
+            itemsAggr                 : Association to OrderItemsAggr on itemsAggr.order_ID = ID,
+            items                     : Association to OrderItems on items.order = $self,
+            client.name as clientName : String @title: '{i18n>clientName}',
+            TO_CHAR(
+                createdAt, 'YYYY-MM-DD'
+            )           as createdOn  : String @title: '{i18n>createdOn}'
+    };
 
     @cds.redirection.target
-    entity Orders           as
-        select from my.Orders
-        join my.OrderItemsAggr
-            on Orders.ID = OrderItemsAggr.order_ID
-        {
-                *,
-            key ID,
-                client.name as clientName : String @title: '{i18n>clientName}',
-                TO_CHAR(
-                    createdAt, 'YYYY-MM-DD'
-                )           as createdOn  : String @title: '{i18n>createdOn}'
-        }
-        excluding {
-            order_ID
-        };
-
     entity OrderItems       as projection on my.OrderItems {
         *,
         equipment.name as equipmentName         : String @title: '{i18n>equipmentName}',

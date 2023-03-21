@@ -8,59 +8,59 @@
 			<Page id="masterPage" showHeader="false" backgroundDesign="List" floatingFooter="true">
 				<List id="ordersList" mode="SingleSelectMaster" items="{
 				path: '/Orders',
+				parameters: {expand: 'itemsAggr'},
 				sorter: {path: 'clientName'}}" selectionChange="onSelectionChange">
 					<headerToolbar>
 						<Toolbar>
 							<SearchField search="onSearch"/>
 						</Toolbar>
 					</headerToolbar>
-					<StandardListItem title="{title}" counter="{itemsCount}"/>
+					<StandardListItem title="{title}" counter="{itemsAggr/itemsCount}"/>
 				</List>
 				<footer>
 					<Toolbar >
 						<ToolbarSpacer />
 						<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateOrder"/>
 					</Toolbar>
-
 				</footer>
 			</Page>
 		</masterPages>
 		<detailPages>
 			<Page id="detailPage" showHeader="false" floatingFooter="true">
-				<form:SimpleForm editable="true" layout="ResponsiveGridLayout" title="{createdOn}" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1">
-					<core:Title text="{i18n>header}"/>
+				<form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1">
+					<!-- <core:Title text="{i18n>header}"/> -->
 					<smartfield:SmartLabel labelFor="client_ID"/>
 					<smartfield:SmartField id="client_ID" value="{client_ID}" textInEditModeSource="ValueList"/>
 					<smartfield:SmartLabel labelFor="title"/>
 					<smartfield:SmartField id="title" value="{title}"/>
 					<Label labelFor="description" text="{/Orders/description/##com.sap.vocabularies.Common.v1.Label/String}"/>
 					<TextArea id="description" value="{description}"/>
-					<core:Title text="{i18n>orderItems}"/>
-					<Table id="itemsTable" items="{path: 'items'}" fixedLayout="false">
-						<headerToolbar>
-							<Toolbar >
-								<ToolbarSpacer />
-								<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateOrderItem"/>
-							</Toolbar>
-						</headerToolbar>
-						<columns>
-							<Column >
-								<Label text="{/OrderItems/equipment_ID/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
-							</Column>
-							<Column >
-								<Label text="{/OrderItems/quantity/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
-							</Column>
-							<Column/>
-						</columns>
-						<ColumnListItem >
-							<cells>
-								<smartfield:SmartField value="{equipment_ID}" textInEditModeSource="ValueList"/>
-								<smartfield:SmartField value="{quantity}"/>
-								<Button icon="sap-icon://delete" press="onPressDeleteItem"/>
-							</cells>
-						</ColumnListItem>
-					</Table>
 				</form:SimpleForm>
+				<Table id="itemsTable" items="{path: 'items'}" fixedLayout="false">
+					<headerToolbar>
+						<Toolbar >
+							<Title text="{i18n>orderItems}" />
+							<ToolbarSpacer />
+							<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateOrderItem"/>
+						</Toolbar>
+					</headerToolbar>
+					<columns>
+						<Column >
+							<Label text="{/OrderItems/equipment_ID/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
+						</Column>
+						<Column >
+							<Label text="{/OrderItems/quantity/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
+						</Column>
+						<Column/>
+					</columns>
+					<ColumnListItem >
+						<cells>
+							<smartfield:SmartField value="{equipment_ID}" textInEditModeSource="ValueList"/>
+							<StepInput value="{quantity}"/>
+							<Button icon="sap-icon://delete" press="onPressDeleteItem"/>
+						</cells>
+					</ColumnListItem>
+				</Table>
 				<footer>
 					<Toolbar >
 						<ToolbarSpacer />

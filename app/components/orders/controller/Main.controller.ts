@@ -45,10 +45,25 @@ export default class Main extends BaseController {
     }
   }
 
-  public onSelectionChange(event: UI5Event) {
+  public async onSelectionChange(event: UI5Event) {
     const { listItem } = event.getParameters();
+    const model = this.getModel() as ODataModel;
+    const resBundle = this.getResourceBundle() as ResourceBundle;
+
     if (!listItem.getBindingContext()) return; // Group headers don't have a context
 
+    if (model.hasPendingChanges()) {
+      await new Promise<void>((resolve, reject) => {
+        MessageBox.confirm(resBundle.getText('confirm.resetChanges'), {
+          onClose: (action: String) => {
+            if (action === 'OK') resolve();
+            else reject();
+          }
+        });
+      });
+    }
+
+    model.resetChanges();
     this.byId('detailPage')?.bindElement(
       listItem.getBindingContext().getPath()
     );
@@ -68,9 +83,9 @@ export default class Main extends BaseController {
 
   public onPressCreateOrderItem() {
     const itemsTable = this.byId('itemsTable') as Table;
-    const itemsBinding = itemsTable?.getBinding('items') as ODataListBinding;
+    const itemsBinding = itemsTable?.getBinding('items') as any;
 
-    itemsBinding.create({});
+    itemsBinding.create({ quantity: 1 });
 
     setTimeout(() => {
       const firstItem = itemsTable?.getItems()[0] as ColumnListItem;
