@@ -6,7 +6,7 @@
     <tnt:ToolPage id="toolPage" class="sapUiSizeCompact">
         <tnt:header>
             <tnt:ToolHeader>
-                <Button icon="sap-icon://menu2" type="Transparent" press="toggleSideNavigation">
+                <Button icon="sap-icon://menu2" type="Transparent" press="getCurrentRouteName">
                     <layoutData>
                         <OverflowToolbarLayoutData priority="NeverOverflow" />
                     </layoutData>

@@ -29,7 +29,13 @@
 			</Page>
 		</masterPages>
 		<detailPages>
-			<Page id="detailPage" showHeader="false" floatingFooter="true">
+			<Page id="detailPage" floatingFooter="true" showHeader="{device>/system/phone}">
+				<customHeader>
+					<Toolbar>
+						<Button text="{i18n>navigation}" icon="sap-icon://menu2" press="showMaster"/>
+					</Toolbar>
+				</customHeader>
+				<!-- <Button visible="{device>/system/phone}" press="showMaster" icon="sap-icon://menu2"/> -->
 				<form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1">
 					<smartfield:SmartLabel labelFor="title"/>
 					<smartfield:SmartField id="title" value="{title}"/>
@@ -57,10 +63,10 @@
 						<Column >
 							<Label text="{/OrderItems/quantity/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
 						</Column>
-						<Column >
+						<Column minScreenWidth="Tablet" demandPopin="true">
 							<Label text="{/OrderItems/unitSalesPrice/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
 						</Column>
-						<Column >
+						<Column minScreenWidth="Tablet" demandPopin="true">
 							<Label text="{/OrderItems/salesPrice/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
 						</Column>
 						<Column/>

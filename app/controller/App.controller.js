@@ -3,7 +3,10 @@ sap.ui.define(
   (BaseController, JSONModel) =>
     BaseController.extend('handwerker.controller.App', {
       onInit() {
-        const viewModel = new JSONModel({ user: '' });
+        const viewModel = new JSONModel({
+          user: '',
+          splitAppMode: 'ShowHideMode'
+        });
 
         this.getView().setModel(viewModel, 'viewModel');
 
@@ -26,6 +29,14 @@ sap.ui.define(
         this.getOwnerComponent()
           .getRouter()
           .navTo(pattern, {}, deepRoutingConfig);
+      },
+
+      getCurrentRouteName: function () {
+        this.getModel().setProperty('/splitAppMode', 'HideMode');
+
+        const router = this.getOwnerComponent().getRouter();
+        const currentHash = router.getHashChanger().getHash();
+        return router.getRouteInfoByHash(currentHash).name; // since 1.75
       },
 
       navToMasterDetail() {

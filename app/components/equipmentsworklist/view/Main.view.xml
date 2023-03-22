@@ -17,10 +17,10 @@
 				<Column >
 					<Label text="{/Equipments/name/##com.sap.vocabularies.Common.v1.Label/String}"/>
 				</Column>
-				<Column >
+				<Column minScreenWidth="Tablet" demandPopin="true">
 					<Label text="{/Equipments/purchasePrice/##com.sap.vocabularies.Common.v1.Label/String}"/>
 				</Column>
-				<Column >
+				<Column minScreenWidth="Tablet" demandPopin="true">
 					<Label text="{/Equipments/salesPrice/##com.sap.vocabularies.Common.v1.Label/String}"/>
 				</Column>
 				<Column >

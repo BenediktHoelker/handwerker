@@ -73,6 +73,15 @@ export default class Main extends BaseController {
     this.byId('detailPage')?.bindElement(
       listItem.getBindingContext().getPath()
     );
+
+    const splitApp = this.byId('splitApp') as SplitApp;
+
+    splitApp.toDetail(this.byId('detailPage'), 'slide', {}, {});
+  }
+
+  public showMaster() {
+    const splitApp = this.byId('splitApp') as SplitApp;
+    splitApp.toMaster(this.byId('masterPage'), 'slide', {}, {});
   }
 
   public calculateSalesPrice(event: UI5Event) {

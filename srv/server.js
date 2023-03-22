@@ -10,8 +10,7 @@ const config = {
     // required to retrieve JWT including permissions (our roles)
     response_type: 'code',
     scope: 'openid',
-    audience: 'https://handwerker-api.com',
-    authority: 'https://dev-r6g55fz7.us.auth0.com/'
+    audience: 'https://handwerker-api.com'
   }
 };
 
@@ -19,8 +18,9 @@ cds.on('bootstrap', (app) => {
   // initialize openid-connect with auth0 configuration
   app.use(auth(config));
   app.use(cov2ap());
-  // app.use('/v2', requiresAuth());
-  app.use('/dist', requiresAuth(), express.static(__dirname + '/../dist'));
+  app.use('/v2', requiresAuth());
+  // app.use('/app', requiresAuth(), express.static(__dirname + '/../app'));
+  app.use('/', requiresAuth(), express.static(__dirname + '/../dist'));
 });
 
 module.exports = cds.server;
