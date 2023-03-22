@@ -31,14 +31,6 @@ sap.ui.define(
           .navTo(pattern, {}, deepRoutingConfig);
       },
 
-      getCurrentRouteName: function () {
-        this.getModel().setProperty('/splitAppMode', 'HideMode');
-
-        const router = this.getOwnerComponent().getRouter();
-        const currentHash = router.getHashChanger().getHash();
-        return router.getRouteInfoByHash(currentHash).name; // since 1.75
-      },
-
       navToMasterDetail() {
         // navTo($event, "trackViaCalendar&/calendar/singleEntry");
         this.getOwnerComponent()
