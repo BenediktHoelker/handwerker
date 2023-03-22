@@ -30,18 +30,22 @@ export default class Main extends BaseController {
     router.getRoute('main')?.attachPatternMatched(() => {
       this.byId('ordersList')
         ?.getBinding('items')
-        ?.attachEventOnce('change', (event: UI5Event) => {
-          this._selectFirstItem(event);
+        ?.attachEventOnce('change', () => {
+          this._selectFirstItem();
         });
     });
   }
 
-  private _selectFirstItem(event: UI5Event) {
-    const ordersList = this.byId('ordersList') as List;
-    const firstMasterListItem = ordersList.getItems()[1]; // [0] is a group header
-    const path = firstMasterListItem?.getBindingContext()?.getPath();
+  private _selectFirstItem() {
+    this._selectItemAtIndex(0);
+  }
 
-    ordersList.setSelectedItem(firstMasterListItem);
+  private _selectItemAtIndex(index: int) {
+    const ordersList = this.byId('ordersList') as List;
+    const firstordersListItem = ordersList.getItems()[index]; // [0] is a group header
+    const path = firstordersListItem?.getBindingContext()?.getPath();
+
+    ordersList.setSelectedItem(firstordersListItem);
     if (path) {
       this.byId('detailPage')?.bindElement(path);
     }
@@ -74,15 +78,14 @@ export default class Main extends BaseController {
   public calculateSalesPrice(event: UI5Event) {
     const control = event.getSource() as Input;
     const path = control.getBindingContext()?.getPath();
-    const orderItem = control.getBindingContext()?.getObject() as {
-      quantity: String;
-      unitSalesPrice: String;
-      unitSalesPriceCurrency_code: String;
-    };
-
     const model = this.getModel() as ODataModel;
 
     setTimeout(() => {
+      const orderItem = control.getBindingContext()?.getObject() as {
+        quantity: String;
+        unitSalesPrice: String;
+        unitSalesPriceCurrency_code: String;
+      };
       const totalItemPrice = (
         Math.round(
           Number(orderItem.quantity) * Number(orderItem.unitSalesPrice) * 100
@@ -126,10 +129,10 @@ export default class Main extends BaseController {
     ordersList.setSelectedItem(firstItem);
 
     this.byId('detailPage')?.bindElement(newOrderContext.getPath());
-    this.byId('client_ID')?.focus();
+    this.byId('title')?.focus();
   }
 
-  public onPressCreateOrderItem() {
+  public onPressCreateOrderItem(event: UI5Event) {
     const itemsTable = this.byId('itemsTable') as Table;
     const itemsBinding = itemsTable?.getBinding('items') as any;
 
@@ -170,6 +173,30 @@ export default class Main extends BaseController {
     bindingInfo.parameters.custom.search = query;
 
     ordersList.bindItems(bindingInfo);
+  }
+
+  public async onPressDeleteOrder(event: UI5Event) {
+    const item = event.getSource() as Button;
+    const path = item.getBindingContext()?.getPath();
+    const model = this.getModel() as ODataModel;
+    const ordersList = this.byId('ordersList') as List;
+    const ordersListItems = ordersList.getItems();
+    const itemIndex = ordersList
+      .getItems()
+      .findIndex((item) => item.getBindingContext().getPath() === path);
+
+    // TODO: make it async => wait for it to calculateSalesPrice correctly
+    if (path) {
+      await new Promise<void>((resolve, reject) => {
+        model.remove(path, { success: resolve, error: reject });
+      });
+    }
+
+    if (ordersListItems[itemIndex]) {
+      this._selectItemAtIndex(itemIndex);
+    } else if (ordersListItems[itemIndex - 1]) {
+      this._selectItemAtIndex(itemIndex - 1);
+    }
   }
 
   onPressSubmit() {

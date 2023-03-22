@@ -31,11 +31,10 @@
 		<detailPages>
 			<Page id="detailPage" showHeader="false" floatingFooter="true">
 				<form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1">
-					<!-- <core:Title text="{i18n>header}"/> -->
-					<smartfield:SmartLabel labelFor="client_ID"/>
-					<smartfield:SmartField id="client_ID" value="{client_ID}" textInEditModeSource="ValueList"/>
 					<smartfield:SmartLabel labelFor="title"/>
 					<smartfield:SmartField id="title" value="{title}"/>
+					<smartfield:SmartLabel labelFor="client_ID"/>
+					<smartfield:SmartField id="client_ID" value="{client_ID}" textInEditModeSource="ValueList"/>
 					<Label labelFor="description" text="{/Orders/description/##com.sap.vocabularies.Common.v1.Label/String}"/>
 					<TextArea id="description" value="{description}"/>
 				</form:SimpleForm>
@@ -84,6 +83,7 @@
 				</Table>
 				<footer>
 					<Toolbar >
+						<Button type="Reject" text="{i18n>deleteOrder}" press="onPressDeleteOrder"/>
 						<ToolbarSpacer />
 						<Button type="Emphasized" text="{i18n>submit}" press="onPressSubmit"/>
 					</Toolbar>
