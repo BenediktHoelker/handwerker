@@ -1,9 +1,10 @@
-ID;name;purchasePrice;salesPrice;salesPriceCurrency_code;purchasePriceCurrency_code
-ba4c9081-0d99-41c5-a54c-29459d4bd372;Wärmepumpe 38A;13.99;13.99;EUR;EUR
-cdb12c95-48d0-448d-9270-6cb65e2953ac;Gastherme XYZ;199.90;210.90;EUR;EUR
-6726bcc6-247c-4827-8201-6171c264fb85;Fernseher Samsung;389.99;440.99;EUR;EUR
-dc175632-1dc6-46e4-a2f6-3fae03d49c45;Waschmaschine 38;300.00;320.00;EUR;EUR
-58790416-782a-4a8f-9553-2c1084af281c;Staubsauger;122.29;132.29;EUR;EUR
-a6675167-0e50-4662-b9bb-b83fcdd00176;Dichtungsring;145.59;155.59;EUR;EUR
-dce79ca0-0f75-46de-ba99-1c7ce952a50b;Saugstopfen;198.99;236.99;EUR;EUR
-ae7befb8-c997-46a8-b750-a6dd06f39dba;Filter;178.98;201.98;EUR;EUR
+id,createdat,createdby,modifiedat,modifiedby,name,purchaseprice,salesprice,margin,purchasepricecurrency_code,salespricecurrency_code
+ba4c9081-0d99-41c5-a54c-29459d4bd372,,,2023-03-21 22:59:06.57+01,auth0|6291edca05373d006f1b13a7,Wärmepumpe 38A,13.99,13.99,1.2,EUR,EUR
+cdb12c95-48d0-448d-9270-6cb65e2953ac,,,2023-03-21 22:59:03.751+01,auth0|6291edca05373d006f1b13a7,Gastherme XYZ,199.90,210.90,1.2,EUR,EUR
+6726bcc6-247c-4827-8201-6171c264fb85,,,2023-03-21 23:04:28.579+01,auth0|6291edca05373d006f1b13a7,Fernseher Samsung,389.99,440.99,1.6,EUR,EUR
+dc175632-1dc6-46e4-a2f6-3fae03d49c45,,,,,Waschmaschine 38,300.00,320.00,,EUR,EUR
+58790416-782a-4a8f-9553-2c1084af281c,,,2023-03-21 22:39:34.484+01,auth0|6291edca05373d006f1b13a7,Staubsauger,122.29,132.29,1.2,EUR,EUR
+a6675167-0e50-4662-b9bb-b83fcdd00176,,,2023-03-21 23:04:33.455+01,auth0|6291edca05373d006f1b13a7,Dichtungsring,145.59,155.59,1.7,EUR,EUR
+c53ac53e-7e0e-48ec-aa2f-c1f3603c4033,2023-03-21 23:00:08.024+01,auth0|6291edca05373d006f1b13a7,2023-03-21 23:03:05.432+01,auth0|6291edca05373d006f1b13a7,Tisch,12.30,18.45,1.5,USD,USD
+dce79ca0-0f75-46de-ba99-1c7ce952a50b,,,,,Saugstopfen,198.99,236.99,,EUR,EUR
+ae7befb8-c997-46a8-b750-a6dd06f39dba,,,2023-03-21 22:52:51.82+01,auth0|6291edca05373d006f1b13a7,Filter,178.98,201.98,1.2,EUR,EUR

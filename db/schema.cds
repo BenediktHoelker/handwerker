@@ -45,14 +45,18 @@ entity Orders : cuid, managed {
 }
 
 entity OrderItems : cuid, managed {
-    order              : Association to Orders     @title: '{i18n>order}';
-    equipment          : Association to Equipments @title: '{i18n>equipment}';
-    quantity           : Integer                   @title: '{i18n>quantity}';
+    order                  : Association to Orders     @title: '{i18n>order}';
+    equipment              : Association to Equipments @title: '{i18n>equipment}';
+    quantity               : Integer                   @title: '{i18n>quantity}';
 
     @Measures.ISOCurrency: salesPriceCurrency_code
-    salesPrice         : Decimal(9, 2)             @title: '{i18n>salesPrice}';
-    salesPriceCurrency : Currency                  @title: '{i18n>salesPriceCurrency}';
-    completedAt        : DateTime                  @title: '{i18n>completedAt}';
+    salesPrice             : Decimal(9, 2)             @title: '{i18n>salesPrice}';
+    salesPriceCurrency     : Currency                  @title: '{i18n>salesPriceCurrency}';
+
+    @Measures.ISOCurrency: unitSalesPriceCurrency_code
+    unitSalesPrice         : Decimal(9, 2)             @title: '{i18n>unitSalesPrice}';
+    unitSalesPriceCurrency : Currency                  @title: '{i18n>unitSalesPriceCurrency}';
+    completedAt            : DateTime                  @title: '{i18n>completedAt}';
 }
 
 entity Settings : managed {

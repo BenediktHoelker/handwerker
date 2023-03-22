@@ -39,7 +39,7 @@
 					<Label labelFor="description" text="{/Orders/description/##com.sap.vocabularies.Common.v1.Label/String}"/>
 					<TextArea id="description" value="{description}"/>
 				</form:SimpleForm>
-				<Table id="itemsTable" items="{path: 'items', parameters: {expand: 'equipment'}}" fixedLayout="false">
+				<Table id="itemsTable" items="{items}" fixedLayout="false">
 					<headerToolbar>
 						<Toolbar >
 							<Title text="{i18n>orderItems}" />
@@ -59,10 +59,10 @@
 							<Label text="{/OrderItems/quantity/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
 						</Column>
 						<Column >
-							<Label text="{i18n>unitSalesPrice}"></Label>
+							<Label text="{/OrderItems/unitSalesPrice/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
 						</Column>
 						<Column >
-							<Label text="{i18n>totalItemSalesPrice}"></Label>
+							<Label text="{/OrderItems/salesPrice/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
 						</Column>
 						<Column/>
 					</columns>
@@ -71,7 +71,7 @@
 							<smartfield:SmartField value="{equipment_ID}" textInEditModeSource="ValueList" change="calculateSalesPrice"/>
 							<StepInput value="{quantity}" change="calculateSalesPrice"/>
 							<Input value="{
-								parts: ['equipment/salesPrice', 'equipment/salesPriceCurrency_code'], 
+								parts: ['unitSalesPrice', 'unitSalesPriceCurrency_code'], 
 								type:'sap.ui.model.type.Currency'
 							}" enabled="false"/>
 							<Input value="{

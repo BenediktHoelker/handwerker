@@ -76,25 +76,25 @@ export default class Main extends BaseController {
     const path = control.getBindingContext()?.getPath();
     const orderItem = control.getBindingContext()?.getObject() as {
       quantity: String;
+      unitSalesPrice: String;
+      unitSalesPriceCurrency_code: String;
     };
 
     const model = this.getModel() as ODataModel;
 
     setTimeout(() => {
-      const equipment = model.getProperty(path + '/equipment') as {
-        salesPrice: String;
-        salesPriceCurrency_code: String;
-      };
       const totalItemPrice = (
         Math.round(
-          Number(orderItem.quantity) * Number(equipment.salesPrice) * 100
+          Number(orderItem.quantity) * Number(orderItem.unitSalesPrice) * 100
         ) / 100
-      ).toFixed(2);
+      )
+        .toFixed(2)
+        .toString();
 
       model.setProperty(path + '/salesPrice', totalItemPrice);
       model.setProperty(
         path + '/salesPriceCurrency_code',
-        equipment.salesPriceCurrency_code
+        orderItem.unitSalesPriceCurrency_code
       );
 
       const orderPath = this.byId('detailPage').getBindingContext().getPath();
@@ -110,7 +110,7 @@ export default class Main extends BaseController {
       // TODO: refactor rounding (put to its own method etc.)
       model.setProperty(
         orderPath + '/salesPrice',
-        (Math.round(totalPrice * 100) / 100).toFixed(2)
+        (Math.round(totalPrice * 100) / 100).toFixed(2).toString()
       );
       // TODO: implement currency-handling
       model.setProperty(orderPath + '/salesPriceCurrency_code', 'EUR');
@@ -183,7 +183,7 @@ export default class Main extends BaseController {
 
     // Workaround: submitChanges seems not to reset changes reliably
     // TODO: understand and replace
-    model.resetChanges();
+    // model.resetChanges();
   }
 
   public onPressToggleMaster() {

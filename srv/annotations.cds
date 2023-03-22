@@ -23,19 +23,14 @@ annotate my.OrderItems with {
                 },
                 {
                     $Type            : 'Common.ValueListParameterOut',
-                    LocalDataProperty: equipment.salesPrice,
+                    LocalDataProperty: unitSalesPrice,
                     ValueListProperty: 'salesPrice'
                 },
                 {
                     $Type            : 'Common.ValueListParameterOut',
-                    LocalDataProperty: equipment.ID,
-                    ValueListProperty: 'ID'
-                },
-                {
-                    $Type            : 'Common.ValueListParameterOut',
-                    LocalDataProperty: equipment.salesPriceCurrency_code,
+                    LocalDataProperty: unitSalesPriceCurrency_code,
                     ValueListProperty: 'salesPriceCurrency_code'
-                },
+                }
             ],
         }
     });
