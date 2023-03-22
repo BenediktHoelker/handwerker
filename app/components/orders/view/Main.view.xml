@@ -15,9 +15,6 @@
 							<SearchField search="onSearch"/>
 						</Toolbar>
 					</headerToolbar>
-
-					<!-- <ObjectNumber number="{salesPrice}" unit="{salesPriceCurrency_code}"/> -->
-					<!-- <ObjectListItem title="{title}" number="{salesPrice}" numberUnit="{salesPriceCurrency_code}"/> -->
 					<StandardListItem title="{title}" info="{
 								parts: ['salesPrice', 'salesPriceCurrency_code'], 
 								type:'sap.ui.model.type.Currency'
@@ -47,7 +44,10 @@
 						<Toolbar >
 							<Title text="{i18n>orderItems}" />
 							<ToolbarSpacer />
-							<ObjectNumber number="{salesPrice}" unit="{salesPriceCurrency_code}"/>
+							<Text text="{
+								parts: ['salesPrice', 'salesPriceCurrency_code'], 
+								type:'sap.ui.model.type.Currency'
+							}"/>
 							<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateOrderItem"/>
 						</Toolbar>
 					</headerToolbar>

@@ -107,8 +107,12 @@ export default class Main extends BaseController {
         .filter((price) => !!price && !isNaN(price))
         .reduce((acc, curr) => acc + Number(curr), 0);
 
+      // TODO: refactor rounding (put to its own method etc.)
+      model.setProperty(
+        orderPath + '/salesPrice',
+        (Math.round(totalPrice * 100) / 100).toFixed(2)
+      );
       // TODO: implement currency-handling
-      model.setProperty(orderPath + '/salesPrice', totalPrice);
       model.setProperty(orderPath + '/salesPriceCurrency_code', 'EUR');
     });
   }
