@@ -236,4 +236,24 @@ export default class Main extends BaseController {
       error: () => MessageBox.error(resBundle.getText('submit.error'))
     });
   }
+
+  public onPressPrint() {
+    window.jsPDF = window.jspdf.jsPDF;
+
+    const doc = new jsPDF();
+
+    // Source HTMLElement or a string containing HTML.
+    var elementHTML = this.byId('detailPage').$().html();
+
+    doc.html(elementHTML, {
+      callback: function (doc) {
+        // Save the PDF
+        doc.save('sample-document.pdf');
+      },
+      x: 15,
+      y: 15,
+      width: 170, //target width in the PDF document
+      windowWidth: 650 //window width in CSS pixels
+    });
+  }
 }

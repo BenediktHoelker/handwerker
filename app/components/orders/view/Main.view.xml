@@ -33,7 +33,11 @@
 				<customHeader>
 					<Toolbar>
 						<Button text="{i18n>navigation}" icon="sap-icon://menu2" press="showMaster"/>
+						<customData>
+							<core:CustomData key="html2canvas-ignore" value="true" writeToDom="true" />
+						</customData>
 					</Toolbar>
+
 				</customHeader>
 				<!-- <Button visible="{device>/system/phone}" press="showMaster" icon="sap-icon://menu2"/> -->
 				<form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1">
@@ -54,6 +58,10 @@
 								type:'sap.ui.model.type.Currency'
 							}"/>
 							<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateOrderItem"/>
+
+							<customData>
+								<core:CustomData key="html2canvas-ignore" value="true" writeToDom="true" />
+							</customData>
 						</Toolbar>
 					</headerToolbar>
 					<columns>
@@ -91,7 +99,11 @@
 					<Toolbar >
 						<Button type="Reject" text="{i18n>deleteOrder}" press="onPressDeleteOrder"/>
 						<ToolbarSpacer />
+						<Button text="{i18n>print}" press="onPressPrint"/>
 						<Button type="Emphasized" text="{i18n>submit}" press="onPressSubmit"/>
+						<customData>
+							<core:CustomData key="html2canvas-ignore" value="true" writeToDom="true" />
+						</customData>
 					</Toolbar>
 				</footer>
 			</Page>

@@ -23,7 +23,8 @@
     "CDL": true,
     "CQL": true,
     "CXL": true,
-    "cds": true
+    "cds": true,
+    "jspdf": true
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
