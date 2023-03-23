@@ -14,6 +14,7 @@ import MessageBox from 'sap/m/MessageBox';
 import ReuseComponentSupport from 'sap/suite/ui/generic/template/extensionAPI/ReuseComponentSupport';
 import Input from 'sap/m/Input';
 import Tab from 'sap/ui/webc/main/Tab';
+import Page from 'sap/m/Page';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -53,35 +54,45 @@ export default class Main extends BaseController {
 
   public async onSelectionChange(event: UI5Event) {
     const { listItem } = event.getParameters();
-    const model = this.getModel() as ODataModel;
-    const resBundle = this.getResourceBundle() as ResourceBundle;
 
     if (!listItem.getBindingContext()) return; // Group headers don't have a context
 
-    if (model.hasPendingChanges()) {
-      await new Promise<void>((resolve, reject) => {
-        MessageBox.confirm(resBundle.getText('confirm.resetChanges'), {
-          onClose: (action: String) => {
-            if (action === 'OK') resolve();
-            else reject();
-          }
-        });
-      });
-    }
-
-    model.resetChanges();
     this.byId('detailPage')?.bindElement(
       listItem.getBindingContext().getPath()
     );
 
-    const splitApp = this.byId('splitApp') as SplitApp;
+    this.checkForPendingChanges().then(() => {
+      const splitApp = this.byId('splitApp') as SplitApp;
 
-    splitApp.toDetail(this.byId('detailPage'), 'slide', {}, {});
+      // @ts-expect-error
+      splitApp.toDetail(this.byId('detailPage'), 'slide', {}, {});
+    });
+  }
+
+  public async checkForPendingChanges() {
+    const model = this.getModel() as ODataModel;
+    const resBundle = this.getResourceBundle() as ResourceBundle;
+    if (model.hasPendingChanges()) {
+      await new Promise<void>((resolve, reject) => {
+        MessageBox.confirm(resBundle.getText('confirm.resetChanges'), {
+          onClose: (action: String) => {
+            if (action === 'OK') {
+              model.resetChanges(undefined, true, true);
+
+              resolve();
+            } else reject();
+          }
+        });
+      });
+    }
   }
 
   public showMaster() {
     const splitApp = this.byId('splitApp') as SplitApp;
-    splitApp.backMaster({}, {});
+
+    this.checkForPendingChanges().then(() => {
+      splitApp.backMaster({}, {});
+    });
   }
 
   public calculateSalesPrice(event: UI5Event) {
@@ -134,10 +145,13 @@ export default class Main extends BaseController {
     const itemsBinding = ordersList?.getBinding('items') as ODataListBinding;
     const newOrderContext = itemsBinding.create({});
     const firstItem = ordersList.getItems()[0];
+    const detailPage = this.byId('detailPage') as Page;
+    const splitApp = this.byId('splitApp') as SplitApp;
 
     ordersList.setSelectedItem(firstItem);
 
-    this.byId('detailPage')?.bindElement(newOrderContext.getPath());
+    detailPage?.bindElement(newOrderContext.getPath());
+    splitApp.toDetail(detailPage, 'slide', {}, {});
     this.byId('title')?.focus();
   }
 
@@ -211,24 +225,15 @@ export default class Main extends BaseController {
   onPressSubmit() {
     const model = this.getModel() as ODataModel;
     const resBundle = this.getResourceBundle() as ResourceBundle;
+    const detailPage = this.byId('detailPage') as Page;
 
     model.submitChanges({
-      success: () => MessageToast.show(resBundle.getText('submit.successful')),
+      success: () =>
+        MessageToast.show(resBundle.getText('submit.successful'), {
+          of: detailPage,
+          offset: '0 -80'
+        }),
       error: () => MessageBox.error(resBundle.getText('submit.error'))
     });
-
-    // Workaround: submitChanges seems not to reset changes reliably
-    // TODO: understand and replace
-    // model.resetChanges();
-  }
-
-  public onPressToggleMaster() {
-    const splitApp = this.byId('splitApp') as SplitApp;
-
-    if (splitApp.isMasterShown()) {
-      splitApp.toDetail('detailPage', 'slide', {}, {});
-    } else {
-      splitApp.toMaster('masterPage', 'slide', {}, {});
-    }
   }
 }
