@@ -15,6 +15,8 @@ import ReuseComponentSupport from 'sap/suite/ui/generic/template/extensionAPI/Re
 import Input from 'sap/m/Input';
 import Tab from 'sap/ui/webc/main/Tab';
 import Page from 'sap/m/Page';
+import Splitter from 'sap/ui/layout/Splitter';
+import Fragment from 'sap/ui/core/Fragment';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -238,12 +240,28 @@ export default class Main extends BaseController {
   }
 
   public onPressPrint() {
+    const splitApp = this.byId('splitApp') as SplitApp;
+    const printOrderPage = this.byId(
+      Fragment.createId('print', 'printOrderPage')
+    );
+
+    printOrderPage.bindElement(
+      this.byId('detailPage').getBindingContext().getPath(),
+      { expand: 'client' }
+    );
+    splitApp.toDetail(printOrderPage, 'slide', {}, {});
+  }
+
+  public onConfirmPrint() {
     window.jsPDF = window.jspdf.jsPDF;
 
     const doc = new jsPDF();
+    const printOrderPage = this.byId(
+      Fragment.createId('print', 'printOrderPage')
+    );
 
     // Source HTMLElement or a string containing HTML.
-    var elementHTML = this.byId('detailPage').$().html();
+    var elementHTML = printOrderPage.$().html();
 
     doc.html(elementHTML, {
       callback: function (doc) {

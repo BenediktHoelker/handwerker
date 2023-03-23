@@ -1,0 +1,55 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:smartfield="sap.ui.comp.smartfield"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page id="printOrderPage" showFooter="true" showHeader="false">
+		<form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1">
+			<Label text="{/Orders/title/##com.sap.vocabularies.Common.v1.Label/String}"/>
+			<Text text="{title}"/>
+			<Label text="{/Orders/client_ID/##com.sap.vocabularies.Common.v1.Label/String}"/>
+			<Text text="{client/name}"/>
+			<Label text="{/Orders/description/##com.sap.vocabularies.Common.v1.Label/String}"/>
+			<Text id="description" text="{description}"/>
+		</form:SimpleForm>
+		<Table id="itemsTable" items="{path: 'items', parameters: {expand: 'equipment'}}" fixedLayout="false">
+			<columns>
+				<Column >
+					<Label text="{/OrderItems/equipment_ID/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
+				</Column>
+				<Column >
+					<Label text="{/OrderItems/quantity/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true">
+					<Label text="{/OrderItems/unitSalesPrice/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true">
+					<Label text="{/OrderItems/salesPrice/##com.sap.vocabularies.Common.v1.Label/String}"></Label>
+				</Column>
+			</columns>
+			<ColumnListItem >
+				<cells>
+					<Text text="{equipment/name}"/>
+					<Text text="{quantity}"/>
+					<Text text="{
+								parts: ['unitSalesPrice', 'unitSalesPriceCurrency_code'], 
+								type:'sap.ui.model.type.Currency'
+							}"/>
+					<Text text="{
+								parts: ['salesPrice', 'salesPriceCurrency_code'], 
+								type:'sap.ui.model.type.Currency'
+							}"/>
+				</cells>
+			</ColumnListItem>
+		</Table>
+		<footer>
+			<Toolbar >
+				<ToolbarSpacer />
+				<Button type="Emphasized" text="{i18n>print}" press="onConfirmPrint"/>
+				<customData>
+					<core:CustomData key="html2canvas-ignore" value="true" writeToDom="true" />
+				</customData>
+			</Toolbar>
+		</footer>
+	</Page>
+</core:FragmentDefinition>
