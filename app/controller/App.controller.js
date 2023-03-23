@@ -26,9 +26,17 @@ sap.ui.define(
             [target]: { route: deepRoute }
           };
         }
+
         this.getOwnerComponent()
           .getRouter()
           .navTo(pattern, {}, deepRoutingConfig);
+
+        const device = this.getModel('device');
+        const toolPage = this.getView().byId('toolPage');
+
+        if (device.getProperty('/system/phone')) {
+          toolPage.setSideExpanded(false);
+        }
       },
 
       navToMasterDetail() {

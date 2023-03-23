@@ -81,7 +81,7 @@ export default class Main extends BaseController {
 
   public showMaster() {
     const splitApp = this.byId('splitApp') as SplitApp;
-    splitApp.toMaster(this.byId('masterPage'), 'slide', {}, {});
+    splitApp.backMaster({}, {});
   }
 
   public calculateSalesPrice(event: UI5Event) {

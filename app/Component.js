@@ -1,6 +1,11 @@
 sap.ui.define(
-  ['sap/ui/Device', 'sap/ui/model/json/JSONModel', 'sap/ui/core/UIComponent'],
-  (Device, JSONModel, UIComponent) =>
+  [
+    'sap/ui/Device',
+    'sap/ui/model/json/JSONModel',
+    './model/models',
+    'sap/ui/core/UIComponent'
+  ],
+  (Device, JSONModel, models, UIComponent) =>
     UIComponent.extend('handwerker.Component', {
       metadata: {
         manifest: 'json'
@@ -12,6 +17,7 @@ sap.ui.define(
         const router = this.getRouter();
 
         this.setModel(new JSONModel({}), 'session');
+        this.setModel(models.createDeviceModel(), 'device');
 
         // create the views based on the url/hash
         router.initialize();

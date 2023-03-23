@@ -2,7 +2,7 @@
     "requires": {
         "auth": {
             "[development]": {
-                "impl": "srv/auth.js"
+                "kind": "dummy"
             },
             "[test]": {
                 "impl": "srv/auth.js"
