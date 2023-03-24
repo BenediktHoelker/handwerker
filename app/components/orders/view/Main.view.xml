@@ -106,7 +106,6 @@
 					</Toolbar>
 				</footer>
 			</Page>
-			<core:Fragment id="print" fragmentName="handwerker.components.orders.view.fragments.PrintOrder" type="XML" />
 		</detailPages>
 	</SplitApp>
 </mvc:View>

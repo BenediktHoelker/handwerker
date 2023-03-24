@@ -11,7 +11,7 @@ service HandwerkerService {
             *,
         key ID,
             itemsAggr                 : Association to OrderItemsAggr on itemsAggr.order_ID = ID,
-            items                     : Association to OrderItems on items.order = $self,
+            items                     : Association to many OrderItems on items.order = $self,
             client.name as clientName : String @title: '{i18n>clientName}',
             TO_CHAR(
                 createdAt, 'YYYY-MM-DD'

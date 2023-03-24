@@ -16,7 +16,8 @@ import Input from 'sap/m/Input';
 import Tab from 'sap/ui/webc/main/Tab';
 import Page from 'sap/m/Page';
 import Splitter from 'sap/ui/layout/Splitter';
-import Fragment from 'sap/ui/core/Fragment';
+import Fragment from 'sap/ui/core/Fragment'; //by importing
+import jsPDFInvoiceTemplate, { OutputType } from 'jspdf-invoice-template';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -240,38 +241,142 @@ export default class Main extends BaseController {
   }
 
   public onPressPrint() {
-    const splitApp = this.byId('splitApp') as SplitApp;
-    const printOrderPage = this.byId(
-      Fragment.createId('print', 'printOrderPage')
-    );
+    const model = this.getModel() as ODataModel;
+    const page = this.byId('detailPage') as Page;
+    const path = page.getBindingContext().getPath();
+    const order = page.getBindingContext().getObject();
 
-    printOrderPage.bindElement(
-      this.byId('detailPage').getBindingContext().getPath(),
-      { expand: 'client' }
-    );
-    splitApp.toDetail(printOrderPage, 'slide', {}, {});
-  }
+    const tableItems = this.byId('itemsTable') as Table;
+    const items = tableItems
+      .getItems()
+      .map((item) => item.getBindingContext().getObject());
 
-  public onConfirmPrint() {
-    window.jsPDF = window.jspdf.jsPDF;
-
-    const doc = new jsPDF();
-    const printOrderPage = this.byId(
-      Fragment.createId('print', 'printOrderPage')
-    );
-
-    // Source HTMLElement or a string containing HTML.
-    var elementHTML = printOrderPage.$().html();
-
-    doc.html(elementHTML, {
-      callback: function (doc) {
-        // Save the PDF
-        doc.save('sample-document.pdf');
+    const propsObject = {
+      outputType: OutputType.Save,
+      returnJsPDFDocObject: true,
+      fileName: 'Invoice 2021',
+      orientationLandscape: false,
+      compress: true,
+      logo: {
+        src: 'https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png',
+        type: 'PNG', //optional, when src= data:uri (nodejs case)
+        width: 53.33, //aspect ratio = width/height
+        height: 26.66,
+        margin: {
+          top: 0, //negative or positive num, from the current position
+          left: 0 //negative or positive num, from the current position
+        }
       },
-      x: 15,
-      y: 15,
-      width: 170, //target width in the PDF document
-      windowWidth: 650 //window width in CSS pixels
-    });
+      stamp: {
+        inAllPages: true, //by default = false, just in the last page
+        src: 'https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg',
+        type: 'JPG', //optional, when src= data:uri (nodejs case)
+        width: 20, //aspect ratio = width/height
+        height: 20,
+        margin: {
+          top: 0, //negative or positive num, from the current position
+          left: 0 //negative or positive num, from the current position
+        }
+      },
+      business: {
+        name: 'Business Name',
+        address: 'Albania, Tirane ish-Dogana, Durres 2001',
+        phone: '(+355) 069 11 11 111',
+        email: 'email@example.com',
+        email_1: 'info@example.al',
+        website: 'www.example.al'
+      },
+      contact: {
+        label: 'Invoice issued for:',
+        name: 'Client Name',
+        address: 'Albania, Tirane, Astir',
+        phone: '(+355) 069 22 22 222',
+        email: 'client@website.al',
+        otherInfo: 'www.website.al'
+      },
+      invoice: {
+        label: 'Invoice #: ',
+        num: 19,
+        invDate: 'Payment Date: 01/01/2021 18:12',
+        invGenDate: 'Invoice Date: 02/02/2021 10:17',
+        headerBorder: false,
+        tableBodyBorder: false,
+        header: [
+          {
+            title: '#',
+            style: {
+              width: 10
+            }
+          },
+          {
+            title: 'Equipment',
+            style: {
+              width: 80
+            }
+          },
+          {
+            title: 'Quantity',
+            style: {
+              width: 30
+            }
+          },
+          { title: 'Unit Price' },
+          { title: 'Sales Price' }
+        ],
+        table: items.map((item: any, index: int) => [
+          index,
+          item.equipmentName,
+          item.quantity,
+          item.unitSalesPrice + ' ' + item.unitSalesPriceCurrency_code,
+          item.salesPrice + ' ' + item.salesPriceCurrency_code
+        ]),
+        // table: Array.from(Array(10), (item, index) => [
+        //   index + 1,
+        //   'There are many variations ',
+        //   'Lorem Ipsum is simply dummy text dummy text ',
+        //   200.5,
+        //   4.5,
+        //   'm2',
+        //   400.5
+        // ]),
+        additionalRows: [
+          {
+            col1: 'Total:',
+            col2: '145,250.50',
+            col3: 'ALL',
+            style: {
+              fontSize: 14 //optional, default 12
+            }
+          },
+          {
+            col1: 'VAT:',
+            col2: '20',
+            col3: '%',
+            style: {
+              fontSize: 10 //optional, default 12
+            }
+          },
+          {
+            col1: 'SubTotal:',
+            col2: '116,199.90',
+            col3: 'ALL',
+            style: {
+              fontSize: 10 //optional, default 12
+            }
+          }
+        ],
+        invDescLabel: 'Invoice Note',
+        invDesc:
+          "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary."
+      },
+      footer: {
+        text: 'The invoice is created on a computer and is valid without the signature and stamp.'
+      },
+      pageEnable: true,
+      pageLabel: 'Page '
+    };
+
+    // @ts-expect-error
+    jsPDFInvoiceTemplate(propsObject);
   }
 }
