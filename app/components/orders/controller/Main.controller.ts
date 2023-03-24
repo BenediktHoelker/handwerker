@@ -1,10 +1,10 @@
 import BaseController from './BaseController';
-import formatter from '../model/formatter';
+import formatter from '../this._model/formatter';
 import List from 'sap/m/List';
 import SplitApp from 'sap/m/SplitApp';
 import UI5Event from 'sap/ui/base/Event';
-import ODataModel from 'sap/ui/model/odata/v2/ODataModel';
-import ODataListBinding from 'sap/ui/model/odata/v2/ODataListBinding';
+import ODataModel from 'sap/ui/this._model/odata/v2/ODataModel';
+import ODataListBinding from 'sap/ui/this._model/odata/v2/ODataListBinding';
 import Table from 'sap/m/Table';
 import ColumnListItem from 'sap/m/ColumnListItem';
 import Button from 'sap/m/Button';
@@ -24,15 +24,25 @@ import jsPDFInvoiceTemplate, { OutputType } from 'jspdf-invoice-template';
  */
 export default class Main extends BaseController {
   private formatter = formatter;
-
+  private _ordersList: List;
+  private _splitApp: SplitApp;
+  private _model: ODataModel;
+  private _detailPage: Page;
+  private _orderItemsTable: Table;
   /**
    * onInit
    */
   public onInit() {
     const router = this.getRouter();
 
+    this._ordersList = this.byId('ordersList') as List;
+    this._orderItemsTable = this.byId('this._orderItemsTable') as Table;
+    this._splitApp = this.byId('splitApp') as SplitApp;
+    this._model = this.getModel() as ODataModel;
+    this._detailPage = this._detailPage as Page;
+
     router.getRoute('main')?.attachPatternMatched(() => {
-      this.byId('ordersList')
+      this.byId('this._ordersList')
         ?.getBinding('items')
         ?.attachEventOnce('change', () => {
           this._selectFirstItem();
@@ -45,13 +55,12 @@ export default class Main extends BaseController {
   }
 
   private _selectItemAtIndex(index: int) {
-    const ordersList = this.byId('ordersList') as List;
-    const firstordersListItem = ordersList.getItems()[index]; // [0] is a group header
-    const path = firstordersListItem?.getBindingContext()?.getPath();
+    const firstOrdersListItem = this._ordersList.getItems()[index]; // [0] is a group header
+    const path = firstOrdersListItem?.getBindingContext()?.getPath();
 
-    ordersList.setSelectedItem(firstordersListItem);
+    this._ordersList.setSelectedItem(firstOrdersListItem);
     if (path) {
-      this.byId('detailPage')?.bindElement(path);
+      this._detailPage?.bindElement(path);
     }
   }
 
@@ -60,27 +69,22 @@ export default class Main extends BaseController {
 
     if (!listItem.getBindingContext()) return; // Group headers don't have a context
 
-    this.byId('detailPage')?.bindElement(
-      listItem.getBindingContext().getPath()
-    );
+    this._detailPage?.bindElement(listItem.getBindingContext().getPath());
 
     this.checkForPendingChanges().then(() => {
-      const splitApp = this.byId('splitApp') as SplitApp;
-
       // @ts-expect-error
-      splitApp.toDetail(this.byId('detailPage'), 'slide', {}, {});
+      this._splitApp.toDetail(this._detailPage, 'slide', {}, {});
     });
   }
 
   public async checkForPendingChanges() {
-    const model = this.getModel() as ODataModel;
     const resBundle = this.getResourceBundle() as ResourceBundle;
-    if (model.hasPendingChanges()) {
+    if (this._model.hasPendingChanges()) {
       await new Promise<void>((resolve, reject) => {
         MessageBox.confirm(resBundle.getText('confirm.resetChanges'), {
           onClose: (action: String) => {
             if (action === 'OK') {
-              model.resetChanges(undefined, true, true);
+              this._model.resetChanges(undefined, true, true);
 
               resolve();
             } else reject();
@@ -91,17 +95,14 @@ export default class Main extends BaseController {
   }
 
   public showMaster() {
-    const splitApp = this.byId('splitApp') as SplitApp;
-
     this.checkForPendingChanges().then(() => {
-      splitApp.backMaster({}, {});
+      this._splitApp.backMaster({}, {});
     });
   }
 
   public calculateSalesPrice(event: UI5Event) {
     const control = event.getSource() as Input;
     const path = control.getBindingContext()?.getPath();
-    const model = this.getModel() as ODataModel;
 
     setTimeout(() => {
       const orderItem = control.getBindingContext()?.getObject() as {
@@ -117,14 +118,14 @@ export default class Main extends BaseController {
         .toFixed(2)
         .toString();
 
-      model.setProperty(path + '/salesPrice', totalItemPrice);
-      model.setProperty(
+      this._model.setProperty(path + '/salesPrice', totalItemPrice);
+      this._model.setProperty(
         path + '/salesPriceCurrency_code',
         orderItem.unitSalesPriceCurrency_code
       );
 
-      const orderPath = this.byId('detailPage').getBindingContext().getPath();
-      const orderItemsTable = this.byId('itemsTable') as Table;
+      const orderPath = this._detailPage.getBindingContext().getPath();
+      const orderItemsTable = this.byId('this._orderItemsTable') as Table;
 
       const totalPrice = orderItemsTable
         .getItems()
@@ -134,38 +135,38 @@ export default class Main extends BaseController {
         .reduce((acc, curr) => acc + Number(curr), 0);
 
       // TODO: refactor rounding (put to its own method etc.)
-      model.setProperty(
+      this._model.setProperty(
         orderPath + '/salesPrice',
         (Math.round(totalPrice * 100) / 100).toFixed(2).toString()
       );
       // TODO: implement currency-handling
-      model.setProperty(orderPath + '/salesPriceCurrency_code', 'EUR');
+      this._model.setProperty(orderPath + '/salesPriceCurrency_code', 'EUR');
     });
   }
 
   public onPressCreateOrder() {
-    const ordersList = this.byId('ordersList') as List;
-    const itemsBinding = ordersList?.getBinding('items') as ODataListBinding;
+    const itemsBinding = this._ordersList?.getBinding(
+      'items'
+    ) as ODataListBinding;
     const newOrderContext = itemsBinding.create({});
-    const firstItem = ordersList.getItems()[0];
-    const detailPage = this.byId('detailPage') as Page;
-    const splitApp = this.byId('splitApp') as SplitApp;
+    const firstItem = this._ordersList.getItems()[0];
+    const detailPage = this._detailPage as Page;
 
-    ordersList.setSelectedItem(firstItem);
+    this._ordersList.setSelectedItem(firstItem);
 
     detailPage?.bindElement(newOrderContext.getPath());
-    splitApp.toDetail(detailPage, 'slide', {}, {});
+    // @ts-expect-error
+    this._splitApp.toDetail(detailPage);
     this.byId('title')?.focus();
   }
 
   public onPressCreateOrderItem(event: UI5Event) {
-    const itemsTable = this.byId('itemsTable') as Table;
-    const itemsBinding = itemsTable?.getBinding('items') as any;
+    const itemsBinding = this._orderItemsTable?.getBinding('items') as any;
 
     itemsBinding.create({ quantity: 1 });
 
     setTimeout(() => {
-      const firstItem = itemsTable?.getItems()[0] as ColumnListItem;
+      const firstItem = this._orderItemsTable?.getItems()[0] as ColumnListItem;
       const firstInput = firstItem.getCells()[0];
       firstInput.focus();
     }, 30);
@@ -174,11 +175,10 @@ export default class Main extends BaseController {
   public onPressDeleteItem(event: UI5Event) {
     const item = event.getSource() as Button;
     const path = item.getBindingContext()?.getPath();
-    const model = this.getModel() as ODataModel;
 
     // TODO: make it async => wait for it to calculateSalesPrice correctly
     if (path) {
-      model.remove(path);
+      this._model.remove(path);
     }
 
     this.calculateSalesPrice(event);
@@ -186,9 +186,7 @@ export default class Main extends BaseController {
 
   public onSearch(event: UI5Event) {
     const query = event.getParameter('query');
-    const ordersList = this.byId('ordersList') as List;
-
-    const bindingInfo = ordersList.getBindingInfo('items') as any;
+    const bindingInfo = this._ordersList.getBindingInfo('items') as any;
 
     if (!bindingInfo.parameters) {
       bindingInfo.parameters = {};
@@ -198,23 +196,21 @@ export default class Main extends BaseController {
     }
     bindingInfo.parameters.custom.search = query;
 
-    ordersList.bindItems(bindingInfo);
+    this._ordersList.bindItems(bindingInfo);
   }
 
   public async onPressDeleteOrder(event: UI5Event) {
     const item = event.getSource() as Button;
     const path = item.getBindingContext()?.getPath();
-    const model = this.getModel() as ODataModel;
-    const ordersList = this.byId('ordersList') as List;
-    const ordersListItems = ordersList.getItems();
-    const itemIndex = ordersList
+    const ordersListItems = this._ordersList.getItems();
+    const itemIndex = this._ordersList
       .getItems()
       .findIndex((item) => item.getBindingContext().getPath() === path);
 
     // TODO: make it async => wait for it to calculateSalesPrice correctly
     if (path) {
       await new Promise<void>((resolve, reject) => {
-        model.remove(path, { success: resolve, error: reject });
+        this._model.remove(path, { success: resolve, error: reject });
       });
     }
 
@@ -226,14 +222,12 @@ export default class Main extends BaseController {
   }
 
   onPressSubmit() {
-    const model = this.getModel() as ODataModel;
     const resBundle = this.getResourceBundle() as ResourceBundle;
-    const detailPage = this.byId('detailPage') as Page;
 
-    model.submitChanges({
+    this._model.submitChanges({
       success: () =>
         MessageToast.show(resBundle.getText('submit.successful'), {
-          of: detailPage,
+          of: this._detailPage,
           offset: '0 -80'
         }),
       error: () => MessageBox.error(resBundle.getText('submit.error'))
@@ -241,13 +235,7 @@ export default class Main extends BaseController {
   }
 
   public onPressPrint() {
-    const model = this.getModel() as ODataModel;
-    const page = this.byId('detailPage') as Page;
-    const path = page.getBindingContext().getPath();
-    const order = page.getBindingContext().getObject();
-
-    const tableItems = this.byId('itemsTable') as Table;
-    const items = tableItems
+    const items = this._orderItemsTable
       .getItems()
       .map((item) => item.getBindingContext().getObject());
 
