@@ -1,10 +1,10 @@
 import BaseController from './BaseController';
-import formatter from '../this._model/formatter';
+import formatter from '../model/formatter';
 import List from 'sap/m/List';
 import SplitApp from 'sap/m/SplitApp';
 import UI5Event from 'sap/ui/base/Event';
-import ODataModel from 'sap/ui/this._model/odata/v2/ODataModel';
-import ODataListBinding from 'sap/ui/this._model/odata/v2/ODataListBinding';
+import ODataModel from 'sap/ui/model/odata/v2/ODataModel';
+import ODataListBinding from 'sap/ui/model/odata/v2/ODataListBinding';
 import Table from 'sap/m/Table';
 import ColumnListItem from 'sap/m/ColumnListItem';
 import Button from 'sap/m/Button';
@@ -38,16 +38,17 @@ export default class Main extends BaseController {
     this._ordersList = this.byId('ordersList') as List;
     this._orderItemsTable = this.byId('this._orderItemsTable') as Table;
     this._splitApp = this.byId('splitApp') as SplitApp;
-    this._model = this.getModel() as ODataModel;
-    this._detailPage = this._detailPage as Page;
+    this._detailPage = this.byId('detailPage') as Page;
 
     router.getRoute('main')?.attachPatternMatched(() => {
-      this.byId('this._ordersList')
-        ?.getBinding('items')
-        ?.attachEventOnce('change', () => {
-          this._selectFirstItem();
-        });
+      this._ordersList?.getBinding('items')?.attachEventOnce('change', () => {
+        this._selectFirstItem();
+      });
     });
+  }
+
+  public onAfterRendering() {
+    this._model = this.getModel() as ODataModel;
   }
 
   private _selectFirstItem() {
