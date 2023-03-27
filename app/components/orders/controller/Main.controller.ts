@@ -36,7 +36,7 @@ export default class Main extends BaseController {
     const router = this.getRouter();
 
     this._ordersList = this.byId('ordersList') as List;
-    this._orderItemsTable = this.byId('this._orderItemsTable') as Table;
+    this._orderItemsTable = this.byId('itemsTable') as Table;
     this._splitApp = this.byId('splitApp') as SplitApp;
     this._detailPage = this.byId('detailPage') as Page;
 
@@ -126,9 +126,8 @@ export default class Main extends BaseController {
       );
 
       const orderPath = this._detailPage.getBindingContext().getPath();
-      const orderItemsTable = this.byId('this._orderItemsTable') as Table;
 
-      const totalPrice = orderItemsTable
+      const totalPrice = this._orderItemsTable
         .getItems()
         .map((item) => item.getBindingContext().getProperty('salesPrice'))
         .map((price) => Number(price))
