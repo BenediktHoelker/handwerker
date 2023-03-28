@@ -67,7 +67,7 @@ export default class Main extends BaseController {
     this._ordersList.setSelectedItem(firstOrdersListItem);
 
     if (path) {
-      this._detailPage?.bindElement(path);
+      this._bindDetailView(path);
     }
   }
 
@@ -76,11 +76,11 @@ export default class Main extends BaseController {
 
     if (!listItem.getBindingContext()) return; // Group headers don't have a context
 
-    this.checkForPendingChanges().then(() => {
-      this._bindDetailView(listItem.getBindingContext().getPath());
-      // @ts-expect-error
-      this._splitApp.toDetail(this._detailPage, 'slide', {}, {});
-    });
+    await this.checkForPendingChanges();
+
+    this._bindDetailView(listItem.getBindingContext().getPath());
+    // @ts-expect-error
+    this._splitApp.toDetail(this._detailPage);
   }
 
   private _bindDetailView(path: string) {
@@ -127,54 +127,55 @@ export default class Main extends BaseController {
     }
   }
 
-  public showMaster() {
-    this.checkForPendingChanges().then(() => {
-      this._splitApp.backMaster({}, {});
-    });
+  public async showMaster() {
+    await this.checkForPendingChanges();
+    this._splitApp.backMaster({}, {});
   }
 
   public calculateSalesPrice(event: UI5Event) {
     const control = event.getSource() as Input;
     const path = control.getBindingContext()?.getPath();
 
-    // setTimeout(() => {
-    const orderItem = control.getBindingContext()?.getObject() as {
-      quantity: String;
-      unitSalesPrice: String;
-      unitSalesPriceCurrency_code: String;
-    };
-    const totalItemPriceRaw =
-      Number(orderItem.quantity) * Number(orderItem.unitSalesPrice);
-    const totalItemPrice = this._roundTo2Digits(totalItemPriceRaw);
+    setTimeout(() => {
+      const orderItem = control.getBindingContext()?.getObject() as {
+        quantity: String;
+        unitSalesPrice: String;
+        unitSalesPriceCurrency_code: String;
+      };
+      const totalItemPriceRaw =
+        Number(orderItem.quantity) * Number(orderItem.unitSalesPrice);
+      const totalItemPrice = this._roundTo2Digits(totalItemPriceRaw);
 
-    this._model.setProperty(path + '/salesPrice', totalItemPrice);
-    this._model.setProperty(
-      path + '/salesPriceCurrency_code',
-      orderItem.unitSalesPriceCurrency_code
-    );
+      this._model.setProperty(path + '/salesPrice', totalItemPrice);
+      this._model.setProperty(
+        path + '/salesPriceCurrency_code',
+        orderItem.unitSalesPriceCurrency_code
+      );
 
-    const orderPath = this._detailPage.getBindingContext().getPath();
+      const orderPath = this._detailPage.getBindingContext().getPath();
 
-    const totalPrice = this._orderItemsTable
-      .getItems()
-      .map((item) => item.getBindingContext().getProperty('salesPrice'))
-      .map((price) => Number(price))
-      .filter((price) => !!price && !isNaN(price))
-      .reduce((acc, curr) => acc + Number(curr), 0);
+      const totalPrice = this._orderItemsTable
+        .getItems()
+        .map((item) => item.getBindingContext().getProperty('salesPrice'))
+        .map((price) => Number(price))
+        .filter((price) => !!price && !isNaN(price))
+        .reduce((acc, curr) => acc + Number(curr), 0);
 
-    this._model.setProperty(
-      orderPath + '/salesPrice',
-      this._roundTo2Digits(totalPrice)
-    );
-    // TODO: implement currency-handling
-    this._model.setProperty(orderPath + '/salesPriceCurrency_code', 'EUR');
-    // });
+      this._model.setProperty(
+        orderPath + '/salesPrice',
+        this._roundTo2Digits(totalPrice)
+      );
+      // TODO: implement currency-handling
+      this._model.setProperty(orderPath + '/salesPriceCurrency_code', 'EUR');
+    });
   }
 
   private _roundTo2Digits(raw: any) {
     const rawNumber = Number(raw);
     const rounded = (Math.round(rawNumber * 100) / 100).toFixed(2).toString();
-    return rounded;
+    // The backend returns 1.5 when the frontend has 1.50 => this is interpreted as pendingChanges by the v2-ODataModel
+    const removePadding = parseFloat(rounded).toString();
+    return removePadding;
   }
 
   public onPressCreateOrder() {
