@@ -14,6 +14,9 @@ import MessageBox from 'sap/m/MessageBox';
 import Input from 'sap/m/Input';
 import Page from 'sap/m/Page';
 import jsPDFInvoiceTemplate, { OutputType } from 'jspdf-invoice-template';
+import Binding from 'sap/ui/model/Binding';
+import View from 'sap/ui/vk/View';
+import JSONModel from 'sap/ui/model/json/JSONModel';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -25,6 +28,8 @@ export default class Main extends BaseController {
   private _model: ODataModel;
   private _detailPage: Page;
   private _orderItemsTable: Table;
+  private _viewModel: JSONModel;
+
   /**
    * onInit
    */
@@ -35,6 +40,10 @@ export default class Main extends BaseController {
     this._orderItemsTable = this.byId('itemsTable') as Table;
     this._splitApp = this.byId('splitApp') as SplitApp;
     this._detailPage = this.byId('detailPage') as Page;
+
+    this._viewModel = new JSONModel({ hasPendingChanges: false });
+
+    this.setModel(this._viewModel, 'viewModel');
 
     router.getRoute('main')?.attachPatternMatched(() => {
       this._ordersList?.getBinding('items')?.attachEventOnce('change', () => {
@@ -56,6 +65,7 @@ export default class Main extends BaseController {
     const path = firstOrdersListItem?.getBindingContext()?.getPath();
 
     this._ordersList.setSelectedItem(firstOrdersListItem);
+
     if (path) {
       this._detailPage?.bindElement(path);
     }
@@ -66,11 +76,24 @@ export default class Main extends BaseController {
 
     if (!listItem.getBindingContext()) return; // Group headers don't have a context
 
-    this._detailPage?.bindElement(listItem.getBindingContext().getPath());
-
     this.checkForPendingChanges().then(() => {
+      this._bindDetailView(listItem.getBindingContext().getPath());
       // @ts-expect-error
       this._splitApp.toDetail(this._detailPage, 'slide', {}, {});
+    });
+  }
+
+  private _bindDetailView(path: string) {
+    this._detailPage?.bindElement(path);
+
+    const context = this._detailPage.getBindingContext();
+    const binding = new Binding(this._model, context.getPath(), context);
+
+    binding.attachChange(() => {
+      this._viewModel.setProperty(
+        '/hasPendingChanges',
+        this._model.hasPendingChanges()
+      );
     });
   }
 
@@ -84,7 +107,20 @@ export default class Main extends BaseController {
               this._model.resetChanges(undefined, true, true);
 
               resolve();
-            } else reject();
+            } else {
+              const itemToSelect = this._ordersList
+                .getItems()
+                .find(
+                  (item) =>
+                    item.getBindingContext().getPath() ===
+                    this._detailPage.getBindingContext().getPath()
+                );
+
+              this._ordersList.setSelectedItem(itemToSelect);
+              itemToSelect.focus();
+
+              reject();
+            }
           }
         });
       });
@@ -101,38 +137,38 @@ export default class Main extends BaseController {
     const control = event.getSource() as Input;
     const path = control.getBindingContext()?.getPath();
 
-    setTimeout(() => {
-      const orderItem = control.getBindingContext()?.getObject() as {
-        quantity: String;
-        unitSalesPrice: String;
-        unitSalesPriceCurrency_code: String;
-      };
-      const totalItemPriceRaw =
-        Number(orderItem.quantity) * Number(orderItem.unitSalesPrice);
-      const totalItemPrice = this._roundTo2Digits(totalItemPriceRaw);
+    // setTimeout(() => {
+    const orderItem = control.getBindingContext()?.getObject() as {
+      quantity: String;
+      unitSalesPrice: String;
+      unitSalesPriceCurrency_code: String;
+    };
+    const totalItemPriceRaw =
+      Number(orderItem.quantity) * Number(orderItem.unitSalesPrice);
+    const totalItemPrice = this._roundTo2Digits(totalItemPriceRaw);
 
-      this._model.setProperty(path + '/salesPrice', totalItemPrice);
-      this._model.setProperty(
-        path + '/salesPriceCurrency_code',
-        orderItem.unitSalesPriceCurrency_code
-      );
+    this._model.setProperty(path + '/salesPrice', totalItemPrice);
+    this._model.setProperty(
+      path + '/salesPriceCurrency_code',
+      orderItem.unitSalesPriceCurrency_code
+    );
 
-      const orderPath = this._detailPage.getBindingContext().getPath();
+    const orderPath = this._detailPage.getBindingContext().getPath();
 
-      const totalPrice = this._orderItemsTable
-        .getItems()
-        .map((item) => item.getBindingContext().getProperty('salesPrice'))
-        .map((price) => Number(price))
-        .filter((price) => !!price && !isNaN(price))
-        .reduce((acc, curr) => acc + Number(curr), 0);
+    const totalPrice = this._orderItemsTable
+      .getItems()
+      .map((item) => item.getBindingContext().getProperty('salesPrice'))
+      .map((price) => Number(price))
+      .filter((price) => !!price && !isNaN(price))
+      .reduce((acc, curr) => acc + Number(curr), 0);
 
-      this._model.setProperty(
-        orderPath + '/salesPrice',
-        this._roundTo2Digits(totalPrice)
-      );
-      // TODO: implement currency-handling
-      this._model.setProperty(orderPath + '/salesPriceCurrency_code', 'EUR');
-    });
+    this._model.setProperty(
+      orderPath + '/salesPrice',
+      this._roundTo2Digits(totalPrice)
+    );
+    // TODO: implement currency-handling
+    this._model.setProperty(orderPath + '/salesPriceCurrency_code', 'EUR');
+    // });
   }
 
   private _roundTo2Digits(raw: any) {
@@ -151,7 +187,7 @@ export default class Main extends BaseController {
 
     this._ordersList.setSelectedItem(firstItem);
 
-    detailPage?.bindElement(newOrderContext.getPath());
+    this._bindDetailView(newOrderContext.getPath());
     // @ts-expect-error
     this._splitApp.toDetail(detailPage);
     this.byId('title')?.focus();

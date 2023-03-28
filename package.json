@@ -35,9 +35,9 @@
   },
   "scripts": {
     "start": "run-p start:cds start:ui5",
-    "test": "cds run --profile test",
+    "test": "cds-ts run --profile test",
     "start:ui5": "ui5 serve --port 8080",
-    "start:cds": "cds run --profile development",
+    "start:cds": "cds-ts run --profile development",
     "start:dist": "ui5 serve  --port 8080 --config ui5-dist.yaml",
     "deploy": "sh set-env.sh development && cds-pg-migra",
     "deploy:overwrite": "sh set-env.sh development && cds-pg-migra -o",

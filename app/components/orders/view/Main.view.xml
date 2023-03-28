@@ -47,7 +47,7 @@
 					<Label labelFor="description" text="{/Orders/description/##com.sap.vocabularies.Common.v1.Label/String}"/>
 					<TextArea id="description" value="{description}"/>
 				</form:SimpleForm>
-				<Table id="itemsTable" items="{items}" fixedLayout="false">
+				<Table id="itemsTable" items="{path: 'items', sorter: [{path: 'equipmentName'}, {path: 'ID'}]}" fixedLayout="false">
 					<headerToolbar>
 						<Toolbar >
 							<Title text="{i18n>orderItems}" />
@@ -96,10 +96,10 @@
 				</Table>
 				<footer>
 					<Toolbar >
-						<Button type="Reject" text="{i18n>deleteOrder}" press="onPressDeleteOrder"/>
+						<Button icon="sap-icon://delete" type="Reject" text="{i18n>deleteOrder}" press="onPressDeleteOrder"/>
 						<ToolbarSpacer />
-						<Button text="{i18n>print}" press="onPressPrint"/>
-						<Button type="Emphasized" text="{i18n>submit}" press="onPressSubmit"/>
+						<Button icon="sap-icon://print" text="{i18n>print}" press="onPressPrint"/>
+						<Button type="Emphasized" text="{i18n>submit}" press="onPressSubmit" enabled="{viewModel>/hasPendingChanges}"/>
 						<customData>
 							<core:CustomData key="html2canvas-ignore" value="true" writeToDom="true" />
 						</customData>

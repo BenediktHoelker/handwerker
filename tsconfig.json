@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "es2015",
+    "target": "ES6",
+    "module": "commonjs",
     "skipLibCheck": true,
     "preserveConstEnums": true,
     "sourceMap": false,
@@ -10,6 +10,7 @@
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
     "rootDirs": [
+      "./srv",
       "./app/components/orders",
       "./app/components/orderitems",
       "./app/components/equipmentsworklist"
@@ -27,6 +28,7 @@
     }
   },
   "include": [
+    "./srv/**/*",
     "./app/components/orders/**/*",
     "./app/components/orderitems/**/*",
     "./app/components/equipmentsworklist/**/*"
