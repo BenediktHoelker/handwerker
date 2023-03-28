@@ -12,7 +12,7 @@
     "express": "^4",
     "express-openid-connect": "^2.12.1",
     "jsonwebtoken": "^9.0.0",
-    "jspdf-invoice-template": "^1.4.3"
+    "jspdf-invoice-template": "https://github.com/BenediktHoelker/jspdf-invoice-template.git"
   },
   "devDependencies": {
     "@sapui5/ts-types-esm": "1.108.11",
