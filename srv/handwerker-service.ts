@@ -16,8 +16,6 @@ export = async (srv: Service): Promise<void> => {
   });
 
   srv.before('CREATE', 'Files', (req) => {
-    console.log('Create called');
-    console.log(JSON.stringify(req.data));
     req.data.url = `/attachments/Files(${req.data.ID})/content`;
   });
 
