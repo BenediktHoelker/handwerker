@@ -17,6 +17,7 @@ import jsPDFInvoiceTemplate, { OutputType } from 'jspdf-invoice-template';
 import Binding from 'sap/ui/model/Binding';
 import View from 'sap/ui/vk/View';
 import JSONModel from 'sap/ui/model/json/JSONModel';
+import Dialog from 'sap/m/Dialog';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -176,6 +177,11 @@ export default class Main extends BaseController {
     // The backend returns 1.5 when the frontend has 1.50 => this is interpreted as pendingChanges by the v2-ODataModel
     const removePadding = parseFloat(rounded).toString();
     return removePadding;
+  }
+
+  public onPressOpenFilesDialog() {
+    const fileUploadDialog = this.byId('fileUploadDialog') as Dialog;
+    fileUploadDialog.open();
   }
 
   public onPressCreateOrder() {

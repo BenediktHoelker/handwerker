@@ -98,6 +98,7 @@
 					<Toolbar >
 						<Button icon="sap-icon://delete" type="Reject" text="{i18n>deleteOrder}" press="onPressDeleteOrder"/>
 						<ToolbarSpacer />
+						<Button icon="sap-icon://attachment" text="{i18n>files}" press="onPressOpenFilesDialog"/>
 						<Button icon="sap-icon://print" text="{i18n>print}" press="onPressPrint"/>
 						<Button type="Emphasized" text="{i18n>submit}" press="onPressSubmit" enabled="{viewModel>/hasPendingChanges}"/>
 						<customData>
@@ -105,6 +106,9 @@
 						</customData>
 					</Toolbar>
 				</footer>
+				<dependents>
+					<core:Fragment fragmentName="handwerker.components.orders.view.fragments.FileUpload" type="XML"/>
+				</dependents>
 			</Page>
 		</detailPages>
 	</SplitApp>
