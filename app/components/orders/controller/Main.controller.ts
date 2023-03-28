@@ -18,6 +18,8 @@ import Binding from 'sap/ui/model/Binding';
 import View from 'sap/ui/vk/View';
 import JSONModel from 'sap/ui/model/json/JSONModel';
 import Dialog from 'sap/m/Dialog';
+import UploadSet from 'sap/m/upload/UploadSet';
+import UploaderHttpRequestMethod from 'sap/m/upload/UploaderHttpRequestMethod';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -182,6 +184,49 @@ export default class Main extends BaseController {
   public onPressOpenFilesDialog() {
     const fileUploadDialog = this.byId('fileUploadDialog') as Dialog;
     fileUploadDialog.open();
+  }
+
+  public onAfterItemAdded(event: UI5Event) {
+    const item = event.getParameter('item');
+    this._createEntity(item).then((id: string) => {
+      this._uploadContent(item, id);
+    });
+  }
+
+  public onUploadCompleted(oEvent: UI5Event) {
+    const uploadSet = this.byId('uploadSet') as UploadSet;
+    uploadSet.removeAllIncompleteItems();
+  }
+
+  private _createEntity(item: any) {
+    const data = {
+      mediaType: item.getMediaType(),
+      fileName: item.getFileName(),
+      size: item.getFileObject().size
+    };
+
+    const settings = {
+      url: '/v2/handwerker/Attachments',
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      data: JSON.stringify(data)
+    };
+
+    return new Promise((resolve, reject) => {
+      $.ajax(settings)
+        .done((results, textStatus, request) => resolve(results.d.ID as string))
+        .fail((err) => reject(err));
+    });
+  }
+
+  private _uploadContent(item: any, id: string) {
+    const url = `/v2/handwerker/Attachments(${id})/content`;
+    item.setUploadUrl(url);
+    const uploadSet = this.byId('uploadSet') as UploadSet;
+    uploadSet.setHttpRequestMethod(UploaderHttpRequestMethod.Put);
+    uploadSet.uploadItem(item);
   }
 
   public onPressCreateOrder() {

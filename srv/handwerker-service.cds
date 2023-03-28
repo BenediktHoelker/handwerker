@@ -32,5 +32,6 @@ service HandwerkerService {
         name  : String @title: '{i18n>name}';
     }
 
+    entity Attachments      as projection on my.Attachments;
     function getUserInfo() returns Users;
 }

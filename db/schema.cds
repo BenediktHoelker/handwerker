@@ -75,3 +75,15 @@ view OrderItemsAggr as
     }
     group by
         order.ID;
+
+
+entity Attachments : cuid {
+    fileName  : String;
+    size      : Integer;
+
+    @Core.MediaType  : mediaType
+    content   : LargeBinary;
+
+    @Core.IsMediaType: true
+    mediaType : String;
+}
