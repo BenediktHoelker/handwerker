@@ -11,12 +11,8 @@ import Button from 'sap/m/Button';
 import MessageToast from 'sap/m/MessageToast';
 import ResourceBundle from 'sap/base/i18n/ResourceBundle';
 import MessageBox from 'sap/m/MessageBox';
-import ReuseComponentSupport from 'sap/suite/ui/generic/template/extensionAPI/ReuseComponentSupport';
 import Input from 'sap/m/Input';
-import Tab from 'sap/ui/webc/main/Tab';
 import Page from 'sap/m/Page';
-import Splitter from 'sap/ui/layout/Splitter';
-import Fragment from 'sap/ui/core/Fragment'; //by importing
 import jsPDFInvoiceTemplate, { OutputType } from 'jspdf-invoice-template';
 
 /**
@@ -111,13 +107,9 @@ export default class Main extends BaseController {
         unitSalesPrice: String;
         unitSalesPriceCurrency_code: String;
       };
-      const totalItemPrice = (
-        Math.round(
-          Number(orderItem.quantity) * Number(orderItem.unitSalesPrice) * 100
-        ) / 100
-      )
-        .toFixed(2)
-        .toString();
+      const totalItemPriceRaw =
+        Number(orderItem.quantity) * Number(orderItem.unitSalesPrice);
+      const totalItemPrice = this._roundTo2Digits(totalItemPriceRaw);
 
       this._model.setProperty(path + '/salesPrice', totalItemPrice);
       this._model.setProperty(
@@ -134,14 +126,19 @@ export default class Main extends BaseController {
         .filter((price) => !!price && !isNaN(price))
         .reduce((acc, curr) => acc + Number(curr), 0);
 
-      // TODO: refactor rounding (put to its own method etc.)
       this._model.setProperty(
         orderPath + '/salesPrice',
-        (Math.round(totalPrice * 100) / 100).toFixed(2).toString()
+        this._roundTo2Digits(totalPrice)
       );
       // TODO: implement currency-handling
       this._model.setProperty(orderPath + '/salesPriceCurrency_code', 'EUR');
     });
+  }
+
+  private _roundTo2Digits(raw: any) {
+    const rawNumber = Number(raw);
+    const rounded = (Math.round(rawNumber * 100) / 100).toFixed(2).toString();
+    return rounded;
   }
 
   public onPressCreateOrder() {
@@ -172,13 +169,16 @@ export default class Main extends BaseController {
     }, 30);
   }
 
-  public onPressDeleteItem(event: UI5Event) {
+  public async onPressDeleteItem(event: UI5Event) {
     const item = event.getSource() as Button;
     const path = item.getBindingContext()?.getPath();
 
-    // TODO: make it async => wait for it to calculateSalesPrice correctly
-    if (path) {
-      this._model.remove(path);
+    if (path && path.includes('id')) {
+      this._model.resetChanges([path], true, true);
+    } else if (path) {
+      await new Promise<void>((resolve, reject) => {
+        this._model.remove(path, { success: resolve, error: reject });
+      });
     }
 
     this.calculateSalesPrice(event);
@@ -207,8 +207,9 @@ export default class Main extends BaseController {
       .getItems()
       .findIndex((item) => item.getBindingContext().getPath() === path);
 
-    // TODO: make it async => wait for it to calculateSalesPrice correctly
-    if (path) {
+    if (path && path.includes('id')) {
+      this._model.resetChanges([path], true, true);
+    } else if (path) {
       await new Promise<void>((resolve, reject) => {
         this._model.remove(path, { success: resolve, error: reject });
       });
