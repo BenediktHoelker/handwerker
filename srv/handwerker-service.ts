@@ -1,6 +1,7 @@
 import type { Request } from '@sap/cds/apis/services';
 import { Service } from '@sap/cds/apis/services';
 import { S3 } from 'aws-sdk';
+import { UUID } from 'aws-sdk/clients/cloudtrail';
 
 const s3 = new S3({
   accessKeyId: process.env.BUCKETEER_AWS_ACCESS_KEY_ID,
@@ -26,10 +27,34 @@ export = async (srv: Service): Promise<void> => {
       Body: req.data.content
     };
 
-    await s3.upload(params);
+    await new Promise((resolve, reject) => {
+      s3.upload(params, (err: any, data: any) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(data.Location);
+      });
+    });
 
     return req.data.content;
   });
 
-  // this.on('WRITE', 'Orders', async (req) => {db});
+  srv.on('READ', 'Attachments', (req, next) => {
+    if (!req.data.ID) {
+      return next();
+    }
+
+    return {
+      value: _getObjectStream(req.data.ID)
+    };
+  });
+
+  /* Get object stream from S3 */
+  function _getObjectStream(objectKey: UUID) {
+    const params = {
+      Bucket: process.env.BUCKETEER_BUCKET_NAME,
+      Key: objectKey
+    };
+    return s3.getObject(params).createReadStream();
+  }
 };

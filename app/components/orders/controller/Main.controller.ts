@@ -186,11 +186,11 @@ export default class Main extends BaseController {
     fileUploadDialog.open();
   }
 
-  public onAfterItemAdded(event: UI5Event) {
+  public async onAfterItemAdded(event: UI5Event) {
     const item = event.getParameter('item');
-    this._createEntity(item).then((id: string) => {
-      this._uploadContent(item, id);
-    });
+    const { ID } = await this._createAttachment(item);
+
+    this._uploadContent(item, ID);
   }
 
   public onUploadCompleted(oEvent: UI5Event) {
@@ -198,33 +198,35 @@ export default class Main extends BaseController {
     uploadSet.removeAllIncompleteItems();
   }
 
-  private _createEntity(item: any) {
-    const data = {
-      mediaType: item.getMediaType(),
-      fileName: item.getFileName(),
-      size: item.getFileObject().size
-    };
+  private async _createAttachment(item: any): Promise<{
+    ID: string;
+  }> {
+    const order_ID = this._detailPage.getBindingContext().getProperty('ID');
 
-    const settings = {
-      url: '/v2/handwerker/Attachments',
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      data: JSON.stringify(data)
-    };
-
-    return new Promise((resolve, reject) => {
-      $.ajax(settings)
-        .done((results, textStatus, request) => resolve(results.d.ID as string))
-        .fail((err) => reject(err));
-    });
+    return new Promise((resolve, reject) =>
+      this._model.create(
+        '/Attachments',
+        {
+          order_ID,
+          createdAt: new Date(),
+          mediaType: item.getMediaType(),
+          fileName: item.getFileName(),
+          size: item.getFileObject().size
+        },
+        {
+          success: resolve,
+          error: reject
+        }
+      )
+    );
   }
 
-  private _uploadContent(item: any, id: string) {
-    const url = `/v2/handwerker/Attachments(${id})/content`;
-    item.setUploadUrl(url);
+  private _uploadContent(item: any, ID: string) {
+    const url = `/v2/handwerker/Attachments(${ID})/content`;
     const uploadSet = this.byId('uploadSet') as UploadSet;
+
+    item.setUploadUrl(url);
+
     uploadSet.setHttpRequestMethod(UploaderHttpRequestMethod.Put);
     uploadSet.uploadItem(item);
   }

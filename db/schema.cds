@@ -39,9 +39,10 @@ entity Orders : cuid, managed {
     @Measures.ISOCurrency: salesPriceCurrency_code
     salesPrice         : Decimal(9, 2)                   @title: '{i18n>salesPrice}';
     salesPriceCurrency : Currency                        @title: '{i18n>salesPriceCurrency}';
-
     items              : Composition of many OrderItems
                              on items.order = $self      @title: '{i18n>items}';
+    attachments        : Composition of many Attachments
+                             on attachments.order = $self;
 }
 
 entity OrderItems : cuid, managed {
@@ -77,7 +78,7 @@ view OrderItemsAggr as
         order.ID;
 
 
-entity Attachments : cuid {
+entity Attachments : cuid, managed {
     fileName  : String;
     size      : Integer;
 
@@ -86,4 +87,5 @@ entity Attachments : cuid {
 
     @Core.IsMediaType: true
     mediaType : String;
+    order     : Association to Orders;
 }

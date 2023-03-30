@@ -3,7 +3,22 @@
 	xmlns:upload="sap.m.upload"
 	xmlns:mvc="sap.ui.core.mvc">
 	<Dialog id="fileUploadDialog" showHeader="false" contentHeight="560px" contentWidth="480px">
-		<upload:UploadSet id="uploadSet" instantUpload="false" uploadEnabled="true" afterItemAdded="onAfterItemAdded" uploadCompleted="onUploadCompleted" />
+		<upload:UploadSet id="uploadSet" instantUpload="false" uploadEnabled="true" afterItemAdded="onAfterItemAdded" uploadCompleted="onUploadCompleted" items="{
+								path: 'attachments',
+								parameters: {
+									$orderby: 'createdAt desc'
+								},
+								templateShareable: false}">
+
+			<upload:items>
+				<upload:UploadSetItem fileName="{fileName}" mediaType="{mediaType}" url="{url}" enabledEdit="false" visibleEdit="false" openPressed="onOpenPressed">
+					<upload:attributes>
+						<ObjectAttribute title="Uploaded on" text="{path: 'createdAt', type: 'sap.ui.model.type.Date', style: 'short'}" active="false" />
+						<ObjectAttribute title="File Size" text="{size}" active="false" />
+					</upload:attributes>
+				</upload:UploadSetItem>
+			</upload:items>
+		</upload:UploadSet>
 		<endButton>
 			<Button type="Emphasized" text="{i18n>ok}"/>
 		</endButton>
