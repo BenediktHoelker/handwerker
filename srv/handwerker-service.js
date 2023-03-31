@@ -1,11 +1,10 @@
-import { S3 } from 'aws-sdk';
+const AWS = require('aws-sdk');
 
-const s3 = new S3({
+const s3 = new AWS.S3({
   accessKeyId: process.env.BUCKETEER_AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.BUCKETEER_AWS_SECRET_ACCESS_KEY,
   region: process.env.BUCKETEER_AWS_REGION
 });
-
 
 module.exports = cds.service.impl(async function () {
   // eslint-disable-next-line func-names
@@ -55,4 +54,4 @@ module.exports = cds.service.impl(async function () {
     };
     return s3.getObject(params).createReadStream();
   }
-};
+});
