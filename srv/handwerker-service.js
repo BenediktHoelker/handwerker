@@ -1,7 +1,4 @@
-import type { Request } from '@sap/cds/apis/services';
-import { Service } from '@sap/cds/apis/services';
 import { S3 } from 'aws-sdk';
-import { UUID } from 'aws-sdk/clients/cloudtrail';
 
 const s3 = new S3({
   accessKeyId: process.env.BUCKETEER_AWS_ACCESS_KEY_ID,
@@ -9,9 +6,10 @@ const s3 = new S3({
   region: process.env.BUCKETEER_AWS_REGION
 });
 
-export = async (srv: Service): Promise<void> => {
+
+module.exports = cds.service.impl(async function () {
   // eslint-disable-next-line func-names
-  srv.on('getUserInfo', async (req: Request) => {
+  srv.on('getUserInfo', async (req) => {
     const email = req.user.email || 'john.doe@web.de';
     return { email };
   });
@@ -20,7 +18,7 @@ export = async (srv: Service): Promise<void> => {
     req.data.url = `/attachments/Files(${req.data.ID})/content`;
   });
 
-  srv.on('UPDATE', 'Attachments', async (req: Request) => {
+  srv.on('UPDATE', 'Attachments', async (req) => {
     const params = {
       Bucket: process.env.BUCKETEER_BUCKET_NAME,
       Key: req.data.ID,
@@ -28,7 +26,7 @@ export = async (srv: Service): Promise<void> => {
     };
 
     await new Promise((resolve, reject) => {
-      s3.upload(params, (err: any, data: any) => {
+      s3.upload(params, (err, data) => {
         if (err) {
           reject(err);
         }
@@ -50,7 +48,7 @@ export = async (srv: Service): Promise<void> => {
   });
 
   /* Get object stream from S3 */
-  function _getObjectStream(objectKey: UUID) {
+  function _getObjectStream(objectKey) {
     const params = {
       Bucket: process.env.BUCKETEER_BUCKET_NAME,
       Key: objectKey
