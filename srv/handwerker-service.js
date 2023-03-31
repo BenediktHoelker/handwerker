@@ -8,16 +8,16 @@ const s3 = new AWS.S3({
 
 module.exports = cds.service.impl(async function () {
   // eslint-disable-next-line func-names
-  srv.on('getUserInfo', async (req) => {
+  this.on('getUserInfo', async (req) => {
     const email = req.user.email || 'john.doe@web.de';
     return { email };
   });
 
-  srv.before('CREATE', 'Files', (req) => {
+  this.before('CREATE', 'Files', (req) => {
     req.data.url = `/attachments/Files(${req.data.ID})/content`;
   });
 
-  srv.on('UPDATE', 'Attachments', async (req) => {
+  this.on('UPDATE', 'Attachments', async (req) => {
     const params = {
       Bucket: process.env.BUCKETEER_BUCKET_NAME,
       Key: req.data.ID,
@@ -36,7 +36,7 @@ module.exports = cds.service.impl(async function () {
     return req.data.content;
   });
 
-  srv.on('READ', 'Attachments', (req, next) => {
+  this.on('READ', 'Attachments', (req, next) => {
     if (!req.data.ID) {
       return next();
     }
