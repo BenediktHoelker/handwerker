@@ -36,7 +36,39 @@ annotate my.OrderItems with {
     });
 };
 
-annotate my.Orders with {
+annotate my.Orders with @(UI: {
+    HeaderInfo: {
+        $Type         : 'UI.HeaderInfoType',
+        TypeName      : '{i18n>orders}',
+        TypeNamePlural: '{i18n>order}',
+        Title         : {
+            $Type: 'UI.DataField',
+            Value: title,
+        },
+    },
+    LineItem  : [
+        {
+            $Type: 'UI.DataField',
+            Value: title,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: description,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: clientName,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: salesPrice
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: createdOn
+        },
+    ],
+}) {
     client
     @(Common: {
         Text     : {
@@ -61,7 +93,6 @@ annotate my.Orders with {
         }
     });
 };
-
 
 annotate my.Equipments with
 @(UI: {
@@ -108,10 +139,23 @@ annotate my.BusinessPartners with
             Value: name,
         },
     },
-    Facets         : [{
-        $Type : 'UI.ReferenceFacet',
-        Target: '@UI.Identification',
-    }, ],
+    Facets         : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            Target: '@UI.Identification',
+            Label : '{i18n>identification}',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Target: 'address/@UI.Identification',
+            Label : '{i18n>address}',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Target: 'orders/@UI.LineItem',
+            Label : '{i18n>orders}',
+        },
+    ],
     Identification : [{
         $Type: 'UI.DataField',
         Value: name,
@@ -129,4 +173,48 @@ annotate my.BusinessPartners with
             TextArrangement: #TextOnly,
         }
     )
+};
+
+annotate my.Adresses with @UI: {
+    LineItem      : [
+        {
+            $Type: 'UI.DataField',
+            Value: street,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: houseNumber,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: postalCode,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: street,
+        },
+    ],
+    HeaderInfo    : {
+        $Type         : 'UI.HeaderInfoType',
+        TypeName      : '{i18n>address}',
+        TypeNamePlural: '{i18n>addresses}'
+    },
+    Identification: [
+        {
+            $Type: 'UI.DataField',
+            Value: street,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: houseNumber,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: postalCode,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: street,
+        },
+    ],
 };

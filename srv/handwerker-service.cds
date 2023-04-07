@@ -2,7 +2,10 @@ using {handwerker as my} from '../db/schema';
 
 @(requires: 'authenticated-user')
 service HandwerkerService {
+    @odata.draft.enabled
     entity BusinessPartners as projection on my.BusinessPartners;
+
+    entity Adresses         as projection on my.Adresses;
     entity Equipments       as projection on my.Equipments;
     entity Settings         as projection on my.Settings;
     entity OrderItemsAggr   as projection on my.OrderItemsAggr;

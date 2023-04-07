@@ -13,9 +13,18 @@ entity Currencies {
 }
 
 entity BusinessPartners : cuid, managed {
-    name   : String                       @title: '{i18n>name}';
-    orders : Association to many Orders
-                 on orders.client = $self @title: '{i18n>orders}';
+    name    : String                       @title: '{i18n>name}';
+    orders  : Association to many Orders
+                  on orders.client = $self @title: '{i18n>orders}';
+    address : Association to Adresses
+}
+
+@title: '{i18n>address}'
+entity Adresses : cuid, managed {
+    street      : String @title: '{i18n>street}';
+    houseNumber : String @title: '{i18n>houseNumber}';
+    postalCode  : String @title: '{i18n>postalCode}';
+    city        : String @title: '{i18n>city}';
 }
 
 entity Equipments : cuid, managed {

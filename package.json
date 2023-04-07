@@ -16,6 +16,7 @@
     "jspdf-invoice-template": "https://github.com/BenediktHoelker/jspdf-invoice-template.git"
   },
   "devDependencies": {
+    "@sap/ux-specification": "^1.108.2",
     "@sapui5/ts-types-esm": "1.108.11",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
@@ -47,7 +48,8 @@
     "build": "ui5 build self-contained --clean-dest --all",
     "ts-typecheck": "tsc --noEmit",
     "prettier-format": "prettier --config .prettierrc app/**/*.ts --write",
-    "lint": "eslint webapp"
+    "lint": "eslint webapp",
+    "watch-businesspartners": "cds watch --open businesspartners/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "ui5": {
     "dependencies": [
@@ -57,5 +59,8 @@
       "ui5-tooling-modules",
       "ui5-task-pwa-enabler"
     ]
-  }
+  },
+  "sapux": [
+    "app/businesspartners"
+  ]
 }

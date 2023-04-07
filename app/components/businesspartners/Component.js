@@ -1,12 +1,12 @@
 sap.ui.define(
-  ['sap/suite/ui/generic/template/lib/AppComponent'],
-  function (Component) {
-    'use strict';
+    ["sap/fe/core/AppComponent"],
+    function (Component) {
+        "use strict";
 
-    return Component.extend('handwerker.businesspartners.Component', {
-      metadata: {
-        manifest: 'json'
-      }
-    });
-  }
+        return Component.extend("businesspartners.Component", {
+            metadata: {
+                manifest: "json"
+            }
+        });
+    }
 );

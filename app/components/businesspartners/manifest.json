@@ -1,7 +1,7 @@
 {
-  "_version": "1.40.0",
+  "_version": "1.49.0",
   "sap.app": {
-    "id": "handwerker.components.businesspartners",
+    "id": "businesspartners",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -11,17 +11,18 @@
     "description": "{{appDescription}}",
     "resources": "resources.json",
     "sourceTemplate": {
-      "id": "@sap-ux/fiori-elements-writer:lrop",
-      "version": "0.3.6",
-      "toolsId": "cef77290-8a2e-4df2-8c91-e7c2362e6124"
+      "id": "@sap/generator-fiori:worklist",
+      "version": "1.9.3",
+      "toolsId": "e2c087ab-1167-4f3e-ad92-75aa5fbe19e5"
     },
     "dataSources": {
       "mainService": {
-        "uri": "/v2/handwerker/",
+        "uri": "/handwerker/",
         "type": "OData",
         "settings": {
+          "annotations": [],
           "localUri": "localService/metadata.xml",
-          "odataVersion": "2.0"
+          "odataVersion": "4.0"
         }
       }
     }
@@ -45,12 +46,12 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.102.1",
+      "minUI5Version": "1.112.1",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
-        "sap.ui.generic.app": {},
-        "sap.suite.ui.generic.template": {}
+        "sap.ushell": {},
+        "sap.fe.templates": {}
       }
     },
     "contentDensities": {
@@ -61,17 +62,17 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "handwerker.businesspartners.equipments.i18n.i18n"
+          "bundleName": "businesspartners.i18n.i18n"
         }
       },
       "": {
         "dataSource": "mainService",
         "preload": true,
         "settings": {
-          "defaultBindingMode": "TwoWay",
-          "defaultCountMode": "Inline",
-          "defaultUpdateMethod": "Put",
-          "refreshAfterChange": false
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
         }
       },
       "@i18n": {
@@ -84,42 +85,69 @@
     },
     "routing": {
       "config": {},
-      "routes": [],
-      "targets": {}
-    }
-  },
-  "sap.ui.generic.app": {
-    "_version": "1.3.0",
-    "settings": {
-      "forceGlobalRefresh": false,
-      "objectPageHeaderType": "Dynamic",
-      "considerAnalyticalParameters": true,
-      "showDraftToggle": false
-    },
-    "pages": {
-      "ListReport|BusinessPartners": {
-        "entitySet": "BusinessPartners",
-        "component": {
-          "name": "sap.suite.ui.generic.template.ListReport",
-          "list": true,
-          "settings": {
-            "condensedTableLayout": true,
-            "smartVariantManagement": true,
-            "variantManagementHidden": true,
-            "enableTableFilterInPageVariant": true,
-            "filterSettings": {
-              "dateSettings": {
-                "useDateRange": true
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "BusinessPartnersList",
+          "target": "BusinessPartnersList"
+        },
+        {
+          "pattern": "BusinessPartners({key}):?query:",
+          "name": "BusinessPartnersObjectPage",
+          "target": "BusinessPartnersObjectPage"
+        },
+        {
+          "pattern": "BusinessPartners({key})/orders({key2}):?query:",
+          "name": "OrdersObjectPage",
+          "target": "OrdersObjectPage"
+        }
+      ],
+      "targets": {
+        "BusinessPartnersList": {
+          "type": "Component",
+          "id": "BusinessPartnersList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "entitySet": "BusinessPartners",
+              "variantManagement": "Page",
+              "hideFilterBar": true,
+              "navigation": {
+                "BusinessPartners": {
+                  "detail": {
+                    "route": "BusinessPartnersObjectPage"
+                  }
+                }
               }
             }
           }
         },
-        "pages": {
-          "ObjectPage|BusinessPartners": {
-            "entitySet": "BusinessPartners",
-            "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
-            "component": {
-              "name": "sap.suite.ui.generic.template.ObjectPage"
+        "BusinessPartnersObjectPage": {
+          "type": "Component",
+          "id": "BusinessPartnersObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "entitySet": "BusinessPartners",
+              "navigation": {
+                "orders": {
+                  "detail": {
+                    "route": "OrdersObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "OrdersObjectPage": {
+          "type": "Component",
+          "id": "OrdersObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "entitySet": "Orders"
             }
           }
         }
