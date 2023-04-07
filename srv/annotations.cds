@@ -220,6 +220,11 @@ annotate my.Adresses with @UI: {
 };
 
 annotate my.Settings with @(UI: {
+    HeaderInfo    : {
+        $Type         : 'UI.HeaderInfoType',
+        TypeName      : '{i18n>settings}',
+        TypeNamePlural: '{i18n>settings}',
+    },
     Facets        : [
         {
             $Type : 'UI.ReferenceFacet',

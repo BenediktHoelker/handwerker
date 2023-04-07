@@ -28,7 +28,7 @@
                     <tnt:NavigationListItem text="{i18n>businessPartners}" icon="sap-icon://customer" select=".navTo($event, 'manageBusinessPartners')"/>
                     <!-- <tnt:NavigationListItem text="{i18n>equipments}" icon="sap-icon://add-equipment" select=".navTo($event, 'editEquipments')"/> -->
                     <tnt:NavigationListItem text="{i18n>equipments}" icon="sap-icon://add-equipment" select=".navTo($event, 'editEquipmentsWorklist')"/>
-                    <tnt:NavigationListItem text="{i18n>settings}" icon="sap-icon://settings" select=".navTo($event, 'changeSettings')"/>
+                    <tnt:NavigationListItem text="{i18n>settings}" icon="sap-icon://settings" select="navToSettings"/>
                 </tnt:NavigationList>
             </tnt:SideNavigation>
         </tnt:sideContent>

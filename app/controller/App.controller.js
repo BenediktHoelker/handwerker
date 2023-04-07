@@ -39,16 +39,19 @@ sap.ui.define(
         }
       },
 
-      navToMasterDetail() {
+      navToSettings() {
         // navTo($event, "trackViaCalendar&/calendar/singleEntry");
         this.getOwnerComponent()
           .getRouter()
           .navTo(
-            'trackViaCalendar',
+            'changeSettings',
             {},
             {
-              spc: {
-                route: 'masterDetail'
+              changeSettings: {
+                route: 'SettingsObjectPage',
+                parameters: {
+                  key: "tenant='john.doe@web.de',IsActiveEntity=true"
+                }
               }
             }
           );

@@ -103,7 +103,7 @@
               "entitySet": "Settings",
               "content": {
                 "header": {
-                  "visible": false,
+                  "visible": true,
                   "anchorBarVisible": false
                 }
               }

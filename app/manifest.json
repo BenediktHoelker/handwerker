@@ -118,7 +118,7 @@
 					"name": "changeSettings",
 					"target": {
 						"name": "changeSettings",
-						"prefix": "settings"
+						"prefix": "set"
 					}
 				}
 			],
