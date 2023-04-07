@@ -25,6 +25,8 @@ entity Adresses : cuid, managed {
     houseNumber : String @title: '{i18n>houseNumber}';
     postalCode  : String @title: '{i18n>postalCode}';
     city        : String @title: '{i18n>city}';
+    email       : String @title: '{i18n>email}';
+    phone       : String @title: '{i18n>phone}';
 }
 
 entity Equipments : cuid, managed {
@@ -70,8 +72,9 @@ entity OrderItems : cuid, managed {
 }
 
 entity Settings : managed {
-    key settingsKey   : String @title: '{i18n>settingsKey}';
-        settingsValue : String @title: '{i18n>settingsValue}';
+    key tenant      : String  @title: '{i18n>tenant}';
+        salesMargin : Decimal @title: '{i18n>salesMargin}';
+        address     : Association to Adresses
 }
 
 view OrderItemsAggr as

@@ -337,10 +337,10 @@ export default class Main extends BaseController {
       orientationLandscape: false,
       compress: true,
       logo: {
-        src: 'https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png',
+        src: sap.ui.require.toUrl('/handwerker/images/iot_logo_512.png'),
         type: 'PNG', //optional, when src= data:uri (nodejs case)
-        width: 53.33, //aspect ratio = width/height
-        height: 26.66,
+        width: 54, //aspect ratio = width/height
+        height: 54,
         margin: {
           top: 0, //negative or positive num, from the current position
           left: 0 //negative or positive num, from the current position

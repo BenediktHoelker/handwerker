@@ -23,13 +23,13 @@ export default class Main extends BaseController {
    * onInit
    */
   public onInit() {
-    this.byId('marginInput')?.bindElement("/Settings('margin')");
+    this.byId('marginInput')?.bindElement("/Settings('john.doe@web.de')");
   }
 
   public onPressCalculateSalesPrice(event: UI5Event) {
     const model = this.getModel() as ODataModel;
     const margin = this.getModel().getProperty(
-      "/Settings('margin')/settingsValue"
+      "/Settings('john.doe@web.de')/salesMargin"
     );
     const button = event.getSource() as Button;
     const path = button.getBindingContext()?.getPath();

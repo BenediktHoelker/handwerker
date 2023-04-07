@@ -10,7 +10,7 @@
 					<SearchField search="onSearch" width="18rem"/>
 					<ToolbarSpacer />
 					<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateEquipment"/>
-					<StepInput step="0.1" displayValuePrecision="1" id="marginInput" value="{settingsValue}" width="10rem" description="{i18n>margin}" visible="{= !${device>/system/phone}}"/>
+					<StepInput step="0.1" displayValuePrecision="1" id="marginInput" value="{salesMargin}" width="10rem" description="{i18n>margin}" visible="{= !${device>/system/phone}}"/>
 				</Toolbar>
 			</headerToolbar>
 			<columns>

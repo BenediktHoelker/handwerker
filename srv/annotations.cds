@@ -191,7 +191,7 @@ annotate my.Adresses with @UI: {
         },
         {
             $Type: 'UI.DataField',
-            Value: street,
+            Value: city,
         },
     ],
     HeaderInfo    : {
