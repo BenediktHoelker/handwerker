@@ -112,6 +112,14 @@
 						"name": "manageBusinessPartners",
 						"prefix": "mngBP"
 					}
+				},
+				{
+					"pattern": "changeSettings",
+					"name": "changeSettings",
+					"target": {
+						"name": "changeSettings",
+						"prefix": "settings"
+					}
 				}
 			],
 			"targets": {
@@ -144,6 +152,12 @@
 					"usage": "manageBusinessPartnersComponent",
 					"title": "Manage Business Partners",
 					"id": "manageBusinessPartners"
+				},
+				"changeSettings": {
+					"type": "Component",
+					"usage": "settingsComponent",
+					"title": "Settings",
+					"id": "changeSettings"
 				}
 			}
 		},
@@ -174,6 +188,12 @@
 			},
 			"manageBusinessPartnersComponent": {
 				"name": "handwerker.components.businesspartners",
+				"settings": {},
+				"componentData": {},
+				"lazy": true
+			},
+			"settingsComponent": {
+				"name": "handwerker.components.settings",
 				"settings": {},
 				"componentData": {},
 				"lazy": true

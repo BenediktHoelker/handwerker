@@ -7,7 +7,10 @@ service HandwerkerService {
 
     entity Adresses         as projection on my.Adresses;
     entity Equipments       as projection on my.Equipments;
+
+    @odata.draft.enabled
     entity Settings         as projection on my.Settings;
+
     entity OrderItemsAggr   as projection on my.OrderItemsAggr;
 
     entity Orders           as projection on my.Orders {

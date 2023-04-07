@@ -218,3 +218,20 @@ annotate my.Adresses with @UI: {
         },
     ],
 };
+
+annotate my.Settings with @(UI: {
+    Facets        : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            Target: '@UI.Identification',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Target: 'address/@UI.Identification',
+        },
+    ],
+    Identification: [{
+        $Type: 'UI.DataField',
+        Value: salesMargin,
+    }]
+});
