@@ -68,6 +68,8 @@ builder:
           display: standalone
 server:
   customMiddleware:
+    - name: '@elevatory/odata-typify-middleware'
+      beforeMiddleware: compression
     - name: ui5-tooling-transpile-middleware
       afterMiddleware: compression
       configuration: *transpileConfig

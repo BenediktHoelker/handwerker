@@ -16,6 +16,7 @@
     "jspdf-invoice-template": "https://github.com/BenediktHoelker/jspdf-invoice-template.git"
   },
   "devDependencies": {
+    "@elevatory/odata-typify-middleware": "^1.0.66",
     "@sap/ux-specification": "^1.108.2",
     "@sapui5/ts-types-esm": "1.108.11",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
@@ -50,7 +51,8 @@
     "prettier-format": "prettier --config .prettierrc app/**/*.ts --write",
     "lint": "eslint webapp",
     "watch-businesspartners": "cds watch --open businesspartners/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-settings": "cds watch --open settings/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-settings": "cds watch --open settings/webapp/index.html?sap-ui-xx-viewCache=false",
+    "typify": "odata-typify"
   },
   "ui5": {
     "dependencies": [
@@ -58,7 +60,8 @@
       "ui5-middleware-simpleproxy",
       "ui5-tooling-transpile",
       "ui5-tooling-modules",
-      "ui5-task-pwa-enabler"
+      "ui5-task-pwa-enabler",
+      "@elevatory/odata-typify-middleware"
     ]
   },
   "sapux": [
