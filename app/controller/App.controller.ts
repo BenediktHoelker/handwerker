@@ -1,6 +1,7 @@
 import JSONModel from 'sap/ui/model/json/JSONModel';
 import BaseController from './BaseController';
 import ToolPage from 'sap/tnt/ToolPage';
+import { Users } from '../metadata';
 
 /**
  * @namespace handwerker
@@ -16,8 +17,8 @@ export default class App extends BaseController {
 
     this.getModel().callFunction('/getUserInfo', {
       success: (result: any) => {
-        const email = result.getUserInfo.email;
-        viewModel.setProperty('/user', email);
+        const userInfo = result.getUserInfo as Users;
+        viewModel.setProperty('/user', userInfo.email);
       }
     });
   }
