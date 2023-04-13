@@ -27,10 +27,5 @@
       "app/components/orders/*": ["./app/*"]
     }
   },
-  "include": [
-    "./srv/**/*",
-    "./app/components/orders/**/*",
-    "./app/components/orderitems/**/*",
-    "./app/components/equipmentsworklist/**/*"
-  ]
+  "include": ["./srv/**/*", "./app/**/*"]
 }
