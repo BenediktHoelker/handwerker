@@ -1,0 +1,33 @@
+<mvc:View xmlns:core="sap.ui.core" controllerName="handwerker.components.settings.controller.Main" displayBlock="true"
+	xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:smartfield="sap.ui.comp.smartfield"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page id="main" showHeader="false" showFooter="true">
+		<form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1">
+			<core:Title text="{i18n>settings}" />
+			<Label text="{/Settings/salesMargin/##com.sap.vocabularies.Common.v1.Label/String}"/>
+			<StepInput step="0.1" displayValuePrecision="1" id="marginInput" value="{salesMargin}" width="15rem"/>
+			<core:Title text="{i18n>address}" />
+			<smartfield:SmartLabel labelFor="street"/>
+			<smartfield:SmartField id="street" value="{address/street}"/>
+			<smartfield:SmartLabel labelFor="postalCode"/>
+			<smartfield:SmartField id="postalCode" value="{address/postalCode}"/>
+			<smartfield:SmartLabel labelFor="city"/>
+			<smartfield:SmartField id="city" value="{address/city}"/>
+			<smartfield:SmartLabel labelFor="email"/>
+			<smartfield:SmartField id="email" value="{address/email}"/>
+			<smartfield:SmartLabel labelFor="phone"/>
+			<smartfield:SmartField id="phone" value="{address/phone}"/>
+			<smartfield:SmartLabel labelFor="website"/>
+			<smartfield:SmartField id="website" value="{address/website}"/>
+		</form:SimpleForm>
+
+		<footer>
+			<Toolbar >
+				<ToolbarSpacer />
+				<Button type="Emphasized" text="{i18n>submit}" press="onPressSubmit" enabled="{viewModel>/hasPendingChanges}"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

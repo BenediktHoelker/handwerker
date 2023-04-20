@@ -7,10 +7,8 @@ service HandwerkerService {
 
     entity Adresses         as projection on my.Adresses;
     entity Equipments       as projection on my.Equipments;
-
-    @odata.draft.enabled
     entity Settings         as projection on my.Settings;
-
+    entity Users            as projection on my.Users;
     entity OrderItemsAggr   as projection on my.OrderItemsAggr;
 
     entity Orders           as projection on my.Orders {
@@ -32,11 +30,6 @@ service HandwerkerService {
             order.createdAt, 'YYYY-MM-DD'
         )              as clientConcatCreatedOn : String @title: '{i18n>createdOn}'
     };
-
-    type Users {
-        email : String @title: '{i18n>email}';
-        name  : String @title: '{i18n>name}';
-    }
 
     entity Attachments      as projection on my.Attachments;
     function getUserInfo() returns Users;

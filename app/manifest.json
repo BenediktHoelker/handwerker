@@ -133,7 +133,10 @@
 					"type": "Component",
 					"usage": "editOrdersComponent",
 					"title": "Edit Orders",
-					"id": "editOrders"
+					"id": "editOrders",
+					"containerOptions": {
+						"propagateModel": true
+					}
 				},
 				"editEquipments": {
 					"type": "Component",

@@ -12,7 +12,7 @@
                     </layoutData>
                 </Button>
                 <ToolbarSpacer ></ToolbarSpacer>
-                <Button text="{viewModel>/user}" type="Transparent" press=".onUserNamePress" ariaHasPopup="Menu">
+                <Button text="{appVM>/user}" type="Transparent" press=".onUserNamePress" ariaHasPopup="Menu">
                     <layoutData>
                         <OverflowToolbarLayoutData priority="NeverOverflow" />
                     </layoutData>

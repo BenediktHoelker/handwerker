@@ -27,6 +27,7 @@ entity Adresses : cuid, managed {
     city        : String @title: '{i18n>city}';
     email       : String @title: '{i18n>email}';
     phone       : String @title: '{i18n>phone}';
+    website     : String @title: '{i18n>website}';
 }
 
 entity Equipments : cuid, managed {
@@ -71,9 +72,14 @@ entity OrderItems : cuid, managed {
     completedAt            : DateTime                  @title: '{i18n>completedAt}';
 }
 
+entity Users : managed {
+    key email : String @title: '{i18n>email}';
+        name  : String @title: '{i18n>name}';
+}
+
 entity Settings : managed {
-    key tenant      : String  @title: '{i18n>tenant}';
-        salesMargin : Decimal @title: '{i18n>salesMargin}';
+    key userEmail   : String     @title: '{i18n>user}';
+        salesMargin : Decimal(2) @title: '{i18n>salesMargin}';
         address     : Association to Adresses
 }
 

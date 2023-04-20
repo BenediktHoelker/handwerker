@@ -1,7 +1,7 @@
 sap.ui.define(['sap/fe/core/AppComponent'], function (Component) {
   'use strict';
 
-  return Component.extend('settings.Component', {
+  return Component.extend('settingsfev4.Component', {
     metadata: {
       manifest: 'json'
     },

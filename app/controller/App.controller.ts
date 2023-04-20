@@ -13,12 +13,11 @@ export default class App extends BaseController {
       splitAppMode: 'ShowHideMode'
     });
 
-    this.getView().setModel(viewModel, 'viewModel');
+    this.getView().setModel(viewModel, 'appVM');
 
     this.getModel().callFunction('/getUserInfo', {
-      success: (result: any) => {
-        const userInfo = result.getUserInfo as Users;
-        viewModel.setProperty('/user', userInfo.email);
+      success: (user: Users) => {
+        viewModel.setProperty('/user', user.email);
       }
     });
   }
@@ -50,10 +49,7 @@ export default class App extends BaseController {
       {
         // @ts-ignore
         changeSettings: {
-          route: 'SettingsObjectPage',
-          parameters: {
-            key: "tenant='john.doe@web.de',IsActiveEntity=true"
-          }
+          route: 'SettingsObjectPage'
         }
       }
     );
