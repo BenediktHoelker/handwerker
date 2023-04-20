@@ -39,4 +39,4 @@ default-envs/*
 dist
 
 # cds-pg-migra
-db_changelogs
+db_changelogs/
