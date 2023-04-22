@@ -160,7 +160,7 @@
 					"type": "Component",
 					"usage": "settingsComponent",
 					"title": "Settings",
-					"id": "changeSettings"
+					"id": "settings"
 				}
 			}
 		},

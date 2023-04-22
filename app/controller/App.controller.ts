@@ -42,15 +42,12 @@ export default class App extends BaseController {
   }
 
   navToSettings() {
-    // navTo($event, "trackViaCalendar&/calendar/singleEntry");
     this.getRouter().navTo(
       'changeSettings',
       {},
       {
         // @ts-ignore
-        changeSettings: {
-          route: ''
-        }
+        settings: { route: '' }
       }
     );
   }

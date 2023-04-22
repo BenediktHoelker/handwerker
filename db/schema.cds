@@ -78,8 +78,8 @@ entity Users : managed {
 }
 
 entity Settings : managed {
-    key userEmail   : String     @title: '{i18n>user}';
-        salesMargin : Decimal(2) @title: '{i18n>salesMargin}';
+    key userEmail   : String  @title: '{i18n>user}';
+        salesMargin : Decimal @title: '{i18n>salesMargin}';
         address     : Association to Adresses
 }
 

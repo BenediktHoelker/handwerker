@@ -32,7 +32,7 @@ export default class Main extends BaseController {
 
     const purchasePrice = model.getProperty(path + '/purchasePrice');
 
-    // model.setProperty(path + '/margin', margin);
+    model.setProperty(path + '/margin', margin);
     model.setProperty(
       path + '/salesPrice',
       (Math.round(Number(purchasePrice) * margin * 100) / 100).toFixed(2)
