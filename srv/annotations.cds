@@ -206,15 +206,19 @@ annotate my.Adresses with @UI: {
         },
         {
             $Type: 'UI.DataField',
-            Value: houseNumber,
-        },
-        {
-            $Type: 'UI.DataField',
             Value: postalCode,
         },
         {
             $Type: 'UI.DataField',
-            Value: street,
+            Value: city,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: phone,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: website,
         },
     ],
 };

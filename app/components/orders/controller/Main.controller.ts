@@ -20,7 +20,7 @@ import JSONModel from 'sap/ui/model/json/JSONModel';
 import Dialog from 'sap/m/Dialog';
 import UploadSet from 'sap/m/upload/UploadSet';
 import UploaderHttpRequestMethod from 'sap/m/upload/UploaderHttpRequestMethod';
-import { Adresses } from '../../../metadata';
+import { Adresses, BusinessPartners, Orders } from '../../../metadata';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -329,15 +329,35 @@ export default class Main extends BaseController {
   public async onPressPrint() {
     const appVM = this.getModel('appVM');
     const user = appVM.getProperty('/user');
+    const order = this._detailPage.getBindingContext().getObject() as Orders;
 
     try {
-      const address: Adresses = await new Promise((resolve, reject) =>
-        this._model.read(
-          this._model.createKey('/Settings', { userEmail: user }) + '/address',
-          { success: resolve, error: reject }
+      const [myAddress, client] = await Promise.all([
+        new Promise<Adresses>((resolve, reject) =>
+          this._model.read(
+            this._model.createKey('/Settings', { userEmail: user }) +
+              '/address',
+            { success: resolve, error: reject }
+          )
+        ),
+        new Promise<BusinessPartners>((resolve, reject) =>
+          this._model.read(
+            this._model.createKey('/BusinessPartners', {
+              ID: order.client_ID,
+              IsActiveEntity: true
+            }),
+            {
+              success: resolve,
+              error: reject,
+              urlParameters: {
+                $expand: 'address'
+              }
+            }
+          )
         )
-      );
+      ]);
 
+      const clientAddress = client.address as Adresses;
       const items = this._orderItemsTable
         .getItems()
         .map((item) => item.getBindingContext().getObject());
@@ -370,19 +390,19 @@ export default class Main extends BaseController {
           }
         },
         business: {
-          name: address.email,
-          address: address.street,
-          phone: address.phone,
-          email: address.email,
-          website: address.website
+          name: myAddress.email,
+          address: myAddress.street,
+          phone: myAddress.phone,
+          email: myAddress.email,
+          website: myAddress.website
         },
         contact: {
           label: 'Invoice issued for:',
-          name: 'Client Name',
-          address: 'Albania, Tirane, Astir',
-          phone: '(+355) 069 22 22 222',
-          email: 'client@website.al',
-          otherInfo: 'www.website.al'
+          name: client.name,
+          address: clientAddress.street,
+          phone: clientAddress.phone,
+          email: clientAddress.email,
+          otherInfo: clientAddress.website
         },
         invoice: {
           label: 'Invoice #: ',
