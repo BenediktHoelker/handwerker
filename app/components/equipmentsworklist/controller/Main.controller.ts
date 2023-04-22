@@ -1,4 +1,4 @@
-import BaseController from './BaseController';
+import BaseController from '../../../controller/BaseController';
 import formatter from '../model/formatter';
 import UI5Event from 'sap/ui/base/Event';
 import ODataModel from 'sap/ui/model/odata/v2/ODataModel';
@@ -32,7 +32,7 @@ export default class Main extends BaseController {
 
     const purchasePrice = model.getProperty(path + '/purchasePrice');
 
-    model.setProperty(path + '/margin', margin);
+    // model.setProperty(path + '/margin', margin);
     model.setProperty(
       path + '/salesPrice',
       (Math.round(Number(purchasePrice) * margin * 100) / 100).toFixed(2)

@@ -1,4 +1,4 @@
-import BaseController from './BaseController';
+import BaseController from '../../../controller/BaseController';
 import formatter from '../model/formatter';
 import List from 'sap/m/List';
 import SplitApp from 'sap/m/SplitApp';

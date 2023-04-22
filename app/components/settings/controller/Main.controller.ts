@@ -1,10 +1,6 @@
-import BaseController from './BaseController';
+import BaseController from '../../../controller/BaseController';
 import formatter from '../model/formatter';
-import UI5Event from 'sap/ui/base/Event';
 import ODataModel from 'sap/ui/model/odata/v2/ODataModel';
-import ODataListBinding from 'sap/ui/model/odata/v2/ODataListBinding';
-import Table from 'sap/m/Table';
-import Button from 'sap/m/Button';
 import MessageToast from 'sap/m/MessageToast';
 import ResourceBundle from 'sap/base/i18n/ResourceBundle';
 import MessageBox from 'sap/m/MessageBox';
@@ -12,7 +8,6 @@ import { Users } from '../../../metadata';
 import JSONModel from 'sap/ui/model/json/JSONModel';
 import Binding from 'sap/ui/model/Binding';
 import Context from 'sap/ui/model/Context';
-import ContextBinding from 'sap/ui/model/ContextBinding';
 
 /**
  * @namespace handwerker.components.settings.controller

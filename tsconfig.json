@@ -9,12 +9,7 @@
     "strict": true,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
-    "rootDirs": [
-      "./srv",
-      "./app/components/orders",
-      "./app/components/orderitems",
-      "./app/components/equipmentsworklist"
-    ],
+    "rootDirs": ["./srv", "./app"],
     "outDir": "./dist",
     "baseUrl": "./",
     "moduleResolution": "node",
@@ -23,8 +18,7 @@
       "./node_modules/@sapui5/ts-types-esm"
     ],
     "paths": {
-      // "app/components/orderitems/*": ["./app/*"],
-      // "app/components/orders/*": ["./app/*"]
+      "handwerker/*": ["./app/*"]
     }
   },
   "include": ["./srv/**/*", "./app/**/*"]

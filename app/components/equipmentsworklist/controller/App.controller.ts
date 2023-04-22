@@ -1,5 +1,4 @@
-import BaseController from './BaseController';
-
+import BaseController from '../../../controller/BaseController';
 /**
  * @namespace handwerker.components.equipmentsworklist.controller
  */

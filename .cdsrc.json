@@ -2,6 +2,9 @@
     "requires": {
         "auth": {
             "[development]": {
+                "kind": "dummy"
+            },
+            "[basic]": {
                 "kind": "basic",
                 "users": {
                     "alice": {}

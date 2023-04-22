@@ -49,7 +49,7 @@ export default class App extends BaseController {
       {
         // @ts-ignore
         changeSettings: {
-          route: 'SettingsObjectPage'
+          route: ''
         }
       }
     );
