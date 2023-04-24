@@ -24,7 +24,7 @@ framework:
 builder:
   resources:
     excludes:
-      - 'handwerker/components/businesspartners'
+      # - 'handwerker/components/businesspartners'
       - 'handwerker/components/equipments'
   customTasks:
     - name: ui5-tooling-transpile-task
