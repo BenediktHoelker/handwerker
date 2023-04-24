@@ -17,14 +17,13 @@ export type BusinessPartners = {
   DraftAdministrativeData_DraftUUID?: string | null;
 };
 
-export type Adresses = {
+export type Addresses = {
   ID: string;
   createdAt?: Date | null;
   createdBy?: string | null;
   modifiedAt?: Date | null;
   modifiedBy?: string | null;
   street?: string | null;
-  houseNumber?: string | null;
   postalCode?: string | null;
   city?: string | null;
   email?: string | null;

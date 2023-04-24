@@ -5,7 +5,7 @@ service HandwerkerService {
     @odata.draft.enabled
     entity BusinessPartners as projection on my.BusinessPartners;
 
-    entity Adresses         as projection on my.Adresses;
+    entity Addresses        as projection on my.Addresses;
     entity Equipments       as projection on my.Equipments;
     entity Settings         as projection on my.Settings;
     entity Users            as projection on my.Users;

@@ -20,7 +20,7 @@ cds.on('bootstrap', (app) => {
   app.use(cov2ap());
   app.use('/v2', requiresAuth());
   app.use('/app', requiresAuth(), express.static(__dirname + '/../app'));
-  // app.use('/', requiresAuth(), express.static(__dirname + '/../dist'));
+  app.use('/', requiresAuth(), express.static(__dirname + '/../dist'));
 });
 
 module.exports = cds.server;

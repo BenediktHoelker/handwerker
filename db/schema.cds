@@ -16,14 +16,13 @@ entity BusinessPartners : cuid, managed {
     name      : String                                   @title: '{i18n>name}';
     orders    : Association to many Orders
                     on orders.client = $self             @title: '{i18n>orders}';
-    addresses : Composition of many Adresses
+    addresses : Composition of many Addresses
                     on addresses.businessPartner = $self @title: '{i18n>addresses}';
 }
 
 @title: '{i18n>address}'
-entity Adresses : cuid, managed {
+entity Addresses : cuid, managed {
     street          : String                          @title: '{i18n>street}';
-    houseNumber     : String                          @title: '{i18n>houseNumber}';
     postalCode      : String                          @title: '{i18n>postalCode}';
     city            : String                          @title: '{i18n>city}';
     email           : String                          @title: '{i18n>email}';
@@ -86,7 +85,7 @@ entity Users : managed {
 entity Settings : managed {
     key userEmail   : String  @title: '{i18n>user}';
         salesMargin : Decimal @title: '{i18n>salesMargin}';
-        address     : Association to Adresses
+        address     : Association to Addresses
 }
 
 view OrderItemsAggr as

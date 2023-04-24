@@ -20,7 +20,7 @@ import JSONModel from 'sap/ui/model/json/JSONModel';
 import Dialog from 'sap/m/Dialog';
 import UploadSet from 'sap/m/upload/UploadSet';
 import UploaderHttpRequestMethod from 'sap/m/upload/UploaderHttpRequestMethod';
-import { Adresses, BusinessPartners, Orders } from '../../../metadata';
+import { Addresses, BusinessPartners, Orders } from '../../../metadata';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -333,7 +333,7 @@ export default class Main extends BaseController {
 
     try {
       const [myAddress, client] = await Promise.all([
-        new Promise<Adresses>((resolve, reject) =>
+        new Promise<Addresses>((resolve, reject) =>
           this._model.read(
             this._model.createKey('/Settings', { userEmail: user }) +
               '/address',
@@ -357,7 +357,7 @@ export default class Main extends BaseController {
         )
       ]);
 
-      const clientAddress = client.address as Adresses;
+      const clientAddress = client.address as Addresses;
       const items = this._orderItemsTable
         .getItems()
         .map((item) => item.getBindingContext().getObject());

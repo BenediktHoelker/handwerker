@@ -175,15 +175,11 @@ annotate my.BusinessPartners with
     )
 };
 
-annotate my.Adresses with @UI: {
+annotate my.Addresses with @UI: {
     LineItem      : [
         {
             $Type: 'UI.DataField',
             Value: street,
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: houseNumber,
         },
         {
             $Type: 'UI.DataField',
@@ -192,6 +188,10 @@ annotate my.Adresses with @UI: {
         {
             $Type: 'UI.DataField',
             Value: city,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: type,
         },
     ],
     HeaderInfo    : {
