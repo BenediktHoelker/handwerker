@@ -13,22 +13,24 @@ entity Currencies {
 }
 
 entity BusinessPartners : cuid, managed {
-    name      : String                       @title: '{i18n>name}';
+    name      : String                                   @title: '{i18n>name}';
     orders    : Association to many Orders
-                    on orders.client = $self @title: '{i18n>orders}';
+                    on orders.client = $self             @title: '{i18n>orders}';
     addresses : Composition of many Adresses
+                    on addresses.businessPartner = $self @title: '{i18n>addresses}';
 }
 
 @title: '{i18n>address}'
 entity Adresses : cuid, managed {
-    street      : String @title: '{i18n>street}';
-    houseNumber : String @title: '{i18n>houseNumber}';
-    postalCode  : String @title: '{i18n>postalCode}';
-    city        : String @title: '{i18n>city}';
-    email       : String @title: '{i18n>email}';
-    phone       : String @title: '{i18n>phone}';
-    website     : String @title: '{i18n>website}';
-    type        : String @title: '{i18n>addressType}' enum {
+    street          : String                          @title: '{i18n>street}';
+    houseNumber     : String                          @title: '{i18n>houseNumber}';
+    postalCode      : String                          @title: '{i18n>postalCode}';
+    city            : String                          @title: '{i18n>city}';
+    email           : String                          @title: '{i18n>email}';
+    phone           : String                          @title: '{i18n>phone}';
+    website         : String                          @title: '{i18n>website}';
+    businessPartner : Association to BusinessPartners @title: '{i18n>businessPartner}';
+    type            : String                          @title: '{i18n>addressType}' enum {
         Invoice;
         Shipping
     };
