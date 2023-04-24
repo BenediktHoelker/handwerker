@@ -13,10 +13,10 @@ entity Currencies {
 }
 
 entity BusinessPartners : cuid, managed {
-    name    : String                       @title: '{i18n>name}';
-    orders  : Association to many Orders
-                  on orders.client = $self @title: '{i18n>orders}';
-    address : Association to Adresses
+    name      : String                       @title: '{i18n>name}';
+    orders    : Association to many Orders
+                    on orders.client = $self @title: '{i18n>orders}';
+    addresses : Composition of many Adresses
 }
 
 @title: '{i18n>address}'
@@ -28,6 +28,10 @@ entity Adresses : cuid, managed {
     email       : String @title: '{i18n>email}';
     phone       : String @title: '{i18n>phone}';
     website     : String @title: '{i18n>website}';
+    type        : String @title: '{i18n>addressType}' enum {
+        Invoice;
+        Shipping
+    };
 }
 
 entity Equipments : cuid, managed {

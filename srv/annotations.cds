@@ -147,7 +147,7 @@ annotate my.BusinessPartners with
         },
         {
             $Type : 'UI.ReferenceFacet',
-            Target: 'address/@UI.Identification',
+            Target: 'addresses/@UI.LineItem',
             Label : '{i18n>address}',
         },
         {
