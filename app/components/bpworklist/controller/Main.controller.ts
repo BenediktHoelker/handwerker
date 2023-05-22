@@ -15,9 +15,6 @@ import MessageBox from 'sap/m/MessageBox';
 export default class Main extends BaseController {
   private formatter = formatter;
 
-  /**
-   * onInit
-   */
   public onInit() {
     this.byId('marginInput')?.bindElement("/Settings('john.doe@web.de')");
   }

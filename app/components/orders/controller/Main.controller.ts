@@ -26,7 +26,6 @@ import { Addresses, BusinessPartners, Orders } from '../../../metadata';
  * @namespace handwerker.components.orders.controller
  */
 export default class Main extends BaseController {
-  private formatter = formatter;
   private _ordersList: List;
   private _splitApp: SplitApp;
   private _model: ODataModel;
@@ -34,9 +33,6 @@ export default class Main extends BaseController {
   private _orderItemsTable: Table;
   private _viewModel: JSONModel;
 
-  /**
-   * onInit
-   */
   public onInit() {
     const router = this.getRouter();
 

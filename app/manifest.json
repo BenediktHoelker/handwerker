@@ -193,7 +193,7 @@
 				"lazy": true
 			},
 			"manageBusinessPartnersComponent": {
-				"name": "handwerker.components.bpworklist",
+				"name": "handwerker.components.businesspartners",
 				"settings": {},
 				"componentData": {},
 				"lazy": true
