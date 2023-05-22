@@ -10,17 +10,17 @@
 			<StepInput step="0.1" displayValuePrecision="1" id="marginInput" value="{salesMargin}" width="15rem"/>
 			<core:Title text="{i18n>address}" />
 			<smartfield:SmartLabel labelFor="street"/>
-			<smartfield:SmartField id="street" value="{address/street}"/>
+			<smartfield:SmartField id="street" value="{address_street}"/>
 			<smartfield:SmartLabel labelFor="postalCode"/>
-			<smartfield:SmartField id="postalCode" value="{address/postalCode}"/>
+			<smartfield:SmartField id="postalCode" value="{address_postalCode}"/>
 			<smartfield:SmartLabel labelFor="city"/>
-			<smartfield:SmartField id="city" value="{address/city}"/>
+			<smartfield:SmartField id="city" value="{address_city}"/>
 			<smartfield:SmartLabel labelFor="email"/>
-			<smartfield:SmartField id="email" value="{address/email}"/>
+			<smartfield:SmartField id="email" value="{address_email}"/>
 			<smartfield:SmartLabel labelFor="phone"/>
-			<smartfield:SmartField id="phone" value="{address/phone}"/>
+			<smartfield:SmartField id="phone" value="{address_phone}"/>
 			<smartfield:SmartLabel labelFor="website"/>
-			<smartfield:SmartField id="website" value="{address/website}"/>
+			<smartfield:SmartField id="website" value="{address_website}"/>
 		</form:SimpleForm>
 
 		<footer>
