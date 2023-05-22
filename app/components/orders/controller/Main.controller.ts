@@ -346,14 +346,14 @@ export default class Main extends BaseController {
               success: resolve,
               error: reject,
               urlParameters: {
-                $expand: 'invoiceAddress'
+                $expand: 'address'
               }
             }
           )
         )
       ]);
 
-      const invoiceAddress = client.invoiceAddress;
+      const address = client.address;
       const items = this._orderItemsTable
         .getItems()
         .map((item) => item.getBindingContext().getObject());
@@ -395,10 +395,10 @@ export default class Main extends BaseController {
         contact: {
           label: 'Invoice issued for:',
           name: client.name,
-          address: invoiceAddress.street,
-          phone: invoiceAddress.phone,
-          email: invoiceAddress.email,
-          otherInfo: invoiceAddress.website
+          address: address.street,
+          phone: address.phone,
+          email: address.email,
+          otherInfo: address.website
         },
         invoice: {
           label: 'Invoice #: ',

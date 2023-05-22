@@ -12,16 +12,16 @@ entity Currencies {
         symbol : String(5) @(title: '{i18n>CurrencySymbol}');
 }
 
-entity BusinessPartners : cuid, managed {
-    name            : String                       @title: '{i18n>name}';
-    orders          : Association to many Orders
-                          on orders.client = $self @title: '{i18n>orders}';
-    invoiceAddress  : Association to Addresses     @title: '{i18n>invoiceAddress}';
-    shippingAddress : Association to Addresses     @title: '{i18n>shippingAddress}'
+entity BusinessPartners : cuid, managed, Addresses {
+    name           : String                       @title: '{i18n>name}';
+    orders         : Association to many Orders
+                         on orders.client = $self @title: '{i18n>orders}';
+    invoiceAddress : Addresses                    @title: '{i18n>invoiceAddress}';
+    address        : Addresses                    @title: '{i18n>address}';
 }
 
 @title: '{i18n>address}'
-entity Addresses : cuid, managed {
+type Addresses : {
     street     : String @title: '{i18n>street}';
     postalCode : String @title: '{i18n>postalCode}';
     city       : String @title: '{i18n>city}';
@@ -80,7 +80,7 @@ entity Users : managed {
 entity Settings : managed {
     key userEmail   : String  @title: '{i18n>user}';
         salesMargin : Decimal @title: '{i18n>salesMargin}';
-        address     : Association to Addresses
+        address     : Addresses;
 }
 
 view OrderItemsAggr as

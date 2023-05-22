@@ -11,7 +11,7 @@ export type BusinessPartners = {
   modifiedBy?: string | null;
   name?: string | null;
   invoiceAddress: Addresses;
-  shippingAddress: Addresses;
+  address: Addresses;
 };
 
 export type Addresses = {

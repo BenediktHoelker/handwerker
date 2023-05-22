@@ -156,7 +156,7 @@ export default class Main extends BaseController {
       .getItems()
       .findIndex((item) => item.getBindingContext().getPath() === path);
 
-    if (path && path.includes('id')) {
+    if (path && path.includes('id-')) {
       this._model.resetChanges([path], true, true);
     } else if (path) {
       await new Promise<void>((resolve, reject) => {

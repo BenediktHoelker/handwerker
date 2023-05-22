@@ -147,11 +147,6 @@ annotate my.BusinessPartners with
         },
         {
             $Type : 'UI.ReferenceFacet',
-            Target: 'addresses/@UI.LineItem',
-            Label : '{i18n>address}',
-        },
-        {
-            $Type : 'UI.ReferenceFacet',
             Target: 'orders/@UI.LineItem',
             Label : '{i18n>orders}',
         },
@@ -175,70 +170,16 @@ annotate my.BusinessPartners with
     )
 };
 
-annotate my.Addresses with @UI: {
-    LineItem      : [
-        {
-            $Type: 'UI.DataField',
-            Value: street,
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: postalCode,
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: city,
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: type,
-        },
-    ],
-    HeaderInfo    : {
-        $Type         : 'UI.HeaderInfoType',
-        TypeName      : '{i18n>address}',
-        TypeNamePlural: '{i18n>addresses}'
-    },
-    Identification: [
-        {
-            $Type: 'UI.DataField',
-            Value: street,
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: postalCode,
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: city,
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: phone,
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: website,
-        },
-    ],
-};
-
 annotate my.Settings with @(UI: {
     HeaderInfo    : {
         $Type         : 'UI.HeaderInfoType',
         TypeName      : '{i18n>settings}',
         TypeNamePlural: '{i18n>settings}',
     },
-    Facets        : [
-        {
-            $Type : 'UI.ReferenceFacet',
-            Target: '@UI.Identification',
-        },
-        {
-            $Type : 'UI.ReferenceFacet',
-            Target: 'address/@UI.Identification',
-        },
-    ],
+    Facets        : [{
+        $Type : 'UI.ReferenceFacet',
+        Target: '@UI.Identification',
+    }, ],
     Identification: [{
         $Type: 'UI.DataField',
         Value: salesMargin,

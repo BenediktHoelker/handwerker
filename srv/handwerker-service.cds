@@ -3,7 +3,6 @@ using {handwerker as my} from '../db/schema';
 @(requires: 'authenticated-user')
 service HandwerkerService {
     entity BusinessPartners as projection on my.BusinessPartners;
-    entity Addresses        as projection on my.Addresses;
     entity Equipments       as projection on my.Equipments;
     entity Settings         as projection on my.Settings;
     entity Users            as projection on my.Users;
