@@ -13,26 +13,21 @@ entity Currencies {
 }
 
 entity BusinessPartners : cuid, managed {
-    name      : String                                   @title: '{i18n>name}';
-    orders    : Association to many Orders
-                    on orders.client = $self             @title: '{i18n>orders}';
-    addresses : Composition of many Addresses
-                    on addresses.businessPartner = $self @title: '{i18n>addresses}';
+    name            : String                       @title: '{i18n>name}';
+    orders          : Association to many Orders
+                          on orders.client = $self @title: '{i18n>orders}';
+    invoiceAddress  : Association to Addresses     @title: '{i18n>invoiceAddress}';
+    shippingAddress : Association to Addresses     @title: '{i18n>shippingAddress}'
 }
 
 @title: '{i18n>address}'
 entity Addresses : cuid, managed {
-    street          : String                          @title: '{i18n>street}';
-    postalCode      : String                          @title: '{i18n>postalCode}';
-    city            : String                          @title: '{i18n>city}';
-    email           : String                          @title: '{i18n>email}';
-    phone           : String                          @title: '{i18n>phone}';
-    website         : String                          @title: '{i18n>website}';
-    businessPartner : Association to BusinessPartners @title: '{i18n>businessPartner}';
-    type            : String                          @title: '{i18n>addressType}' enum {
-        Invoice;
-        Shipping
-    };
+    street     : String @title: '{i18n>street}';
+    postalCode : String @title: '{i18n>postalCode}';
+    city       : String @title: '{i18n>city}';
+    email      : String @title: '{i18n>email}';
+    phone      : String @title: '{i18n>phone}';
+    website    : String @title: '{i18n>website}';
 }
 
 entity Equipments : cuid, managed {

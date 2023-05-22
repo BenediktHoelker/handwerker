@@ -50,6 +50,7 @@
     "deploy:overwrite": "sh set-env.sh development && cds-pg-migra -o",
     "deploy:prod": "sh set-env.sh production && cds-pg-migra",
     "build:simple": "ui5 build --clean-dest",
+    "build:all": "ui5 build --clean-dest --all",
     "build": "ui5 build self-contained --clean-dest --all",
     "ts-typecheck": "tsc --noEmit",
     "prettier-format": "prettier --config .prettierrc app/**/*.ts --write",

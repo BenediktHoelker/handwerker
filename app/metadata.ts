@@ -10,11 +10,8 @@ export type BusinessPartners = {
   modifiedAt?: Date | null;
   modifiedBy?: string | null;
   name?: string | null;
-  address_ID?: string | null;
-  IsActiveEntity: boolean;
-  HasActiveEntity: boolean;
-  HasDraftEntity: boolean;
-  DraftAdministrativeData_DraftUUID?: string | null;
+  invoiceAddress: Addresses;
+  shippingAddress: Addresses;
 };
 
 export type Addresses = {
@@ -29,6 +26,7 @@ export type Addresses = {
   email?: string | null;
   phone?: string | null;
   website?: string | null;
+  type: string;
 };
 
 export type Equipments = {

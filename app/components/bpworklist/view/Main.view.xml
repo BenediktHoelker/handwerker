@@ -1,0 +1,31 @@
+<mvc:View xmlns:core="sap.ui.core" controllerName="handwerker.components.bpworklist.controller.Main" displayBlock="true"
+	xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:smartfield="sap.ui.comp.smartfield"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page id="worklist" showHeader="false" showFooter="false">
+		<Table id="bpTable" items="{/BusinessPartners}" fixedLayout="false">
+			<headerToolbar>
+				<Toolbar >
+					<SearchField search="onSearch" width="18rem"/>
+					<ToolbarSpacer />
+					<Button type="Emphasized" icon="sap-icon://add" press="onPressCreateBP"/>
+				</Toolbar>
+			</headerToolbar>
+			<columns>
+				<Column >
+					<Label text="{/BusinessPartners/name/##com.sap.vocabularies.Common.v1.Label/String}"/>
+				</Column>
+				<Column/>
+			</columns>
+			<ColumnListItem >
+				<cells>
+					<smartfield:SmartField value="{name}"/>
+					<HBox >
+						<Button icon="sap-icon://delete" press="onPressDeleteBP" class="sapUiTinyMarginEnd"/>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</Table>
+	</Page>
+</mvc:View>

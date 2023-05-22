@@ -1,7 +1,7 @@
 {
   "_version": "1.49.0",
   "sap.app": {
-    "id": "businesspartners",
+    "id": "handwerker.components.businesspartners",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -46,7 +46,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.112.1",
+      "minUI5Version": "1.108.11",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},

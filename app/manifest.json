@@ -33,12 +33,15 @@
 			"id": "app"
 		},
 		"dependencies": {
-			"minUI5Version": "1.108.11",
 			"libs": {
 				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.f": {},
+				"sap.uxap": {},
+				"sap.ui.comp": {},
 				"sap.ui.layout": {},
 				"sap.ui.unified": {},
-				"sap.m": {}
+				"sap.ui.table": {}
 			}
 		},
 		"handleValidation": true,
@@ -190,7 +193,7 @@
 				"lazy": true
 			},
 			"manageBusinessPartnersComponent": {
-				"name": "handwerker.components.businesspartners",
+				"name": "handwerker.components.bpworklist",
 				"settings": {},
 				"componentData": {},
 				"lazy": true
