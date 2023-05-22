@@ -328,32 +328,26 @@ export default class Main extends BaseController {
     const order = this._detailPage.getBindingContext().getObject() as Orders;
 
     try {
-      const [myAddress, client] = await Promise.all([
+      const [mySettings, client] = await Promise.all([
         new Promise<Addresses>((resolve, reject) =>
           this._model.read(
-            this._model.createKey('/Settings', { userEmail: user }) +
-              '/address',
+            this._model.createKey('/Settings', { userEmail: user }),
             { success: resolve, error: reject }
           )
         ),
         new Promise<BusinessPartners>((resolve, reject) =>
           this._model.read(
             this._model.createKey('/BusinessPartners', {
-              ID: order.client_ID,
-              IsActiveEntity: true
+              ID: order.client_ID
             }),
             {
               success: resolve,
-              error: reject,
-              urlParameters: {
-                $expand: 'address'
-              }
+              error: reject
             }
           )
         )
       ]);
 
-      const address = client.address;
       const items = this._orderItemsTable
         .getItems()
         .map((item) => item.getBindingContext().getObject());
@@ -386,19 +380,19 @@ export default class Main extends BaseController {
           }
         },
         business: {
-          name: myAddress.email,
-          address: myAddress.street,
-          phone: myAddress.phone,
-          email: myAddress.email,
-          website: myAddress.website
+          name: mySettings.address_email,
+          address: mySettings.address_street,
+          phone: mySettings.address_phone,
+          email: mySettings.address_email,
+          website: mySettings.address_website
         },
         contact: {
           label: 'Invoice issued for:',
           name: client.name,
-          address: address.street,
-          phone: address.phone,
-          email: address.email,
-          otherInfo: address.website
+          address: client.address_street,
+          phone: client.address_phone,
+          email: client.address_email,
+          otherInfo: client.address_website
         },
         invoice: {
           label: 'Invoice #: ',
