@@ -39,7 +39,7 @@ export default class Main extends BaseController {
           );
         });
 
-        view.bindElement(path, { expand: 'address' });
+        view.bindElement(path);
       }
     });
   }
