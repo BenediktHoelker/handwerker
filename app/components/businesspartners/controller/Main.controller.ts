@@ -48,14 +48,20 @@ export default class Main extends BaseController {
   }
 
   private _selectItemAtIndex(index: int) {
-    const previousListItem = this._bpList.getItems()[index];
+    const listItem = this._bpList.getItems()[index];
 
-    if (!previousListItem) return;
+    if (!listItem) {
+      // @ts-expect-error
+      this._splitApp.toDetail(this.byId('notFound'));
+      return;
+    }
 
-    const path = previousListItem?.getBindingContext()?.getPath();
+    // @ts-expect-error
+    this._splitApp.toDetail(this.byId('main'));
 
-    this._bpList.setSelectedItem(previousListItem);
+    const path = listItem?.getBindingContext()?.getPath();
 
+    this._bpList.setSelectedItem(listItem);
     this._bindDetailView(path);
   }
 
@@ -72,8 +78,13 @@ export default class Main extends BaseController {
   }
 
   private _bindDetailView(path: string) {
-    this._detailPage?.bindElement(path);
+    this._detailPage.bindElement(path, {
+      events: {
+        change: this.onDetailViewBindingChange.bind(this)
+      }
+    });
 
+    // Must be standalone binding => does not work if attached to detailpage-binding
     const context = this._detailPage.getBindingContext();
     const binding = new Binding(this._model, context.getPath(), context);
 
@@ -83,6 +94,18 @@ export default class Main extends BaseController {
         this._model.hasPendingChanges()
       );
     });
+  }
+
+  onDetailViewBindingChange() {
+    const viewBinding = this.getView().getElementBinding();
+
+    if (!viewBinding.getBoundContext()) {
+      // @ts-expect-error
+      this._splitApp.toDetail(this.byId('notFound'));
+    } else {
+      // @ts-expect-error
+      this._splitApp.toDetail(this.byId('main'));
+    }
   }
 
   public async checkForPendingChanges() {
@@ -131,7 +154,7 @@ export default class Main extends BaseController {
     this._bindDetailView(newBPContext.getPath());
     // @ts-expect-error
     this._splitApp.toDetail(detailPage);
-    this.byId('title')?.focus();
+    setTimeout(() => this.byId('name')?.focus());
   }
 
   public onSearch(event: UI5Event) {

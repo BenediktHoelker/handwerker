@@ -83,6 +83,11 @@
 				"main": {
 					"viewId": "main",
 					"viewName": "Main"
+				},
+				"notFound": {
+					"viewId": "notFound",
+					"viewName": "NotFound",
+					"transition": "show"
 				}
 			}
 		}
