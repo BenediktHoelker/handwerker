@@ -76,21 +76,12 @@
 					"pattern": "",
 					"name": "main",
 					"target": "main"
-				},
-				{
-					"pattern": "printOrder",
-					"name": "printOrder",
-					"target": "printOrder"
 				}
 			],
 			"targets": {
 				"main": {
 					"viewId": "main",
 					"viewName": "Main"
-				},
-				"printOrder": {
-					"viewId": "printOrder",
-					"viewName": "printOrder"
 				}
 			}
 		}
