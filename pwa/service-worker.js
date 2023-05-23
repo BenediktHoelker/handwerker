@@ -1,7 +1,14 @@
 //This is the service worker with the Advanced caching
 
 const CACHE = 'advanced-caching-1684773083840';
-const precacheFiles = ['/sap-ui-custom.js', '/index.html'];
+const precacheFiles = [
+  '/resources/sap-ui-custom.js',
+  '/index.html',
+  '/.*library.css$', // matches everything that ends with "library.css"
+  '/.*.js$',
+  '/.*.properties$',
+  '/.*.woff2$'
+];
 
 const offlineFallbackPage = 'offline.html';
 
