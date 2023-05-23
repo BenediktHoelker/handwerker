@@ -1,10 +1,16 @@
 using {
     cuid,
-    Currency,
     managed
 } from '@sap/cds/common';
 
 namespace handwerker;
+
+/**
+ * Type for an association to Currencies
+ *
+ * See <https://cap.cloud.sap/docs/cds/common#type-currency>
+ */
+type Currency  : Association to Currencies;
 
 // use custom to avoid problems with language-dependent problems (not working with PG-adapter)
 entity Currencies {

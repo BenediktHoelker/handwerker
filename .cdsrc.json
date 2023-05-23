@@ -40,6 +40,9 @@
             ]
         }
     },
+    "--features": {
+        "assert_integrity": "db"
+    },
     "folders": {
         "[development]": {
             "app": "app"
