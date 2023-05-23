@@ -47,8 +47,12 @@ framework:
     - name: sap.uxap
     - name: sap.tnt
     - name: sap.ui.core
-    - name: sap.ui.fl
+    # - name: sap.ui.fl
     - name: sap.ui.comp
     - name: sap.ui.layout
     - name: sap.ui.unified
+    # - name: sap.suite.ui.commons
+    # - name: sap.ui.support
+    # - name: sap.ui.testrecorder
+    # - name: sap.ui.rta
     - name: themelib_sap_horizon
