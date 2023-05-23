@@ -48,14 +48,15 @@ export default class Main extends BaseController {
   }
 
   private _selectItemAtIndex(index: int) {
-    const firstBusinessPartnerListItem = this._bpList.getItems()[index]; // [0] is a group header
-    const path = firstBusinessPartnerListItem?.getBindingContext()?.getPath();
+    const previousListItem = this._bpList.getItems()[index];
 
-    this._bpList.setSelectedItem(firstBusinessPartnerListItem);
+    if (!previousListItem) return;
 
-    if (path) {
-      this._bindDetailView(path);
-    }
+    const path = previousListItem?.getBindingContext()?.getPath();
+
+    this._bpList.setSelectedItem(previousListItem);
+
+    this._bindDetailView(path);
   }
 
   public async onSelectionChange(event: UI5Event) {

@@ -392,7 +392,7 @@ export default class Main extends BaseController {
           address: client.address_street,
           phone: client.address_phone,
           email: client.address_email,
-          otherInfo: client.address_website
+          otherInfo: client.address_6website
         },
         invoice: {
           label: 'Invoice #: ',
