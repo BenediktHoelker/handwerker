@@ -21,6 +21,7 @@ import Dialog from 'sap/m/Dialog';
 import UploadSet from 'sap/m/upload/UploadSet';
 import UploaderHttpRequestMethod from 'sap/m/upload/UploaderHttpRequestMethod';
 import { Addresses, BusinessPartners, Orders } from '../../../metadata';
+import Context from 'sap/ui/model/odata/v2/Context';
 
 /**
  * @namespace handwerker.components.orders.controller
@@ -132,42 +133,49 @@ export default class Main extends BaseController {
     this._splitApp.backMaster({}, {});
   }
 
-  public calculateSalesPrice(event: UI5Event) {
+  public calculateSalesPrices(event: UI5Event) {
     const control = event.getSource() as Input;
-    const path = control.getBindingContext()?.getPath();
-
+    const bindingContext = control.getBindingContext() as Context;
     setTimeout(() => {
-      const orderItem = control.getBindingContext()?.getObject() as {
-        quantity: String;
-        unitSalesPrice: String;
-        unitSalesPriceCurrency_code: String;
-      };
-      const totalItemPriceRaw =
-        Number(orderItem.quantity) * Number(orderItem.unitSalesPrice);
-      const totalItemPrice = this._roundTo2Digits(totalItemPriceRaw);
-
-      this._model.setProperty(path + '/salesPrice', totalItemPrice);
-      this._model.setProperty(
-        path + '/salesPriceCurrency_code',
-        orderItem.unitSalesPriceCurrency_code
-      );
-
-      const orderPath = this._detailPage.getBindingContext().getPath();
-
-      const totalPrice = this._orderItemsTable
-        .getItems()
-        .map((item) => item.getBindingContext().getProperty('salesPrice'))
-        .map((price) => Number(price))
-        .filter((price) => !!price && !isNaN(price))
-        .reduce((acc, curr) => acc + Number(curr), 0);
-
-      this._model.setProperty(
-        orderPath + '/salesPrice',
-        this._roundTo2Digits(totalPrice)
-      );
-      // TODO: implement currency-handling
-      this._model.setProperty(orderPath + '/salesPriceCurrency_code', 'EUR');
+      this._calculateItemSalesPrice(bindingContext);
+      this._calculateOrderSalesPrice();
     });
+  }
+
+  public _calculateItemSalesPrice(bindingContext: Context) {
+    const path = bindingContext.getPath();
+    const orderItem = bindingContext?.getObject() as {
+      quantity: String;
+      unitSalesPrice: String;
+      unitSalesPriceCurrency_code: String;
+    };
+    const totalItemPriceRaw =
+      Number(orderItem.quantity) * Number(orderItem.unitSalesPrice);
+    const totalItemPrice = this._roundTo2Digits(totalItemPriceRaw);
+
+    this._model.setProperty(path + '/salesPrice', totalItemPrice);
+    this._model.setProperty(
+      path + '/salesPriceCurrency_code',
+      orderItem.unitSalesPriceCurrency_code
+    );
+  }
+
+  private _calculateOrderSalesPrice() {
+    const orderPath = this._detailPage.getBindingContext().getPath();
+
+    const totalPrice = this._orderItemsTable
+      .getItems()
+      .map((item) => item.getBindingContext().getProperty('salesPrice'))
+      .map((price) => Number(price))
+      .filter((price) => !!price && !isNaN(price))
+      .reduce((acc, curr) => acc + Number(curr), 0);
+
+    this._model.setProperty(
+      orderPath + '/salesPrice',
+      this._roundTo2Digits(totalPrice)
+    );
+    // TODO: implement currency-handling
+    this._model.setProperty(orderPath + '/salesPriceCurrency_code', 'EUR');
   }
 
   private _roundTo2Digits(raw: any) {
@@ -190,9 +198,10 @@ export default class Main extends BaseController {
     this._uploadContent(item, ID);
   }
 
-  public onUploadCompleted(oEvent: UI5Event) {
+  public onUploadCompleted() {
     const uploadSet = this.byId('uploadSet') as UploadSet;
-    uploadSet.removeAllIncompleteItems();
+    const itemsBinding = uploadSet.getBinding('items') as ODataListBinding;
+    itemsBinding.refresh();
   }
 
   private async _createAttachment(item: any): Promise<{
@@ -260,15 +269,21 @@ export default class Main extends BaseController {
     const item = event.getSource() as Button;
     const path = item.getBindingContext()?.getPath();
 
-    if (path && path.includes('id')) {
+    if (path && path.includes('id-')) {
       this._model.resetChanges([path], true, true);
     } else if (path) {
       await new Promise<void>((resolve, reject) => {
-        this._model.remove(path, { success: resolve, error: reject });
+        this._model.remove(path, {
+          groupId: 'group1',
+          changeSetId: 'changeSetId1',
+          success: resolve,
+          error: reject
+        });
       });
     }
 
-    this.calculateSalesPrice(event);
+    this._calculateOrderSalesPrice();
+    this._model.submitChanges();
   }
 
   public onSearch(event: UI5Event) {
