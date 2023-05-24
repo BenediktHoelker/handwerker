@@ -43,4 +43,4 @@ function capAuth0(req, res, next) {
   next();
 }
 
-module.exports = [requiresAuth(), capAuth0];
+module.exports = [capAuth0];

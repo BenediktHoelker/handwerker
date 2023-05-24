@@ -16,11 +16,12 @@ const config = {
 
 cds.on('bootstrap', (app) => {
   // initialize openid-connect with auth0 configuration
-  app.use(auth(config));
+  if (!process.env.CDS_ENV === 'development') {
+    app.use(auth(config));
+    app.use('/', requiresAuth(), express.static(__dirname + '/../dist'));
+    app.use('/v2', requiresAuth());
+  }
   app.use(cov2ap());
-  app.use('/v2', requiresAuth());
-  app.use('/app', requiresAuth(), express.static(__dirname + '/../app'));
-  app.use('/', requiresAuth(), express.static(__dirname + '/../dist'));
 });
 
 module.exports = cds.server;
