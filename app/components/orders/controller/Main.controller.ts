@@ -275,8 +275,6 @@ export default class Main extends BaseController {
     } else if (path) {
       await new Promise<void>((resolve, reject) => {
         this._model.remove(path, {
-          groupId: 'group1',
-          changeSetId: 'changeSetId1',
           success: resolve,
           error: reject
         });

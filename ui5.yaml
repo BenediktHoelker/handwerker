@@ -12,6 +12,11 @@ builder:
       - 'handwerker/components/equipments'
       - 'handwerker/components/bpworklist'
   customTasks:
+    - name: ui5-task-librarian
+      beforeTask: replaceCopyright
+      configuration:
+        debug: false
+        strict: false
     - name: ui5-tooling-transpile-task
       afterTask: replaceVersion
       configuration: &transpileConfig
