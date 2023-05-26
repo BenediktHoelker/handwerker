@@ -198,12 +198,6 @@ export default class Main extends BaseController {
     this._uploadContent(item, ID);
   }
 
-  public onUploadCompleted() {
-    const uploadSet = this.byId('uploadSet') as UploadSet;
-    const itemsBinding = uploadSet.getBinding('items') as ODataListBinding;
-    itemsBinding.refresh();
-  }
-
   private async _createAttachment(item: any): Promise<{
     ID: string;
   }> {
@@ -235,6 +229,13 @@ export default class Main extends BaseController {
 
     uploadSet.setHttpRequestMethod(UploaderHttpRequestMethod.Put);
     uploadSet.uploadItem(item);
+  }
+
+  public onUploadCompleted() {
+    const uploadSet = this.byId('uploadSet') as UploadSet;
+    const itemsBinding = uploadSet.getBinding('items') as ODataListBinding;
+    // uploadSet.removeAllIncompleteItems();
+    itemsBinding.refresh();
   }
 
   public onPressCreateOrder() {

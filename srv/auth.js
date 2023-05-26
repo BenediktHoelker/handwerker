@@ -43,4 +43,10 @@ function capAuth0(req, res, next) {
   next();
 }
 
-module.exports = [capAuth0];
+let middlewares = [capAuth0];
+
+// if (!process.env.CDS_ENV === 'development') {
+//   middlewares.unshift(requiresAuth());
+// }
+
+module.exports = middlewares;

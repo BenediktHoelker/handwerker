@@ -16,7 +16,7 @@ const config = {
 
 cds.on('bootstrap', (app) => {
   // initialize openid-connect with auth0 configuration
-  if (!process.env.CDS_ENV === 'development') {
+  if (process.env.CDS_ENV !== 'development') {
     app.use(auth(config));
     app.use('/', requiresAuth(), express.static(__dirname + '/../dist'));
     app.use('/v2', requiresAuth());
